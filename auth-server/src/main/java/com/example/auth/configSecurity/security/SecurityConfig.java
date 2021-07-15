@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.anonymous().and().cors().and().csrf().disable()
         .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
           .antMatchers(

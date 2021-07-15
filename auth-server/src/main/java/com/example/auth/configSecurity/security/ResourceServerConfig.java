@@ -11,12 +11,12 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-  private static final String RESOURCE_ID = "ehealth";
+  private static final String RESOURCE_ID = "hoang";
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http.anonymous().disable()
-        .requestMatchers().antMatchers("/api/**")
+        .requestMatchers().antMatchers("/**")
         .and()
         .authorizeRequests()
         .antMatchers("/login").permitAll()
