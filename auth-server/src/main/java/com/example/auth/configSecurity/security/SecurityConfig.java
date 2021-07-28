@@ -1,8 +1,14 @@
 package com.example.auth.configSecurity.security;
 
 import java.util.Arrays;
+import java.util.Collections;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.SessionCookieConfig;
+import javax.servlet.SessionTrackingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -86,15 +92,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        .authenticationEntryPoint(authenticationEntryPoint)
 //        .and().httpBasic();
     http.csrf().disable()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-        .and()
         .authorizeRequests()
         .antMatchers("/oauth/authorize").permitAll()
         .anyRequest().permitAll()
         .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
         .and().httpBasic();
     ;
+  }
+
+  @Bean
+  public ServletContextInitializer servletContextInitializer() {
+    return new ServletContextInitializer() {
+
+      @Override
+      public void onStartup(ServletContext servletContext) throws ServletException {
+        servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
+        SessionCookieConfig sessionCookieConfig=servletContext.getSessionCookieConfig();
+        sessionCookieConfig.setHttpOnly(true);
+      }
+    };
+
   }
 
   private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> authorizationCodeTokenResponseClient() {
