@@ -1,5 +1,7 @@
 package com.example.auth.dao.model;
 
+import com.example.auth.configSecurity.security.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "user")
+@JsonView(Views.User.class)
 public class UserEntity implements Serializable {
 
   @Id
@@ -33,6 +36,7 @@ public class UserEntity implements Serializable {
   private String username;
 
   @Column(name = "password" , nullable = false, length = 1000)
+//  @JsonView(Views.Admin.class)
   private String password;
 
   @Column(name = "full_name")
@@ -43,6 +47,7 @@ public class UserEntity implements Serializable {
 
   @Column(name = "email")
   @Email
+//  @JsonView(Views.User.class)
   private String email;
 
   @Column(name = "role_id")

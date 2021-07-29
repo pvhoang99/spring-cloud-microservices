@@ -5,6 +5,7 @@ import com.example.auth.dao.repository.UserRepository;
 import com.netflix.discovery.converters.Auto;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -26,12 +27,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ControllerTest {
 
-  @GetMapping(value = "/hello", produces = "application/JSON")
+  @GetMapping(value = "/hello")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<?> hello() {
     Map map = new HashMap();
     map.put("key", "hoang");
     return ResponseEntity.ok(map);
+  }
+
+  @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<UserEntity>> getAllUser() {
+    return ResponseEntity.ok(userRepository.findAll());
   }
 
   @Autowired
