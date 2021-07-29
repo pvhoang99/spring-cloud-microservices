@@ -1,14 +1,22 @@
 package com.example.auth.configSecurity.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
@@ -47,19 +55,48 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.csrf().disable()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        .and()
+//        .requestMatchers().antMatchers("/**")
         .and()
-        .antMatcher("/**")
         .authorizeRequests()
-        .antMatchers("/oauth/revoke_token").permitAll()
-        .antMatchers("/oauth/authorize").permitAll()
-        .anyRequest().permitAll()
+        .antMatchers("/oauth/*").permitAll()
+        .and()
+        .authorizeRequests()
+        .expressionHandler(webExpressionHandler())
+        .anyRequest().authenticated()
         .and().formLogin()
         .loginPage("/login")
         .successHandler(authenticationSuccessHandler)
         .permitAll()
         .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
+        .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
         .and().httpBasic();
   }
+
+  @Bean
+  public RoleHierarchy roleHierarchy() {
+    RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+    String hierarchy = "ROLE_ADMIN > ROLE_USER";
+    roleHierarchy.setHierarchy(hierarchy);
+    return roleHierarchy;
+  }
+
+  private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
+    DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+    defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
+    return defaultWebSecurityExpressionHandler;
+  }
+
+  @Bean
+  public RoleHierarchyVoter roleHierarchyVoter() {
+    return new RoleHierarchyVoter(roleHierarchy());
+  }
+
+  @Autowired
+  private AccessDeniedHandle accessDeniedHandle;
+
+  @Autowired
+  private AuthenticationEntryPoint authenticationEntryPoint;
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) {

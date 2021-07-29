@@ -7,9 +7,13 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,9 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ControllerTest {
 
-  @GetMapping("/hello")
-  public String hello() {
-    return "hello";
+  @GetMapping(value = "/hello", produces = "application/JSON")
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity<?> hello() {
+    Map map = new HashMap();
+    map.put("key", "hoang");
+    return ResponseEntity.ok(map);
   }
 
   @Autowired
@@ -36,7 +43,7 @@ public class ControllerTest {
   @RequestMapping(path = "/me")
   public ResponseEntity me(Principal principal) {
     UserEntity user = null;
-    if(principal != null) {
+    if (principal != null) {
       user = userRepository.findByUsername(principal.getName()).get();
     }
 
@@ -46,13 +53,14 @@ public class ControllerTest {
   }
 
   //Đoạn này tạm thời fix cứng dữ liệu ahihi
-  @RequestMapping("/user")
-  public Map user(Principal user) {
+  @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Map<String, Object> user(Principal user) {
     Map map = new HashMap();
-    map.put("id","hoang1");
-    map.put("name","Phạm Việt Hoàng");
-    map.put("email","PhamVietHoang@gmail.com");
-    map.put("picture","ahihi");
+    map.put("id", "hoang1");
+    map.put("name", "Phạm Việt Hoàng");
+    map.put("email", "PhamVietHoang@gmail.com");
+    map.put("picture", "ahihi");
     return map;
   }
+
 }

@@ -182,6 +182,14 @@
       <artifactId>slf4j-api</artifactId>
       <version>1.7.29</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>

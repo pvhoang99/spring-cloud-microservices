@@ -13,19 +13,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController {
 
+  @RequestMapping("/")
+  @ResponseBody
+  public String home() {
+    return "hello";
+  }
+
   @GetMapping("/login")
   public String login(HttpServletRequest request, Authentication authentication,
       Model model, @CookieValue(value = "username", defaultValue = "") String usernameCookie) {
+
 
     if (authentication != null && authentication.isAuthenticated()) {
       return "redirect:/";
     }
 
     HttpSession session = request.getSession();
+
+    if (session.getAttribute("redirect_uri") == null) {
+      return "redirect:/";
+    }
 
     if (session == null) {
       return "login";

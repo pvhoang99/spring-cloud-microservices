@@ -9,9 +9,14 @@ import javax.servlet.SessionTrackingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -26,9 +31,6 @@ import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResp
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -91,14 +93,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        .accessDeniedHandler(accessDeniedHandle)
 //        .authenticationEntryPoint(authenticationEntryPoint)
 //        .and().httpBasic();
-    http.csrf().disable()
-        .authorizeRequests()
-        .antMatchers("/oauth/authorize").permitAll()
-        .anyRequest().permitAll()
-        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
-        .and().httpBasic();
-    ;
   }
+
+
+
+
 
   @Bean
   public ServletContextInitializer servletContextInitializer() {
@@ -107,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       @Override
       public void onStartup(ServletContext servletContext) throws ServletException {
         servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
-        SessionCookieConfig sessionCookieConfig=servletContext.getSessionCookieConfig();
+        SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
         sessionCookieConfig.setHttpOnly(true);
       }
     };
@@ -117,7 +116,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> authorizationCodeTokenResponseClient() {
     OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter =
         new OAuth2AccessTokenResponseHttpMessageConverter();
-    tokenResponseHttpMessageConverter.setTokenResponseConverter(new CustomAccessTokenResponseConverter());
+    tokenResponseHttpMessageConverter
+        .setTokenResponseConverter(new CustomAccessTokenResponseConverter());
 
     RestTemplate restTemplate = new RestTemplate(Arrays.asList(
         new FormHttpMessageConverter(), tokenResponseHttpMessageConverter));
