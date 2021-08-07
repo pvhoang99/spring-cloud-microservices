@@ -19,6 +19,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableResourceServer
@@ -51,7 +52,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //        .successHandler(authenticationSuccessHandler)
 //        .permitAll()
 //        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
-      ;
+    ;
     http.csrf().disable()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -59,7 +60,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //        .requestMatchers().antMatchers("/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/oauth/*").permitAll()
+        .antMatchers("/oauth/*", "/login", "/login-error", "/logout").permitAll()
         .and()
         .authorizeRequests()
         .expressionHandler(webExpressionHandler())
@@ -71,6 +72,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .permitAll()
         .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
         .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
+        .and()
+        .logout()
+        .invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessHandler(new RedirectLogoutSuccessHandler())
+        .deleteCookies("auth_code", "JSESSIONID")
+        .permitAll()
         .and().httpBasic();
   }
 
