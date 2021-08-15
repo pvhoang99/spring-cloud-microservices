@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="eureka-service-discovery" />
+        <module name="ehealth-api-gateway" />
+        <module name="patient-management-service" />
+        <module name="clinic-management-service" />
+        <module name="ehealth-central-configuration" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="clinic-management-service" target="1.8" />
+      <module name="ehealth-api-gateway" target="1.8" />
+      <module name="ehealth-central-configuration" target="1.8" />
+      <module name="eureka-service-discovery" target="1.8" />
+      <module name="patient-management-service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="clinic-management-service" options="-parameters" />
+      <module name="ehealth-api-gateway" options="-parameters" />
+      <module name="ehealth-central-configuration" options="-parameters" />
+      <module name="eureka-service-discovery" options="-parameters" />
+      <module name="patient-management-service" options="-parameters" />
+    </option>
+  </component>
+</project>

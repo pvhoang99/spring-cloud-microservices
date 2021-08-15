@@ -1,0 +1,31 @@
+spring.main.allow-bean-definition-overriding: true
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: kidclient
+#      access-token-uri: localhost:8080/oauth/token
+#security:
+#  oauth2:
+#    client:
+#      messaging-client-auth-code:
+#        client-id: kidclient
+#        client-secret: admin
+#        grant-type: authorization_code
+#        user-authorization-uri: http://localhost:8080/oauth/authorize
+#        access-token-uri: http://localhost:8080/oauth/token
+#        scope: message.read, message.write
+#        pre-established-redirect-uri: http://localhost:8080/authorized
+#        use-current-uri: false
+#      messaging-client-client-creds:
+#        client-id: kidclient
+#        client-secret: admin
+#        grant-type: client_credentials
+#        access-token-uri: http://localhost:8080/oauth/token
+#        scope: message.read, message.write
+#      messaging-client-password:
+#        client-id: kidclient
+#        client-secret: admin
+#        grant-type: password
+#        access-token-uri: http://localhost:8080/oauth/token
+#        scope: message.read, message.write
