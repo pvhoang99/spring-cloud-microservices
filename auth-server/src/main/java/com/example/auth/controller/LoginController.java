@@ -31,7 +31,7 @@ public class LoginController {
     return "login";
   }
 
-  @GetMapping("/login")
+  @RequestMapping("/login")
   public String login(HttpServletRequest request, Authentication authentication,
       Model model, @CookieValue(value = "username", defaultValue = "") String usernameCookie) {
 
@@ -55,7 +55,8 @@ public class LoginController {
       Boolean onAuthenticationFailure = (Boolean) session.getAttribute("onAuthenticationFailure");
 
       if (onAuthenticationFailure == null || !onAuthenticationFailure) {
-        return "redirect:/login-error";
+        model.addAttribute("error",true);
+        return "login";
       }
 
       String password = (String) session.getAttribute("password");

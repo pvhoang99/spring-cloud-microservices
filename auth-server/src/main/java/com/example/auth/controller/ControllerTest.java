@@ -58,7 +58,7 @@ public class ControllerTest {
         .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
   }
 
-  //Đoạn này tạm thời fix cứng dữ liệu ahihi
+  //Đoạn này tạm thời fix cứng dữ liệu
   @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
   public Map<String, Object> user(Principal user) {
     Map map = new HashMap();

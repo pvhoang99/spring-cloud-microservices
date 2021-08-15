@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <h1>Login</h1>
-    <p th:if="${loginError}" style="font-weight:bold;color:red;">Wrong username or password</p>
+    <p th:if="${error}" style="font-weight:bold;color:red;">Wrong username or password</p>
     <form th:action="@{/login}" method="post">
         <div class="form-row">
             <div class="form-group">

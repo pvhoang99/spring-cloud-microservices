@@ -68,7 +68,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .and().formLogin()
         .loginPage("/login")
         .successHandler(authenticationSuccessHandler)
-        .failureUrl("/login-error")
         .permitAll()
         .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
         .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
