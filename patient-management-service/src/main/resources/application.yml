@@ -1,7 +1,0 @@
-security:
-  oauth2:
-    client:
-      client-id: kidclient
-      access-token-uri: localhost:8080/oauth/token
-
-

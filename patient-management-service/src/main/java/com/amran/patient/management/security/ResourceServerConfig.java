@@ -38,7 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId("ehealth")
+        resources.resourceId("hoang")
 //            .tokenServices(tokenServices())
         ;
     }

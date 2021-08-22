@@ -54,6 +54,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
     security
+        .realm(REALM)
         .checkTokenAccess("isAuthenticated()")
         .tokenKeyAccess("permitAll()")
         .allowFormAuthenticationForClients()

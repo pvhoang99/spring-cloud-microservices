@@ -93,40 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        .accessDeniedHandler(accessDeniedHandle)
 //        .authenticationEntryPoint(authenticationEntryPoint)
 //        .and().httpBasic();
-  }
-
-
-
-
-
-  @Bean
-  public ServletContextInitializer servletContextInitializer() {
-    return new ServletContextInitializer() {
-
-      @Override
-      public void onStartup(ServletContext servletContext) throws ServletException {
-        servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
-        SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
-        sessionCookieConfig.setHttpOnly(true);
-      }
-    };
-
-  }
-
-  private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> authorizationCodeTokenResponseClient() {
-    OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter =
-        new OAuth2AccessTokenResponseHttpMessageConverter();
-    tokenResponseHttpMessageConverter
-        .setTokenResponseConverter(new CustomAccessTokenResponseConverter());
-
-    RestTemplate restTemplate = new RestTemplate(Arrays.asList(
-        new FormHttpMessageConverter(), tokenResponseHttpMessageConverter));
-    restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
-
-    DefaultAuthorizationCodeTokenResponseClient tokenResponseClient = new DefaultAuthorizationCodeTokenResponseClient();
-    tokenResponseClient.setRestOperations(restTemplate);
-
-    return tokenResponseClient;
+    http.anonymous().and().cors().and().csrf().disable().authorizeRequests()
+          .antMatchers("/oauth/check_token").permitAll();
   }
 
   @Override
