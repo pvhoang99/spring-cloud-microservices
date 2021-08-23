@@ -85,16 +85,16 @@ public class OAuth2Controller {
     return whitelabelErrorEndpoint.handleError(request);
   }
 
-//  @DeleteMapping("/revoke_token")
-//  public ResponseEntity revokeToken(@RequestParam Map<String, Object> requestParam) {
-//    String accessToken = (String) requestParam.get("access_token");
-//    String refreshToken = (String) requestParam.get("refresh_token");
-//    OAuth2AccessToken oAuth2AccessToken = new DefaultOAuth2AccessToken(accessToken);
-//    OAuth2RefreshToken oAuth2RefreshToken = new DefaultOAuth2RefreshToken(refreshToken);
-//    tokenStore.removeAccessToken(oAuth2AccessToken);
-//    tokenStore.removeRefreshToken(oAuth2RefreshToken);
-//    Map<String, Object> response = new HashMap<>();
-//    response.put("message", "success");
-//    return ResponseEntity.ok(response);
-//  }
+  @DeleteMapping("/revoke_token")
+  public ResponseEntity revokeToken(@RequestParam Map<String, Object> requestParam) {
+    String accessToken = (String) requestParam.get("access_token");
+    String refreshToken = (String) requestParam.get("refresh_token");
+    OAuth2AccessToken oAuth2AccessToken = new DefaultOAuth2AccessToken(accessToken);
+    OAuth2RefreshToken oAuth2RefreshToken = new DefaultOAuth2RefreshToken(refreshToken);
+    tokenStore.removeAccessToken(oAuth2AccessToken);
+    tokenStore.removeRefreshToken(oAuth2RefreshToken);
+    Map<String, Object> response = new HashMap<>();
+    response.put("message", "success");
+    return ResponseEntity.ok(response);
+  }
 }

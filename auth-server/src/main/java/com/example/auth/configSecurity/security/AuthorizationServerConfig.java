@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -78,11 +80,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     ;
   }
 
+  @Autowired
+  private RedisConnectionFactory redisConnectionFactory;
 
   @Bean
   public TokenStore tokenStore() {
-    return new JwtTokenStore(tokenEnhancer());
+    return new RedisTokenStore(redisConnectionFactory);
   }
+
+
+//  @Bean
+//  public TokenStore tokenStore() {
+//    return new JwtTokenStore(tokenEnhancer());
+//  }
 
   @Bean
   public JwtAccessTokenConverter tokenEnhancer() {
