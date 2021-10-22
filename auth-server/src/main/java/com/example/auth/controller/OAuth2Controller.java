@@ -43,7 +43,7 @@ public class OAuth2Controller {
   @Autowired
   private AuthorizationEndpoint authorizationEndpoint;
 
-  @RequestMapping(value = "/authorize",method = RequestMethod.GET)
+  @RequestMapping(value = "/authorize", method = RequestMethod.GET)
   public ModelAndView authorize(Map<String, Object> model,
       @RequestParam Map<String, String> parameters, SessionStatus sessionStatus,
       HttpSession session) {

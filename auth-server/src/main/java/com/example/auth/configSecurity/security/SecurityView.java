@@ -14,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJacksonResponseBodyAdvice;
 
-@RestControllerAdvice(basePackages = { "com.example.auth" })
+@RestControllerAdvice(basePackages = {"com.example.auth"})
 public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
 
   @Override
@@ -31,11 +31,12 @@ public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
           .map(GrantedAuthority::getAuthority).map(Role::valueOf)
           .map(Views.MAPPING::get)
           .collect(Collectors.toList());
-      if (jsonViews.size() == 1)
+      if (jsonViews.size() == 1) {
         bodyContainer.setSerializationView(jsonViews.get(0));
-      else
+      } else {
         throw new IllegalArgumentException("Ambiguous declaration for roles " + authorities.stream()
             .map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
+      }
     }
   }
 }

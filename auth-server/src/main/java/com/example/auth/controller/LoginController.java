@@ -1,18 +1,12 @@
 package com.example.auth.controller;
 
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.security.auth.login.CredentialException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,7 +29,6 @@ public class LoginController {
   public String login(HttpServletRequest request, Authentication authentication,
       Model model, @CookieValue(value = "username", defaultValue = "") String usernameCookie) {
 
-
     if (authentication != null && authentication.isAuthenticated()) {
       return "redirect:/";
     }
@@ -55,7 +48,7 @@ public class LoginController {
       Boolean onAuthenticationFailure = (Boolean) session.getAttribute("onAuthenticationFailure");
 
       if (onAuthenticationFailure == null || !onAuthenticationFailure) {
-        model.addAttribute("error",true);
+        model.addAttribute("error", true);
         return "login";
       }
 

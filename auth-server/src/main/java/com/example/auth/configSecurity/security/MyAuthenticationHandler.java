@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -24,10 +23,10 @@ public class MyAuthenticationHandler {
       String scope = (String) session.getAttribute("scope");
       if (scope == null) {
 //        scope = clientDetailRepository.findByClientId(clientId).get().getScope().replace(","," ");
-        scope ="";
+        scope = "";
       }
       String state = (String) session.getAttribute("state");
-      if(state == null) {
+      if (state == null) {
         state = "";
       }
       session.setAttribute("authentication", authentication);

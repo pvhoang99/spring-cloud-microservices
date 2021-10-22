@@ -20,20 +20,20 @@ import lombok.NoArgsConstructor;
 @Table(name = "oauth_client_token")
 public class OauthClientTokenEntity implements Serializable {
 
-    @Column(name = "token_id")
-    private String tokenId;
+  @Column(name = "token_id")
+  private String tokenId;
 
-    @Lob
-    private byte[] token;
+  @Lob
+  private byte[] token;
 
-    @Id
-    @Column(name = "authentication_id")
-    private String authenticationId;
+  @Id
+  @Column(name = "authentication_id")
+  private String authenticationId;
 
-    @Column(name = "user_name")
-    private String userName;
+  @Column(name = "user_name")
+  private String userName;
 
-    @Column(name = "client_id")
-    private String clientId;
+  @Column(name = "client_id")
+  private String clientId;
 
 }

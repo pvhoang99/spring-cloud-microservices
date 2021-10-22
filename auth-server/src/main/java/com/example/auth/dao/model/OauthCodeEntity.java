@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "oauth_code")
 public class OauthCodeEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String code;
+  private String code;
 
-    @Lob
-    private byte[] authentication;
+  @Lob
+  private byte[] authentication;
 }

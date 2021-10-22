@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
   @Override
-  public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
+  public void commence(HttpServletRequest request, HttpServletResponse response,
+      AuthenticationException authEx)
       throws IOException {
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     PrintWriter writer = response.getWriter();

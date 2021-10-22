@@ -9,14 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/login").setViewName("login");
+  }
 
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        super.configureContentNegotiation(configurer);
-        configurer.defaultContentType(MediaType.APPLICATION_JSON);
-    }
+  @Override
+  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+    super.configureContentNegotiation(configurer);
+    configurer.defaultContentType(MediaType.APPLICATION_JSON);
+  }
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClientDetailRepository extends JpaRepository<OauthClientDetailEntity,String> {
+public interface ClientDetailRepository extends JpaRepository<OauthClientDetailEntity, String> {
 
   Optional<OauthClientDetailEntity> findByClientId(String clientId);
 }

@@ -10,14 +10,15 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class DispatcherServletInitializer implements WebApplicationInitializer {
 
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.scan("com.example.auth");
+  public void onStartup(ServletContext servletContext) throws ServletException {
+    AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+    context.scan("com.example.auth");
 
-        servletContext.addListener(new ContextLoaderListener(context));
+    servletContext.addListener(new ContextLoaderListener(context));
 
-        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/");
-    }
+    ServletRegistration.Dynamic dispatcher = servletContext
+        .addServlet("dispatcher", new DispatcherServlet(context));
+    dispatcher.setLoadOnStartup(1);
+    dispatcher.addMapping("/");
+  }
 }

@@ -20,7 +20,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
   @Override
   public void handle(HttpServletRequest request,
       HttpServletResponse response,
-        AccessDeniedException ex) throws IOException, ServletException, java.io.IOException {
+      AccessDeniedException ex) throws IOException, ServletException, java.io.IOException {
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 

@@ -35,7 +35,7 @@ public class UserEntity implements Serializable {
   @Column(name = "user_name", unique = true, nullable = false)
   private String username;
 
-  @Column(name = "password" , nullable = false, length = 1000)
+  @Column(name = "password", nullable = false, length = 1000)
 //  @JsonView(Views.Admin.class)
   private String password;
 
@@ -54,6 +54,6 @@ public class UserEntity implements Serializable {
   private Long roleId;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "role_id",insertable = false,updatable = false)
+  @JoinColumn(name = "role_id", insertable = false, updatable = false)
   private RoleEntity roleEntity;
 }
