@@ -1,0 +1,64 @@
+https://openplanning.net/10869/su-dung-nhieu-datasource-voi-spring-boot-va-routingdatasource
+https://kipalog.com/posts/Distributed-tracing-voi-Spring-Cloud-Sleuth-va-Zipkin
+https://attacomsian.com/blog/spring-boot-resttemplate-get-request-parameters-headers
+https://www.youtube.com/watch?v=uceE4RILLwc
+https://www.javainuse.com/devOps/docker/docker-mysql
+
+http://localhost:2401/auth/oauth/authorize?client_id=isofh&response_type=code&redirect_uri=http://localhost:3000&state=%2F
+
+"#oauth2.hasScope('trust')"
+
+ps -ux | grep java
+rabbitmqctl set_user_tags rabbitmq administrator
+git diff --staged : so sánh staged với commit cuối
+git checkout <id> -- <tên file> : roll back về commit có <id>
+git restore --staged : loại trừ trạng thái staged
+git diff <id1> <id2> :chỉ ra 2 commit có khác nhau gì không (chi tiết)
+git diff <id1> <id2> :--stat tổng quan
+git commit --amend -m "" : gộp với commit cuối
+journalctl -f -u medical-education
+netstat -tulpn | grep 8082
+ps -ef | grep medical-education-1.0.jar
+tail -f 10 nohob.out
+pm2 ps
+pms restart
+free -h
+
+
+docker ps
+docker images
+
+docker ps | grep isofhcare
+docker logs -f --tail 1000 dockerId
+docker exec -it mysql bash -l
+
+
+Image chi the doc k the sua
+
+Image : liet ke ca image docker images
+xoa 1 mage docker image rm tenimage||id
+
+docker run <thamso> docker run -it <ID>
+docker ps liet ke container
+docker start <id>||<ten>
+docker attach <id> : vao lai terminal
+docker run -it --name <ten> -h <hostname> <image>
+docker rm $(docker ps -a -f status=exited -q)
+docker rmi <name> : detele all dependent container to remove Image
+ docker stop $(docker ps -a -q) : stop tat ca docker container
+ docker rm $(docker ps -a -q) : xoa tat ca docker container
+ docker container run --detach --publish 8888:80 --name hello-dock-container fhsinchy/hello-dock : --detack run in background 
+ docker container rename <container identifier> <new name> : doi ten trong docker
+ docker container stop <container identifier>
+ docker container run --publish 8080:80 fhsinchy/hello-dock : run 1 images
+	
+docker container run --rm --detach --publish 8888:80 --name hello-dock-volatile fhsinchy/hello-dock : xoa container ngay sau khi no stop    
+docker image tag <image id> <image repository>:<image tag> : tag images
+docker image tag <image repository>:<image tag> <new image repository>:<new image tag> : tag images
+docker image prune --force : xoa nhung image  un-tagged 
+docker image build --tag custom-nginx:built . : build image with tag
+docker container run --rm --detach --name custom-nginx-built --publish 8080:80 custom-nginx:built : buld with tag
+
+//Docker volume reactjs
+https://www.youtube.com/watch?v=ddWiErCX75s
+https://docs.google.com/document/d/1C0KkiuCJwu6hCJNrx9j-ZvO5AvhrKRefw4YB8jWKPwM/edit?usp=sharing

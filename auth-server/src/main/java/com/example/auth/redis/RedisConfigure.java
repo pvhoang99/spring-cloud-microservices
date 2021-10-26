@@ -48,9 +48,8 @@ public class RedisConfigure {
   public LettuceConnectionFactory redisConnectionFactory() {
     RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(
         "127.0.0.1", 6379);
-    LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(
+    return new LettuceConnectionFactory(
         redisStandaloneConfiguration);
-    return connectionFactory;
   }
 
 }
