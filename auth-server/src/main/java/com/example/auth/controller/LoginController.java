@@ -35,12 +35,12 @@ public class LoginController {
 
     HttpSession session = request.getSession();
 
-    if (session.getAttribute("redirect_uri") == null) {
-      return "redirect:/";
-    }
-
     if (session == null) {
       return "login";
+    }
+
+    if (session.getAttribute("redirect_uri") == null) {
+      return "redirect:/";
     }
 
     String paras = request.getQueryString();
