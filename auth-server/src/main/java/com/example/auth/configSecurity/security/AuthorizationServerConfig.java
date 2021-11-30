@@ -24,15 +24,6 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-  private static String REALM = "KE_REALM";
-
-  private String GRANT_TYPE_PASSWORD = "password";
-  private String AUTHORIZATION_CODE = "authorization_code";
-  private String REFRESH_TOKEN = "refresh_token";
-  private String SCOPE_READ = "read";
-  private String SCOPE_WRITE = "write";
-  private int VALID_FOREVER = -1;
-
   @Autowired
   @Qualifier("customClientDetailService")
   private ClientDetailsService clientDetailsService;
@@ -52,10 +43,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Autowired
   private AuthenticationEntryPoint authenticationEntryPoint;
 
+  @Autowired
+  private RedisConnectionFactory redisConnectionFactory;
+
+  @Autowired
+  private KeyUtil keyUtil;
+
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
     security
-        .realm(REALM)
         .checkTokenAccess("isAuthenticated()")
         .tokenKeyAccess("permitAll()")
         .allowFormAuthenticationForClients()
@@ -79,8 +75,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     ;
   }
 
-  @Autowired
-  private RedisConnectionFactory redisConnectionFactory;
 
   @Bean
   public TokenStore tokenStore() {
@@ -98,9 +92,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     converter.setKeyPair(keyPair());
     return converter;
   }
-
-  @Autowired
-  private KeyUtil keyUtil;
 
   public KeyPair keyPair() {
     return new KeyPair(keyUtil.getPublicKey(), keyUtil.getPrivateKey());

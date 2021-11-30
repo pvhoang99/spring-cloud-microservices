@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "user")
-@JsonView(Views.User.class)
+//@JsonView(Views.User.class)
 public class UserEntity implements Serializable {
 
   @Id

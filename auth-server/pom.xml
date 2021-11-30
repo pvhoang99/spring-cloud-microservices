@@ -9,7 +9,7 @@
     <version>2.3.1.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.hoang</groupId>
+  <groupId>com.example</groupId>
   <artifactId>oauth2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>oauth2</name>
@@ -68,14 +68,8 @@
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security.oauth</groupId>
-      <artifactId>spring-security-oauth2</artifactId>
-      <version>2.5.0.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-oauth2-client</artifactId>
-      <version>5.3.3.RELEASE</version>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-oauth2</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
@@ -188,10 +182,6 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security.oauth.boot</groupId>
-      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

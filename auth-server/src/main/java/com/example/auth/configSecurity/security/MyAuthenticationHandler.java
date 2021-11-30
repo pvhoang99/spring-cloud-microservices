@@ -22,7 +22,6 @@ public class MyAuthenticationHandler {
       String redirectUri = (String) session.getAttribute("redirect_uri");
       String scope = (String) session.getAttribute("scope");
       if (scope == null) {
-//        scope = clientDetailRepository.findByClientId(clientId).get().getScope().replace(","," ");
         scope = "";
       }
       String state = (String) session.getAttribute("state");

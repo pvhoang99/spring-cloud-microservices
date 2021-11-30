@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class ControllerTest {
 
   @GetMapping(value = "/hello")
-  @PreAuthorize("hasRole('USER')")
+//  @PreAuthorize("hasRole('USER')")
   public ResponseEntity<?> hello() {
     Map map = new HashMap();
     map.put("key", "hoang");
     return ResponseEntity.ok(map);
   }
 
-  @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<UserEntity>> getAllUser() {
-    return ResponseEntity.ok(userRepository.findAll());
-  }
+//  @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<List<UserEntity>> getAllUser() {
+//    return ResponseEntity.ok(userRepository.findAll());
+//  }
 
   @Autowired
   private UserDetailsService userDetailsService;
@@ -54,8 +54,8 @@ public class ControllerTest {
   }
 
   //Đoạn này tạm thời fix cứng dữ liệu
-  @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Map<String, Object> user(Principal user) {
+  @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Map<String, Object> user() {
     Map map = new HashMap();
     map.put("id", "hoang1");
     map.put("name", "Phạm Việt Hoàng");

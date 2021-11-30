@@ -13,7 +13,6 @@ public class DispatcherServletInitializer implements WebApplicationInitializer {
   public void onStartup(ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
     context.scan("com.example.auth");
-
     servletContext.addListener(new ContextLoaderListener(context));
 
     ServletRegistration.Dynamic dispatcher = servletContext

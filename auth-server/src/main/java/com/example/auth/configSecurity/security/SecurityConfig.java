@@ -28,20 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Qualifier("customUserDetailsService")
   private UserDetailsService userDetailsService;
 
-  @Autowired
-  private AccessDeniedHandle accessDeniedHandle;
-
-  @Autowired
-  private AuthenticationEntryPoint authenticationEntryPoint;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.anonymous().and().cors().and().csrf().disable().authorizeRequests()
-        .antMatchers("/oauth/check_token").permitAll();
-  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {

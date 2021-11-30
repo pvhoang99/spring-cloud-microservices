@@ -17,49 +17,24 @@ import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEn
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-  private static final String RESOURCE_ID = "hoang";
-
   @Autowired
   private AuthenticationSuccessHandler authenticationSuccessHandler;
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-//    http.anonymous().disable()
-//        .requestMatchers().antMatchers("/**")
-//        .and()
-//        .authorizeRequests()
-//        .antMatchers("/oauth/revoke_token").permitAll()
-//        .antMatchers("/oauth/authorize").permitAll()
-//        .anyRequest().permitAll()
-//        .antMatchers(
-//            "/",
-//            "/js/**",
-//            "/css/**",
-//            "/img/**",
-//            "/webjars/**").permitAll()
-//        .antMatchers("/**")
-//        .access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_PATIENT') or #oauth2.hasScope('trust')")
-//        .and().formLogin()
-//        .loginPage("/login")
-//        .successHandler(authenticationSuccessHandler)
-//        .permitAll()
-//        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
-    ;
     http.csrf().disable()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//        .and()
-//        .requestMatchers().antMatchers("/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/oauth/*", "/login", "/login-error", "/logout").permitAll()
+        .antMatchers("/oauth/*", "/login", "/login-error", "/logout", "/api/user",
+            "/oauth/check_token").permitAll()
         .and()
         .authorizeRequests()
         .expressionHandler(webExpressionHandler())
@@ -81,6 +56,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .and().httpBasic();
   }
 
+  @Override
+  public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+    super.configure(resources);
+    resources.resourceId("auth-server");
+  }
+
   @Bean
   public RoleHierarchy roleHierarchy() {
     RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
@@ -98,22 +79,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   public RoleHierarchyVoter roleHierarchyVoter() {
     return new RoleHierarchyVoter(roleHierarchy());
-  }
-
-  @Autowired
-  private AccessDeniedHandle accessDeniedHandle;
-
-  @Autowired
-  private AuthenticationEntryPoint authenticationEntryPoint;
-
-  @Override
-  public void configure(ResourceServerSecurityConfigurer resources) {
-    resources.resourceId(RESOURCE_ID)
-    ;
-  }
-
-  @Bean
-  HttpSessionSecurityContextRepository contextRepository() {
-    return new HttpSessionSecurityContextRepository();
   }
 }
