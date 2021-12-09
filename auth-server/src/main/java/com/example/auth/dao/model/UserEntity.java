@@ -1,6 +1,7 @@
 package com.example.auth.dao.model;
 
 import com.example.auth.configSecurity.security.Views;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -37,6 +38,7 @@ public class UserEntity implements Serializable {
 
   @Column(name = "password", nullable = false, length = 1000)
 //  @JsonView(Views.Admin.class)
+  @JsonIgnore
   private String password;
 
   @Column(name = "full_name")

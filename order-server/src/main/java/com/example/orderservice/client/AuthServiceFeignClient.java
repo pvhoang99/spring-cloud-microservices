@@ -10,4 +10,7 @@ public interface AuthServiceFeignClient {
   @GetMapping(value = "/api/hello")
   Object testAPI();
 
+  @GetMapping(value = "/v1/me")
+  Object getCurrentUser();
+
 }

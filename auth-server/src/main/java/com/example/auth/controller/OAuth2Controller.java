@@ -32,9 +32,6 @@ import org.springframework.web.servlet.View;
 public class OAuth2Controller {
 
   @Autowired
-  private WhitelabelApprovalEndpoint whitelabelApprovalEndpoint;
-
-  @Autowired
   private WhitelabelErrorEndpoint whitelabelErrorEndpoint;
 
   @Autowired
@@ -72,13 +69,6 @@ public class OAuth2Controller {
         .approveOrDeny(approvalParameters, model, sessionStatus, authentication);
   }
 
-//  @RequestMapping("/confirm_access")
-//  public ModelAndView customConfirmAccessPage(Map<String, Object> model, HttpServletRequest request)
-//      throws Exception {
-//    // TODO: custom code here
-//    return whitelabelApprovalEndpoint.getAccessConfirmation(model, request);
-//  }
-
   @RequestMapping("/error")
   public ModelAndView customErrorPage(HttpServletRequest request) {
     // TODO: custom code here
@@ -86,7 +76,7 @@ public class OAuth2Controller {
   }
 
   @DeleteMapping("/revoke_token")
-  public ResponseEntity revokeToken(@RequestParam Map<String, Object> requestParam) {
+  public ResponseEntity<?> revokeToken(@RequestParam Map<String, Object> requestParam) {
     String accessToken = (String) requestParam.get("access_token");
     String refreshToken = (String) requestParam.get("refresh_token");
     OAuth2AccessToken oAuth2AccessToken = new DefaultOAuth2AccessToken(accessToken);

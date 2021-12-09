@@ -1,6 +1,7 @@
 package com.example.auth.configSecurity.security;
 
 import java.security.KeyPair;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
@@ -49,6 +51,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Autowired
   private KeyUtil keyUtil;
 
+  @Autowired
+  private DataSource dataSource;
+
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
     security
@@ -76,15 +81,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   }
 
 
-  @Bean
-  public TokenStore tokenStore() {
-    return new RedisTokenStore(redisConnectionFactory);
-  }
+//  @Bean
+//  public TokenStore tokenStore() {
+//    return new RedisTokenStore(redisConnectionFactory);
+//  }
 
 //  @Bean
 //  public TokenStore tokenStore() {
 //    return new JwtTokenStore(tokenEnhancer());
 //  }
+
+  @Bean
+  public TokenStore tokenStore() {
+    return new JdbcTokenStore(dataSource);
+  }
 
   @Bean
   public JwtAccessTokenConverter tokenEnhancer() {

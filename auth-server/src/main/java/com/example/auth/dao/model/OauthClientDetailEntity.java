@@ -10,9 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author Md. Amran Hossain
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,0 +1,4 @@
+spring:
+  profiles: test
+  application:
+    name: user-service
