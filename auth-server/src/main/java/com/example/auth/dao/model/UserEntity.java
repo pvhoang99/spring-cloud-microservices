@@ -1,8 +1,6 @@
 package com.example.auth.dao.model;
 
-import com.example.auth.configSecurity.security.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

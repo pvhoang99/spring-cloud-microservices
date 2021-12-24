@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        user:
+          binder: kafka
+          destination: user
+          group: user-group
+          contentType: 'application/json'
+          consumer:
+            concurrency: 1

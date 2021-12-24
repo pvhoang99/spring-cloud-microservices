@@ -81,20 +81,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   }
 
 
-//  @Bean
-//  public TokenStore tokenStore() {
-//    return new RedisTokenStore(redisConnectionFactory);
-//  }
+  // Lưu token vào redis
+  @Bean
+  public TokenStore tokenStore() {
+    return new RedisTokenStore(redisConnectionFactory);
+  }
 
 //  @Bean
 //  public TokenStore tokenStore() {
 //    return new JwtTokenStore(tokenEnhancer());
 //  }
 
-  @Bean
-  public TokenStore tokenStore() {
-    return new JdbcTokenStore(dataSource);
-  }
+  //Lưu token vào data base để sử dụng api revoke token
+//  @Bean
+//  public TokenStore tokenStore() {
+//    return new JdbcTokenStore(dataSource);
+//  }
 
   @Bean
   public JwtAccessTokenConverter tokenEnhancer() {

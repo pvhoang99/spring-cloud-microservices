@@ -3,7 +3,6 @@ package com.example.orderservice.config;
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
@@ -20,7 +19,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
 @Configuration
 @EnableResourceServer
@@ -61,7 +59,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
     remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientId());
     remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientSecret());
-    remoteTokenServices.setCheckTokenEndpointUrl(clientCredentialsResourceDetails().getAccessTokenUri());
+    remoteTokenServices
+        .setCheckTokenEndpointUrl(clientCredentialsResourceDetails().getAccessTokenUri());
     return remoteTokenServices;
   }
 
@@ -70,7 +69,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers(HttpMethod.POST, "/").permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
-        .antMatchers("/test").permitAll()
+        .antMatchers("/test", "/orders/**").permitAll()
         .anyRequest().authenticated();
   }
 

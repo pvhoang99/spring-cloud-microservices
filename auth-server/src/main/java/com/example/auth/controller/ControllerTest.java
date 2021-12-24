@@ -47,7 +47,7 @@ public class ControllerTest {
     map.put("id", "hoang1");
     map.put("name", "Phạm Việt Hoàng");
     map.put("email", "PhamVietHoang@gmail.com");
-    map.put("picture", "ahihi");
+    map.put("picture", "");
     return map;
   }
 

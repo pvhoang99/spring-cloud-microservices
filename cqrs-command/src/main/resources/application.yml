@@ -1,0 +1,13 @@
+#spring:
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+#      bindings:
+#        output:
+#          destination: user
+#          contentType: application/json
+#          group: user-group
+#          producer:
+#            requiredGroups: user-group
