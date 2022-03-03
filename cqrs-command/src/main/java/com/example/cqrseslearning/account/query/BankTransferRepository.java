@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountBankRepository extends JpaRepository<AccountBankEntity, Long> {
+public interface BankTransferRepository extends JpaRepository<BankTransferEntity, Long> {
 
-  AccountBankEntity findByAxonBankAccountId(String id);
+  BankTransferEntity findByAxonBankTransferId(String id);
 
 }

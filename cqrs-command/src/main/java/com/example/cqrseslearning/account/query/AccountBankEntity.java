@@ -18,6 +18,7 @@ public class AccountBankEntity {
   private String axonBankAccountId;
   private long balance;
   private long overdraftLimit;
+  private String username;
 
   public AccountBankEntity(String axonBankAccountId, long balance, long overdraftLimit) {
     this.axonBankAccountId = axonBankAccountId;
@@ -55,5 +56,13 @@ public class AccountBankEntity {
 
   public void setOverdraftLimit(long overdraftLimit) {
     this.overdraftLimit = overdraftLimit;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 }

@@ -3,13 +3,16 @@ package com.example.cqrseslearning.api.v1;
 import com.example.cqrseslearning.account.command.CreateAccountCommand;
 import com.example.cqrseslearning.account.command.EditMoneyCommand;
 import com.example.cqrseslearning.account.dto.AccountBankDto;
+import com.example.cqrseslearning.account.dto.BankTransferDto;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.messaging.Message;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,12 +31,14 @@ public class AccountBankController {
   private final EventStore eventStore;
 
   @PostMapping("/create")
-  public void create(@RequestBody AccountBankDto accountBankDto) {
+  public CompletableFuture<ResponseEntity<String>> create(
+      @RequestBody AccountBankDto accountBankDto) {
     String id = UUID.randomUUID().toString();
     CreateAccountCommand createAccountCommand = new CreateAccountCommand(id,
-        accountBankDto.getOverdraftLimit());
-
-    commandGateway.send(createAccountCommand);
+        accountBankDto.getOverdraftLimit(), accountBankDto.getUsername());
+    return commandGateway.send(createAccountCommand)
+        .thenApply(e -> ResponseEntity.ok("success"))
+        .exceptionally(e -> ResponseEntity.badRequest().body("fail"));
   }
 
   @GetMapping("/get-event/{id}")
@@ -43,9 +48,20 @@ public class AccountBankController {
   }
 
   @PutMapping("/edit")
-  public void edit(@RequestBody AccountBankDto accountBankDto) {
+  public CompletableFuture<ResponseEntity<String>> edit(
+      @RequestBody AccountBankDto accountBankDto) {
 
-    commandGateway.send(new EditMoneyCommand(accountBankDto.getId(), accountBankDto.getMoney()));
+    return commandGateway
+        .send(new EditMoneyCommand(accountBankDto.getId(), accountBankDto.getMoney()))
+        .thenApply(e -> ResponseEntity.ok(e + "oke"))
+        .exceptionally(e -> ResponseEntity.badRequest().body("fail"));
+  }
+
+  @PutMapping("/transfer")
+  public CompletableFuture<ResponseEntity<?>> transfer(
+      @RequestBody BankTransferDto bankTransferDto) {
+
+    return null;
   }
 
 }

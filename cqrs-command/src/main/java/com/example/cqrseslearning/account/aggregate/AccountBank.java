@@ -18,6 +18,7 @@ public class AccountBank {
 
   @AggregateIdentifier
   private String id;
+  private String username;
   private long overdraftLimit;
   private long balanceInCents;
 
@@ -28,7 +29,7 @@ public class AccountBank {
   @CommandHandler
   public AccountBank(CreateAccountCommand createAccountCommand) {
     AggregateLifecycle.apply(new AccountCreatedEvent(createAccountCommand.getBankAccountId(),
-        createAccountCommand.getOverdraftLimit()));
+        createAccountCommand.getOverdraftLimit(), createAccountCommand.getUsername()));
   }
 
   @EventSourcingHandler
@@ -36,6 +37,7 @@ public class AccountBank {
     this.id = event.getId();
     this.overdraftLimit = event.getOverdraftLimit();
     this.balanceInCents = 0;
+    this.username = event.getUsername();
   }
 
   @CommandHandler

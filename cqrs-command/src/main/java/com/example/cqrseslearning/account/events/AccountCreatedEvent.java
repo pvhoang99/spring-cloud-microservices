@@ -11,4 +11,5 @@ public class AccountCreatedEvent {
 
   private String id;
   private long overdraftLimit;
+  private String username;
 }

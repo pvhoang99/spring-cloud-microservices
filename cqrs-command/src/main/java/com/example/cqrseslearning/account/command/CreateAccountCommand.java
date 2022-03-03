@@ -14,6 +14,7 @@ public class CreateAccountCommand {
   private String bankAccountId;
 
   private long overdraftLimit;
+  private String username;
 }
 
 

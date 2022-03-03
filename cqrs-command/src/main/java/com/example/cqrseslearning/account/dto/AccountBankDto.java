@@ -11,5 +11,6 @@ public class AccountBankDto {
 
   private String id;
   private long overdraftLimit;
+  private String username;
   private long money;
 }

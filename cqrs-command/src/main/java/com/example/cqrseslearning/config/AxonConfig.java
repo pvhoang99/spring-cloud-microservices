@@ -1,6 +1,8 @@
 package com.example.cqrseslearning.config;
 
 import com.example.cqrseslearning.account.aggregate.AccountBank;
+import com.example.cqrseslearning.account.aggregate.BankTransfer;
+import javax.sql.DataSource;
 import org.axonframework.common.jdbc.ConnectionProvider;
 import org.axonframework.common.jdbc.PersistenceExceptionResolver;
 import org.axonframework.common.transaction.TransactionManager;
@@ -11,6 +13,10 @@ import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.eventsourcing.eventstore.jdbc.EventTableFactory;
 import org.axonframework.eventsourcing.eventstore.jdbc.JdbcEventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.jdbc.MySqlEventTableFactory;
+import org.axonframework.modelling.saga.repository.SagaStore;
+import org.axonframework.modelling.saga.repository.jdbc.HsqlSagaSqlSchema;
+import org.axonframework.modelling.saga.repository.jdbc.JdbcSagaStore;
+import org.axonframework.modelling.saga.repository.jdbc.SagaSqlSchema;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.spring.config.AxonConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +28,23 @@ import org.springframework.context.annotation.Configuration;
 public class AxonConfig {
 
   @Bean
-  public EventSourcingRepository<AccountBank> accountAggregateEventSourcingRepository(EventStore eventStore){
-    EventSourcingRepository<AccountBank> repository = EventSourcingRepository.builder(AccountBank.class).eventStore(eventStore).build();
+  public EventSourcingRepository<AccountBank> accountAggregateEventSourcingRepository(
+      EventStore eventStore) {
+    EventSourcingRepository<AccountBank> repository = EventSourcingRepository
+        .builder(AccountBank.class).eventStore(eventStore).build();
+    return repository;
+  }
+
+  @Bean
+  public EventSourcingRepository<BankTransfer> bankTransferEventSourcingRepository(
+      EventStore eventStore) {
+    EventSourcingRepository<BankTransfer> repository = EventSourcingRepository
+        .builder(BankTransfer.class).eventStore(eventStore).build();
     return repository;
   }
 
   @Autowired
-  public void createJdbcEventStorageSchema(EventStorageEngine eventStorageEngine){
+  public void createJdbcEventStorageSchema(EventStorageEngine eventStorageEngine) {
     ((JdbcEventStorageEngine) eventStorageEngine).createSchema(eventTableFactory());
   }
 
@@ -38,11 +54,26 @@ public class AxonConfig {
   }
 
   @Bean
-  public EmbeddedEventStore eventStore(EventStorageEngine storageEngine, AxonConfiguration configuration) {
+  public EmbeddedEventStore eventStore(EventStorageEngine storageEngine,
+      AxonConfiguration configuration) {
     return EmbeddedEventStore.builder()
         .storageEngine(storageEngine)
         .messageMonitor(configuration.messageMonitor(EventStore.class, "eventStore"))
         .build();
+  }
+
+  @Bean
+  public SagaSqlSchema sagaSqlSchema() {
+    return new HsqlSagaSqlSchema();
+  }
+
+  @Bean
+  public SagaStore<Object> sagaRepository(DataSource dataSource,
+      ConnectionProvider connectionProvider) {
+    return JdbcSagaStore.builder()
+        .dataSource(dataSource)
+        .connectionProvider(connectionProvider)
+        .sqlSchema(sagaSqlSchema()).build();
   }
 
   @Bean
