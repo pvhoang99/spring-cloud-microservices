@@ -33,6 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private PasswordEncoder passwordEncoder;
 
   @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.anonymous().and().cors().and().csrf().disable();
+  }
+
+  @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
   }

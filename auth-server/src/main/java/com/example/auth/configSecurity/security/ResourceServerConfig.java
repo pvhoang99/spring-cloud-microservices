@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEn
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -28,13 +29,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable()
-        .sessionManagement()
+    http.sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/oauth/*", "/login", "/login-error", "/logout", "/api/user",
-            "/oauth/check_token").permitAll()
+        .antMatchers("/oauth/**", "/login", "/login-error", "/logout", "/api/user").permitAll()
         .and()
         .authorizeRequests()
         .expressionHandler(webExpressionHandler())
@@ -79,5 +78,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   public RoleHierarchyVoter roleHierarchyVoter() {
     return new RoleHierarchyVoter(roleHierarchy());
+  }
+
+  @Bean
+  public HttpSessionSecurityContextRepository contextRepository() {
+    return new HttpSessionSecurityContextRepository();
   }
 }

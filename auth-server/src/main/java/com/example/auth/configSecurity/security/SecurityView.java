@@ -14,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJacksonResponseBodyAdvice;
 
-@RestControllerAdvice(basePackages = {"com.example.auth.dao"})
+//@RestControllerAdvice(basePackages = {"com.example.auth.dao"})
 public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
 
   @Override
