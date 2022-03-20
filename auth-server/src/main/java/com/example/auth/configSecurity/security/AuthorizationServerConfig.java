@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -42,8 +43,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Autowired
   private AuthenticationManager authenticationManager;
 
-  @Autowired
-  private AuthenticationEntryPoint authenticationEntryPoint;
 
   @Autowired
   private RedisConnectionFactory redisConnectionFactory;
@@ -60,7 +59,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .checkTokenAccess("isAuthenticated()")
         .tokenKeyAccess("permitAll()")
         .allowFormAuthenticationForClients()
-        .authenticationEntryPoint(authenticationEntryPoint)
         .passwordEncoder(passwordEncoder());
   }
 
@@ -108,5 +106,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   public KeyPair keyPair() {
     return new KeyPair(keyUtil.getPublicKey(), keyUtil.getPrivateKey());
   }
-
 }

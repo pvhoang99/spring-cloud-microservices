@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,13 +21,12 @@ public class LoginController {
     return "hello";
   }
 
-  @RequestMapping("/login-error")
-  public String loginError(Model model) {
-    model.addAttribute("loginError", true);
+  @GetMapping("/login")
+  public String loginPage() {
     return "login";
   }
 
-  @RequestMapping("/login")
+  @PostMapping("/login")
   public String login(HttpServletRequest request, Authentication authentication,
       Model model, @CookieValue(value = "username", defaultValue = "") String usernameCookie) {
 
