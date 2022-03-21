@@ -53,6 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Autowired
   private DataSource dataSource;
 
+
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
     security
@@ -60,6 +61,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .tokenKeyAccess("permitAll()")
         .allowFormAuthenticationForClients()
         .passwordEncoder(passwordEncoder());
+    security.allowFormAuthenticationForClients();
   }
 
   @Override

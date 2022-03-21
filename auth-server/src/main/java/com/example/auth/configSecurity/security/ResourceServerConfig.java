@@ -26,6 +26,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.resourceId("auth-server");
   }
 
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    http
+        .authorizeRequests()
+        .antMatchers("/assets/**", "/login").permitAll()
+        .anyRequest().authenticated();
+  }
+
   @Bean
   public RoleHierarchy roleHierarchy() {
     RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
