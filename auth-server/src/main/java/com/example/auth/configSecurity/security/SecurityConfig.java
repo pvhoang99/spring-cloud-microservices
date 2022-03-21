@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,32 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  //  @Override
-//  protected void configure(HttpSecurity http) throws Exception {
-//    http.sessionManagement()
-//        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//        .and()
-//        .authorizeRequests()
-//        .antMatchers("/resources/**").permitAll()
-//        .antMatchers("/oauth/token", "/login", "/logout", "/api/user").permitAll()
-//        .anyRequest().authenticated()
-//        .and()
-//        .formLogin()
-//        .loginPage("/login")
-//        .failureUrl("/login?error=true")
-//        .permitAll()
-//        .and()
-//        .logout()
-//        .invalidateHttpSession(true)
-//        .clearAuthentication(true)
-//        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//        .logoutSuccessHandler(new RedirectLogoutSuccessHandler())
-//        .deleteCookies("auth_code", "JSESSIONID")
-//        .permitAll()
-//        .and().httpBasic();
-//    http.anonymous().and().cors().and().csrf().disable();
-//  }
-//
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -64,7 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .anyRequest().authenticated()
         .and()
-        .formLogin().permitAll();
+        .formLogin().permitAll()
+        .and()
+        .logout()
+        .invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessHandler(new RedirectLogoutSuccessHandler())
+        .deleteCookies("auth_code", "JSESSIONID")
+        .permitAll();
   }
 
   @Override

@@ -61,7 +61,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .tokenKeyAccess("permitAll()")
         .allowFormAuthenticationForClients()
         .passwordEncoder(passwordEncoder());
-    security.allowFormAuthenticationForClients();
   }
 
   @Override

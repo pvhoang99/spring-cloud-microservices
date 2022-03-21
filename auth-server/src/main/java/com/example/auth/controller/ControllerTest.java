@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ControllerTest {
 
   @GetMapping(value = "/hello")
-//  @PreAuthorize("hasRole('USER')")
   public ResponseEntity<?> hello() {
     Map map = new HashMap();
     map.put("key", "hoang");
