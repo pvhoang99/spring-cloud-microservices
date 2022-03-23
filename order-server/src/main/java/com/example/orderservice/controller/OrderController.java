@@ -1,21 +1,10 @@
 package com.example.orderservice.controller;
 
 import com.example.orderservice.client.AuthServiceFeignClient;
-import com.example.orderservice.entity.Order;
-import com.example.orderservice.entity.OrderRepo;
 import com.example.orderservice.service.OrderStateService;
-import com.example.orderservice.state.OrderStatus;
-import com.example.orderservice.state.OrderStatusChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -70,6 +59,13 @@ public class OrderController {
   public Object test() {
     System.out.println("a");
     return authServiceFeignClient.testAPI();
+  }
+
+  @GetMapping("/security")
+  public void security() {
+    System.out.println("a");
+    Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
   }
 
 }

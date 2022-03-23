@@ -1,4 +1,4 @@
-package com.example.auth.configSecurity.client;
+package com.example.auth.config.security.client;
 
 import com.example.auth.dao.model.OauthClientDetailEntity;
 import com.google.common.collect.Sets;

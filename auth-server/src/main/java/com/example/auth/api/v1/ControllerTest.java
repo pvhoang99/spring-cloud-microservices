@@ -1,4 +1,4 @@
-package com.example.auth.controller;
+package com.example.auth.api.v1;
 
 import com.example.auth.dao.repository.UserRepository;
 import java.security.Principal;

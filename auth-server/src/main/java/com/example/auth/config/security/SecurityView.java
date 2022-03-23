@@ -1,6 +1,6 @@
-package com.example.auth.configSecurity.security;
+package com.example.auth.config.security;
 
-import com.example.auth.configSecurity.security.Views.Role;
+import com.example.auth.config.security.Views.Role;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +11,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJacksonResponseBodyAdvice;
 
 //@RestControllerAdvice(basePackages = {"com.example.auth.dao"})

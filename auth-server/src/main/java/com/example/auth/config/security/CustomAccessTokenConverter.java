@@ -1,4 +1,4 @@
-package com.example.auth.configSecurity.security;
+package com.example.auth.config.security;
 
 import com.example.auth.dao.model.UserEntity;
 import com.example.auth.dao.repository.UserRepository;

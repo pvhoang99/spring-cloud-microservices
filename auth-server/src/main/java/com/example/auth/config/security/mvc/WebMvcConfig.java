@@ -1,4 +1,4 @@
-package com.example.auth.configSecurity.mvc;
+package com.example.auth.config.security.mvc;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

@@ -1,8 +1,6 @@
 package com.example.auth.dao.model;
 
-import com.example.auth.configSecurity.security.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -23,7 +21,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "role")
-@JsonView(Views.Admin.class)
+//@JsonView(Views.Admin.class)
 public class RoleEntity implements Serializable {
 
   @Id

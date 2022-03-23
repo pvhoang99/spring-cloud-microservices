@@ -1,4 +1,4 @@
-package com.example.auth.configSecurity.security;
+package com.example.auth.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

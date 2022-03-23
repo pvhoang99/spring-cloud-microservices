@@ -1,4 +1,4 @@
-package com.example.auth.configSecurity.security;
+package com.example.auth.config.security;
 
 import java.util.HashMap;
 import java.util.Map;
