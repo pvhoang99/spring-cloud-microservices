@@ -1,25 +1,26 @@
 spring:
   profiles:
-    active: development
+    active: default
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/time_store_cart?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/chat-service?createDatabaseIfNotExist=true
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
 security:
   oauth2:
     resource:
-      token-info-uri: http://localhost:8082/oauth/check_token
-      user-info-uri: http://localhost:8082/api/user
+      token-info-uri: http://localhost:8082/auth-server/oauth/check_token
+      user-info-uri: http://localhost:8082/auth-server/api/user
+      id: chat-server
     client:
       client-id: hoang
       client-secret: 1
-      access-token-uri: http://localhost:8082/oauth/token
+      access-token-uri: http://localhost:8082/auth-server/oauth/token
       scope: server
 server:
   port: 8085
