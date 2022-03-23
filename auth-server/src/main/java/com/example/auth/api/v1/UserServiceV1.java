@@ -18,8 +18,17 @@ public class UserServiceV1 {
   @Cacheable(value = "user", key = "#username")
   public Optional<UserEntity> getUserByUsername(String username) {
 
-
     return userRepository.findByUsername(username);
+  }
+
+  public UserEntity saveUser(UserEntity userEntity) {
+
+    if (userRepository.existsByUsername(userEntity.getUsername())) {
+      throw new RuntimeException("user is exist with: " + userEntity.getUsername());
+    }
+
+    return userRepository.save(userEntity);
+
   }
 
 }

@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: default
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/chat-service?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8082/auth-server/oauth/check_token
+      user-info-uri: http://localhost:8082/auth-server/api/user
+      id: chat-server
+    client:
+      client-id: hoang
+      client-secret: 1
+      access-token-uri: http://localhost:8082/auth-server/oauth/token
+      scope: server
+server:
+  port: 8085
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+

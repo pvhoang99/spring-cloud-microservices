@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,7 +45,6 @@ public class UserEntity implements Serializable {
   private Boolean isActive = true;
 
   @Column(name = "email")
-  @Email
 //  @JsonView(Views.User.class)
   private String email;
 
