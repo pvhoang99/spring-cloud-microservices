@@ -1,25 +1,29 @@
 package com.example.auth.config.security;
 
+import com.example.common.config.CommonResult;
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 public class RedirectLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
+  private final Gson gson = new Gson();
+
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {
-
-    String uri = request.getParameter("redirect_uri");
-
-    if (StringUtils.isNotEmpty(uri)) {
-      getRedirectStrategy().sendRedirect(request, response, uri);
-      response.setStatus(HttpServletResponse.SC_OK);
-    }
+    CommonResult<?> commonResult = CommonResult.success("Logout success!");
+    String result = gson.toJson(commonResult);
+    PrintWriter out = response.getWriter();
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    out.print(result);
+    out.flush();
 
   }
 }

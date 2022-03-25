@@ -32,10 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http
+    http.anonymous()
+        .and()
+        .csrf().disable().cors().disable()
         .antMatcher("/**")
         .authorizeRequests()
-        .antMatchers("/login**", "/oauth/token")
+        .antMatchers("/login**", "/oauth/token", "/logout**")
         .permitAll()
         .and()
         .authorizeRequests()
