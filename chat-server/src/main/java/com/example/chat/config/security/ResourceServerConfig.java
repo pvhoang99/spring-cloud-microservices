@@ -1,16 +1,13 @@
-package com.example.shoppingcartservice.config;
+package com.example.chat.config.security;
 
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -74,7 +71,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers(HttpMethod.POST, "/").permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
-        .antMatchers("/test").permitAll()
+        .antMatchers("/hello").permitAll()
         .anyRequest().authenticated();
   }
 
@@ -84,4 +81,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);
   }
+
 }

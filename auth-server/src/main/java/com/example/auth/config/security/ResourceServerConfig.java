@@ -34,7 +34,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers("/api/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/assets/**", "/login").permitAll()
+        .antMatchers("/assets/**", "/login","/api/v1/user/revoke").permitAll()
         .anyRequest().authenticated();
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }

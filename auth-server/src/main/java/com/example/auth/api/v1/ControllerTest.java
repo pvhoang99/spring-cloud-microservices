@@ -4,10 +4,12 @@ import com.example.auth.dao.repository.UserRepository;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +24,6 @@ public class ControllerTest {
     map.put("key", "hoang");
     return ResponseEntity.ok(map);
   }
-
-//  @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public ResponseEntity<List<UserEntity>> getAllUser() {
-//    return ResponseEntity.ok(userRepository.findAll());
-//  }
 
   @Autowired
   private UserDetailsService userDetailsService;

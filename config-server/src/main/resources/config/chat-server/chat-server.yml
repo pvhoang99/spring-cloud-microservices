@@ -1,13 +1,11 @@
 spring:
-  profiles:
-    active: default
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/chat-service?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/chat_server?createDatabaseIfNotExist=true
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -21,7 +19,7 @@ security:
       client-id: hoang
       client-secret: 1
       access-token-uri: http://localhost:8082/auth-server/oauth/token
-      scope: server
+      scope: read
 server:
   port: 8085
 
