@@ -24,6 +24,11 @@ import lombok.ToString;
 //@JsonView(Views.Admin.class)
 public class RoleEntity implements Serializable {
 
+  public RoleEntity(String value, String name) {
+    this.value = value;
+    this.name = name;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;

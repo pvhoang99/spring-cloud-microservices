@@ -47,6 +47,6 @@ public class OauthClientDetailEntity implements Serializable {
   @Column(name = "additional_information")
   private String additionalInformation;
 
-  private String autoapprove;
+  private boolean autoApprove = true;
 
 }

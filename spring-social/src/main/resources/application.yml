@@ -38,7 +38,7 @@ spring:
                 - user:email
                 - read:user
             hoang:
-              clientId: hoang1
+              clientId: hoang
               clientSecret: 1
               authorizationGrantType: authorization_code
               redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"

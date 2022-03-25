@@ -108,7 +108,7 @@ public class CustomClientDetail implements ClientDetails {
 
   @Override
   public boolean isAutoApprove(String scope) {
-    return true;
+    return client.isAutoApprove();
   }
 
   @Override
