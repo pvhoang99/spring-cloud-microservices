@@ -25,7 +25,7 @@ public class UserControllerV1 {
   private final UserServiceV1 userService;
 
   @RequestMapping(path = "/me", method = RequestMethod.GET)
-  @PreAuthorize("#oauth2.hasScope('server')")
+  @PreAuthorize("hasRole('USER')")
   public ResponseEntity<UserEntity> me(Principal principal) {
     Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     UserEntity user = null;

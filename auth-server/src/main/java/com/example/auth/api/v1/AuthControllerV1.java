@@ -1,5 +1,6 @@
 package com.example.auth.api.v1;
 
+import com.example.common.config.CommonResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
@@ -16,7 +17,7 @@ public class AuthControllerV1 {
   private final ConsumerTokenServices tokenServices;
 
   @RequestMapping(value = "/logout", method = RequestMethod.POST)
-  public ResponseEntity<?> revokeToken(@RequestParam(value = "token") String token) {
-    return ResponseEntity.ok(tokenServices.revokeToken(token));
+  public ResponseEntity<CommonResult<?>> revokeToken(@RequestParam(value = "token") String token) {
+    return ResponseEntity.ok(CommonResult.success(tokenServices.revokeToken(token)));
   }
 }
