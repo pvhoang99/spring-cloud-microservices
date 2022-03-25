@@ -83,7 +83,12 @@ public class CustomClientDetail implements ClientDetails {
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
-    return Sets.newHashSet(client.getWebServerRedirectUri());
+    String listRegisters = client.getWebServerRedirectUri();
+    if (listRegisters != null) {
+      String[] registers = listRegisters.split(",");
+      return Sets.newHashSet(registers);
+    }
+    return null;
   }
 
   @Override

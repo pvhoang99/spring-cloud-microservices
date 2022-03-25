@@ -37,8 +37,8 @@ public class OauthClientDetailEntity implements Serializable {
   private String webServerRedirectUri;
 
   private String authorities;
-  @Column(name = "access_token_validity")
 
+  @Column(name = "access_token_validity")
   private Integer accessTokenValidity;
 
   @Column(name = "refresh_token_validity")

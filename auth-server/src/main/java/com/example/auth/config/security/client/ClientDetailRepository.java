@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ClientDetailRepository extends JpaRepository<OauthClientDetailEntity, String> {
 
   Optional<OauthClientDetailEntity> findByClientId(String clientId);
+
+  boolean existsByClientId(String clientId);
 }
