@@ -31,8 +31,6 @@ public class CustomClientDetail implements ClientDetails {
 
       String[] resourceIds = resourceList.split(",");
 
-      Sets.newHashSet(resourceIds);
-
       return Sets.newHashSet(resourceIds);
     }
     return null;

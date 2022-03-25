@@ -26,7 +26,7 @@ public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
           .getAuthentication()
           .getAuthorities();
 
-      List<Class> jsonViews = authorities.stream()
+      List<Class<?>> jsonViews = authorities.stream()
           .map(GrantedAuthority::getAuthority).map(Role::valueOf)
           .map(Views.MAPPING::get)
           .collect(Collectors.toList());
