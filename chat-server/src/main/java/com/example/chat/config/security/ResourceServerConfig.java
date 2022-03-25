@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.client.token.grant.client.ClientCrede
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.web.client.RestTemplate;
 
@@ -68,11 +70,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
+    http.requestMatchers()
+        .antMatchers("/api/v1/**")
+        .and()
+        .authorizeRequests()
         .antMatchers(HttpMethod.POST, "/").permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
-        .antMatchers("/hello").permitAll()
-        .anyRequest().authenticated();
+        .antMatchers("/api/v1/login").permitAll()
+        .anyRequest().authenticated()
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
+        .accessDeniedHandler(new OAuth2AccessDeniedHandler());
   }
 
   @Override

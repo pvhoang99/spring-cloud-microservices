@@ -11,6 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -34,8 +36,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers("/api/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/assets/**", "/login","/api/v1/user/revoke").permitAll()
-        .anyRequest().authenticated();
+        .antMatchers("/assets/**", "/login", "/api/v1/user/revoke").permitAll()
+        .expressionHandler(webExpressionHandler())
+        .anyRequest().authenticated()
+        .and()
+        .exceptionHandling()
+        .accessDeniedHandler(new OAuth2AccessDeniedHandler())
+        .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint());
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
 
