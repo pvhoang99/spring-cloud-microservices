@@ -1,30 +1,26 @@
 package com.example.auth.config.security.mvc;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig implements WebMvcConfigurer {
+
+  private final long MAX_AGE_SECS = 3600;
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
 //    registry.addViewController("/login").setViewName("login");
   }
 
-  @Override
-  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-    super.configureContentNegotiation(configurer);
-    configurer.defaultContentType(MediaType.APPLICATION_JSON);
-  }
-
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
+        .allowedOrigins("*")
+        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        .allowedHeaders("*")
+        .allowCredentials(true)
+        .maxAge(MAX_AGE_SECS);
   }
 }
