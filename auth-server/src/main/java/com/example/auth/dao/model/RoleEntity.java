@@ -3,6 +3,8 @@ package com.example.auth.dao.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,14 +32,15 @@ public class RoleEntity implements Serializable {
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
 
   private String value;
 
   private String name;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "roleEntity")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "roleEntity", cascade = CascadeType.ALL)
   @JsonIgnore
   private Set<UserEntity> userEntities;
 

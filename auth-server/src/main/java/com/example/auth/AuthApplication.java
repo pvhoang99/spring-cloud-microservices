@@ -4,6 +4,7 @@ import com.example.auth.config.security.client.ClientDetailRepository;
 import com.example.auth.dao.model.OauthClientDetailEntity;
 import com.example.auth.dao.model.RoleEntity;
 import com.example.auth.dao.model.UserEntity;
+import com.example.auth.dao.repository.RoleRepository;
 import com.example.auth.dao.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +24,8 @@ public class AuthApplication {
 
   @Bean
   public CommandLineRunner init(ClientDetailRepository oauthClientDetailRepository,
-      UserRepository userRepository) {
+      UserRepository userRepository,
+      RoleRepository roleRepository) {
     return args -> {
       if (!oauthClientDetailRepository.existsByClientId("hoang")) {
         OauthClientDetailEntity clientDetailEntity = new OauthClientDetailEntity();
@@ -41,11 +43,13 @@ public class AuthApplication {
       if (!userRepository.existsByUsername("hoangpv")) {
         RoleEntity roleEntity = new RoleEntity("USER", "User");
         UserEntity userEntity = new UserEntity();
+        roleEntity = roleRepository.save(roleEntity);
         userEntity.setFullName("Phạm Việt Hoàng");
         userEntity.setIsActive(true);
         userEntity.setPassword("1");
+        userEntity.setEmail("phamviethoang1418@gmail.com");
         userEntity.setUsername("hoangpv");
-        userEntity.setRoleEntity(roleEntity);
+        userEntity.setRoleId(roleEntity.getId());
         userRepository.save(userEntity);
       }
     };

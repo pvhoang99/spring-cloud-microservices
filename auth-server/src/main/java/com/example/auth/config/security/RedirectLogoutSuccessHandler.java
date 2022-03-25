@@ -17,7 +17,7 @@ public class RedirectLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {
-    CommonResult<?> commonResult = CommonResult.success("Logout success!");
+    CommonResult<?> commonResult = CommonResult.success("Logout success!d");
     String result = gson.toJson(commonResult);
     PrintWriter out = response.getWriter();
     response.setContentType("application/json");
