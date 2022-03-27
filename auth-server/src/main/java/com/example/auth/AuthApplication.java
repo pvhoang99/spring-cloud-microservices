@@ -37,7 +37,7 @@ public class AuthApplication {
         clientDetailEntity.setResourceIds("hoang,auth-server,order-server,chat-server");
         clientDetailEntity.setScope("read,write,server");
         clientDetailEntity.setWebServerRedirectUri(
-            "http://localhost:8080/oauth2/callback/hoang,http://localhost:3000");
+            "http://localhost:8080/oauth2/callback/hoang,http://localhost:3000,http://localhost:3000/sso");
         oauthClientDetailRepository.save(clientDetailEntity);
       }
       if (!userRepository.existsByUsername("hoangpv")) {

@@ -2,6 +2,7 @@ package com.example.chat.api.v1;
 
 import com.example.chat.client.AuthServiceFeignClient;
 import com.example.chat.dto.LoginByCodeDTO;
+import com.example.chat.dto.LoginByUsernameAndPasswordDTO;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,17 @@ public class AuthServiceV1 {
 
     return authServiceFeignClient.login(parameters);
 
+  }
+
+  public Map<String, Object> loginByUsernameAndPassword(LoginByUsernameAndPasswordDTO loginDTO) {
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("client_id", "hoang");
+    parameters.put("client_secret", "1");
+    parameters.put("grant_type", "password");
+    parameters.put("username", loginDTO.getUsername());
+    parameters.put("password", loginDTO.getPassword());
+    return authServiceFeignClient.login(parameters);
   }
 
 }

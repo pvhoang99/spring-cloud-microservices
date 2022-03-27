@@ -1,6 +1,5 @@
 package com.example.chat.config.socket;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -15,8 +14,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry.addEndpoint("/ws")
         .setAllowedOrigins("*")
-        .withSockJS()
-        .setInterceptors(handshakeInterceptor());
+        .withSockJS();
   }
 
   @Override
@@ -24,11 +22,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registry.setApplicationDestinationPrefixes("/app");
     registry.setUserDestinationPrefix("/user");
     registry.enableSimpleBroker("/broker");
-  }
-
-  @Bean
-  public HttpHandshakeInterceptor handshakeInterceptor() {
-    return new HttpHandshakeInterceptor();
   }
 
 }

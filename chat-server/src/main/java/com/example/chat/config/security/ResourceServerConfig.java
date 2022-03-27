@@ -76,7 +76,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, "/").permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
-        .antMatchers("/api/v1/login").permitAll()
+        .antMatchers("/api/v1/login", "/ws").permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling()
@@ -90,5 +90,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);
   }
+
+
 
 }
