@@ -1,4 +1,4 @@
-package com.example.chat.api.v1;
+package com.example.chat.service;
 
 import com.example.chat.client.AuthServiceFeignClient;
 import com.example.chat.dto.LoginByCodeDTO;

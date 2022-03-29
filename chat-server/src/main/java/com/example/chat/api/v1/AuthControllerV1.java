@@ -1,6 +1,7 @@
 package com.example.chat.api.v1;
 
 import com.example.chat.dto.LoginByCodeDTO;
+import com.example.chat.service.AuthServiceV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -70,13 +70,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.requestMatchers()
-        .antMatchers("/api/v1/**")
-        .and()
+    http
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, "/").permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
-        .antMatchers("/api/v1/login", "/ws").permitAll()
+        .antMatchers("/api/v1/login", "/ws", "/api/v1/user", "/api/v1/user/sync", "/api/v1/**")
+        .permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling()
@@ -90,7 +89,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);
   }
-
 
 
 }

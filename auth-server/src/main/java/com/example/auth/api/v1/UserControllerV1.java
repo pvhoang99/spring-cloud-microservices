@@ -7,14 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,7 +25,6 @@ public class UserControllerV1 {
   @RequestMapping(path = "/me", method = RequestMethod.GET)
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<UserEntity> me(Principal principal) {
-    Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     UserEntity user = null;
     if (principal != null) {
       user = userService.getUserByUsername(principal.getName()).orElse(null);
@@ -41,5 +38,10 @@ public class UserControllerV1 {
   public ResponseEntity<UserEntity> register(@RequestBody UserEntity userEntity) {
 
     return ResponseEntity.ok(userService.saveUser(userEntity));
+  }
+
+  @GetMapping("/get-all")
+  public ResponseEntity<?> findAll() {
+    return ResponseEntity.ok(userService.findAll());
   }
 }

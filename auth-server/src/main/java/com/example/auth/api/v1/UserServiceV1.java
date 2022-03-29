@@ -3,6 +3,7 @@ package com.example.auth.api.v1;
 import com.example.auth.dao.model.UserEntity;
 import com.example.auth.dao.repository.UserRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,6 +30,10 @@ public class UserServiceV1 {
 
     return userRepository.save(userEntity);
 
+  }
+
+  public List<UserEntity> findAll() {
+    return userRepository.findAll();
   }
 
 }
