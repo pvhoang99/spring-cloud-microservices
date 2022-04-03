@@ -11,7 +11,6 @@ public class WebSocketConnectEventListener implements ApplicationListener<Sessio
 
   private final Logger logger = LoggerFactory.getLogger(WebSocketConnectEventListener.class);
 
-
   @Override
   public void onApplicationEvent(SessionConnectedEvent event) {
     logger.info("Socket connect");

@@ -2,6 +2,7 @@ package com.example.chat.config.socket;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -13,14 +14,14 @@ import org.springframework.messaging.support.ChannelInterceptorAdapter;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
   private final ResourceServerTokenServices resourceServerTokenServices;
 
@@ -51,6 +52,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         assert accessor != null;
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
           String accessToken = accessor.getFirstNativeHeader("Authorization");
+          if (StringUtils.startsWith(accessToken, "Bearer")) {
+            assert accessToken != null;
+            accessToken = accessToken.substring(7);
+          }
 
           Authentication authentication = resourceServerTokenServices
               .loadAuthentication(accessToken);

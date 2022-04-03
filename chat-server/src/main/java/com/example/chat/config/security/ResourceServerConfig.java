@@ -9,7 +9,6 @@ import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequest
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
@@ -72,10 +71,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/").permitAll()
-        .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
-        .antMatchers("/api/v1/login", "/ws", "/api/v1/user", "/api/v1/user/sync", "/api/v1/**")
+        .antMatchers("/api/v1/login", "/api/v1/user",
+            "/api/v1/user/sync", "/api/v1/**")
         .permitAll()
+        .antMatchers("/ws**", "/ws/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling()
