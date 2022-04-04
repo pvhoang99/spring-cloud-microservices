@@ -13,9 +13,12 @@
   <artifactId>gateway-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>gateway-server</name>
+  <packaging>jar</packaging>
   <description>Demo project for Spring Boot</description>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <spring-cloud.version>Finchley.SR2</spring-cloud.version>
   </properties>
@@ -77,6 +80,9 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <fork>true</fork>
+        </configuration>
       </plugin>
     </plugins>
   </build>

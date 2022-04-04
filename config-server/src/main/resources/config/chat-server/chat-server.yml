@@ -13,8 +13,6 @@ server:
   port: 8085
 
 eureka:
-  instance:
-    prefer-ip-address: true
   client:
     fetchRegistry: true
     service-url:

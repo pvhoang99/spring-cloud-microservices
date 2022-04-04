@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableFeignClients
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties
-@EnableAsync
 public class ChatServiceApplication extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
