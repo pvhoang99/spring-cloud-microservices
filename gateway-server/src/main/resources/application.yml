@@ -2,7 +2,6 @@ spring:
   cloud:
     gateway:
       globalcors:
-        add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
             allowedOrigins: "*"
@@ -10,10 +9,23 @@ spring:
             allowedMethods: "*"
       routes:
         - id: authModule
-          uri: lb://AUTH-SERVER
+          uri: lb://auth-server
           predicates:
             - Path=/auth-server/**
         - id: chatModule
-          uri: lb://CHAT-SERVER
+          uri: lb://chat-server
           predicates:
-            - Path=/chat-server/**
+            - Path=/chat-server/api/**
+        - id: chatModule
+          uri: lb://chat-server
+          predicates:
+            - Path=/chat-server/ws/info/**
+        - id: chatModule
+          uri: lb:ws://chat-server
+          predicates:
+            - Path=/chat-server/ws/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
