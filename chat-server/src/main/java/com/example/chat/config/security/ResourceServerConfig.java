@@ -1,5 +1,6 @@
 package com.example.chat.config.security;
 
+import com.google.common.collect.ImmutableList;
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -21,6 +22,9 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableResourceServer
@@ -80,6 +84,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .exceptionHandling()
         .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
         .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+    http.csrf().disable();
+    http.cors().configurationSource(corsConfigurationSource());
+    http.httpBasic().disable();
   }
 
   @Override
@@ -89,5 +96,21 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.stateless(true);
   }
 
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    final CorsConfiguration configuration = new CorsConfiguration();
+
+    configuration
+        .setAllowedOrigins(ImmutableList.of("*"));
+    configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
+    configuration.setAllowCredentials(true);
+    configuration
+        .setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+
+    return source;
+  }
 
 }

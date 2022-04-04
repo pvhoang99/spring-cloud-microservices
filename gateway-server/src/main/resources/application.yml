@@ -1,26 +1,20 @@
 spring:
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedHeaders: "*"
-            allowedMethods: "*"
       routes:
         - id: authModule
           uri: lb://auth-server
           predicates:
             - Path=/auth-server/**
-        - id: chatModule
+        - id: chatModule1
           uri: lb://chat-server
           predicates:
             - Path=/chat-server/api/**
-        - id: chatModule
+        - id: chatModule2
           uri: lb://chat-server
           predicates:
             - Path=/chat-server/ws/info/**
-        - id: chatModule
+        - id: chatModule3
           uri: lb:ws://chat-server
           predicates:
             - Path=/chat-server/ws/**
