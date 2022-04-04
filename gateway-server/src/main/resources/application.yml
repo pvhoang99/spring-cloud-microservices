@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        - id: authModule
+          uri: lb://AUTH-SERVER
+          predicates:
+            - Path=/auth-server/**
+        - id: chatModule
+          uri: lb://CHAT-SERVER
+          predicates:
+            - Path=/chat-server/**
