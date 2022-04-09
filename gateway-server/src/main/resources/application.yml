@@ -15,7 +15,7 @@ spring:
         - id: chatModule1
           uri: lb://chat-server
           predicates:
-            - Path=/chat-server/api/**
+            - Path=/chat-server/**
         - id: chatModule2
           uri: lb://chat-server
           predicates:

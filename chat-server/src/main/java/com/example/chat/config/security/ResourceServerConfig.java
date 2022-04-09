@@ -3,18 +3,21 @@ package com.example.chat.config.security;
 import com.google.common.collect.ImmutableList;
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -60,6 +63,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   }
 
   @Bean
+  public DefaultOAuth2UserService defaultOAuth2UserService() {
+    return new CustomOAuth2UserService();
+  }
+
+  @Bean
   @Primary
   public RemoteTokenServices remoteTokenServices() {
     RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
@@ -71,19 +79,48 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     return remoteTokenServices;
   }
 
+  @Bean
+  public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+    return new HttpCookieOAuth2AuthorizationRequestRepository();
+  }
+
+  @Bean
+  public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
+    return new OAuth2AuthenticationFailureHandler();
+  }
+
+  @Bean
+  public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+    return new OAuth2AuthenticationSuccessHandler();
+  }
+
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
         .antMatchers("/api/v1/login", "/api/v1/user",
-            "/api/v1/user/sync", "/api/v1/**")
+            "/api/v1/user/sync", "/api/v1/**", "/oauth2/**")
         .permitAll()
         .antMatchers("/ws**", "/ws/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling()
         .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
-        .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        .accessDeniedHandler(new OAuth2AccessDeniedHandler())
+        .and()
+        .oauth2Login()
+        .authorizationEndpoint()
+        .baseUri("/oauth2/authorize")
+        .authorizationRequestRepository(cookieAuthorizationRequestRepository())
+        .and()
+        .redirectionEndpoint()
+        .baseUri("/oauth2/callback/*")
+        .and()
+        .userInfoEndpoint()
+        .userService(defaultOAuth2UserService())
+        .and()
+        .successHandler(oAuth2AuthenticationSuccessHandler())
+        .failureHandler(oAuth2AuthenticationFailureHandler());
     http.csrf().disable();
     http.cors().configurationSource(corsConfigurationSource());
     http.httpBasic().disable();

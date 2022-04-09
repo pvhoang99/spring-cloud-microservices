@@ -23,7 +23,7 @@ public class UserControllerV1 {
   private final UserServiceV1 userService;
 
   @RequestMapping(path = "/me", method = RequestMethod.GET)
-  @PreAuthorize("hasRole('USER')")
+  @PreAuthorize("hasRole('USER') OR #oauth2.hasScope('server')")
   public ResponseEntity<UserEntity> me(Principal principal) {
     UserEntity user = null;
     if (principal != null) {
