@@ -2,3 +2,6 @@ spring:
   cache:
     redis:
       time-to-live: 1m
+eureka:
+  instance:
+    prefer-ip-address: true
