@@ -24,8 +24,7 @@ public class AuthApplication {
 
   @Bean
   public CommandLineRunner init(ClientDetailRepository oauthClientDetailRepository,
-      UserRepository userRepository,
-      RoleRepository roleRepository) {
+      UserRepository userRepository, RoleRepository roleRepository) {
     return args -> {
       if (!oauthClientDetailRepository.existsByClientId("hoang")) {
         OauthClientDetailEntity clientDetailEntity = new OauthClientDetailEntity();
@@ -37,7 +36,7 @@ public class AuthApplication {
         clientDetailEntity.setResourceIds("hoang,auth-server,order-server,chat-server");
         clientDetailEntity.setScope("read,write,server");
         clientDetailEntity.setWebServerRedirectUri(
-            "http://localhost:8080/oauth2/callback/hoang,http://localhost:3000,http://localhost:3000/sso");
+            "http://192.168.238.1:8085/chat-server/oauth2/callback/hoang,http://localhost:3000/sso");
         oauthClientDetailRepository.save(clientDetailEntity);
       }
       if (!userRepository.existsByUsername("hoangpv")) {
