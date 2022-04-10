@@ -8,6 +8,8 @@ import com.example.chat.config.security.user.OAuth2UserInfoFactory.AuthProvider;
 import com.example.chat.config.security.user.UserPrincipal;
 import com.example.chat.dao.entity.UserEntity;
 import com.example.chat.dao.repositoty.UserRepository;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -42,7 +44,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory
         .getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(),
             oAuth2User.getAttributes());
-    if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
+    if (StringUtils.isEmpty(oAuth2UserInfo.getUsername())) {
       throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
     }
 
@@ -60,8 +62,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     } else {
       user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
     }
+    Map<String, Object> attributes = new HashMap<>(oAuth2User.getAttributes());
+    attributes.put("token", oAuth2UserRequest.getAccessToken().getTokenValue());
 
-    return UserPrincipal.create(user, oAuth2User.getAttributes());
+    return UserPrincipal.create(user, attributes);
   }
 
   private UserEntity registerNewUser(OAuth2UserRequest oAuth2UserRequest,
@@ -69,6 +73,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     UserEntity user = new UserEntity();
     user.setProvider(
         AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
+    user.setUsername(oAuth2UserInfo.getUsername());
     user.setProviderId(oAuth2UserInfo.getId());
     user.setFullName(oAuth2UserInfo.getName());
     user.setEmail(oAuth2UserInfo.getEmail());

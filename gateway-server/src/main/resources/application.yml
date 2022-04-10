@@ -29,3 +29,8 @@ management:
     web:
       exposure:
         include: refresh
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true

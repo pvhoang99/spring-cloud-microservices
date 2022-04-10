@@ -12,7 +12,7 @@ spring:
             clientId: hoang
             clientSecret: 1
             authorizationGrantType: authorization_code
-            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - read
               - write
@@ -20,7 +20,12 @@ spring:
             clientName: chat-server
         provider:
           hoang:
-            authorizationUri: http://localhost:8000/auth-server/oauth/authorize
-            tokenUri: http://localhost:8000/auth-server/oauth/token
-            userInfoUri: http://localhost:8000/auth-server/api/user/me
-            userNameAttribute: name
+            authorizationUri: http://192.168.1.49:8000/auth-server/oauth/authorize
+            tokenUri: http://192.168.1.49:8000/auth-server/oauth/token
+            userInfoUri: http://192.168.1.49:8000/auth-server/api/v1/user/me
+            userNameAttribute: username
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true

@@ -5,3 +5,5 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true
+  client:
+    fetch-registry: true

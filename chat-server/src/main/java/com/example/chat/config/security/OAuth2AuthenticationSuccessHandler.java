@@ -1,6 +1,7 @@
 package com.example.chat.config.security;
 
 import com.example.chat.config.security.exception.BadRequestException;
+import com.example.chat.config.security.user.UserPrincipal;
 import com.example.chat.util.CookieUtils;
 import java.io.IOException;
 import java.util.Optional;
@@ -39,15 +40,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
         .map(Cookie::getValue);
 
-    if (redirectUri.isPresent()) {
+    if (!redirectUri.isPresent()) {
       throw new BadRequestException(
           "Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
     }
 
     String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
+    UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+    String token = userPrincipal.getAttribute("token");
     return UriComponentsBuilder.fromUriString(targetUrl)
-        .queryParam("token", "a")
+        .queryParam("token", token)
         .build().toUriString();
   }
 

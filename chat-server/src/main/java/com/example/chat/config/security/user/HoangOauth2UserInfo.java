@@ -10,7 +10,7 @@ public class HoangOauth2UserInfo extends OAuth2UserInfo {
 
   @Override
   public String getId() {
-    return (String) attributes.get("userId");
+    return String.valueOf(attributes.get("userId"));
   }
 
   @Override
