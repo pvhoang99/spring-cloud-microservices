@@ -48,7 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .exceptionHandling()
         .accessDeniedHandler(new OAuth2AccessDeniedHandler())
         .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint());
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
   }
 
   @Bean

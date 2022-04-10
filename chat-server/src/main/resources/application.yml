@@ -3,3 +3,29 @@ management:
     web:
       exposure:
         include: refresh
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          hoang:
+            clientId: hoang
+            clientSecret: 1
+            authorizationGrantType: authorization_code
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - read
+              - write
+              - server
+            clientName: chat-server
+        provider:
+          hoang:
+            authorizationUri: http://192.168.238.1:8000/auth-server/oauth/authorize
+            tokenUri: http://192.168.238.1:8000/auth-server/oauth/token
+            userInfoUri: http://192.168.238.1:8000/auth-server/api/v1/user/me
+            userNameAttribute: username
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true

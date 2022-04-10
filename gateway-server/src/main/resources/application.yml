@@ -15,7 +15,7 @@ spring:
         - id: chatModule1
           uri: lb://chat-server
           predicates:
-            - Path=/chat-server/api/**
+            - Path=/chat-server/**
         - id: chatModule2
           uri: lb://chat-server
           predicates:
@@ -29,3 +29,8 @@ management:
     web:
       exposure:
         include: refresh
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true

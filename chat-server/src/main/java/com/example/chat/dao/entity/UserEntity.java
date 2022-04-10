@@ -1,5 +1,6 @@
 package com.example.chat.dao.entity;
 
+import com.example.chat.config.security.user.OAuth2UserInfoFactory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,13 @@ public class UserEntity {
   private String fullName;
 
   private String email;
+
+  private String token;
+
+  private OAuth2UserInfoFactory.AuthProvider provider;
+
+  private String providerId;
+
+  private String imageUrl;
 
 }

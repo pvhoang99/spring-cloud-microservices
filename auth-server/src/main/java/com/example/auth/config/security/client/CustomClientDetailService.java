@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CustomClientDetailService implements ClientDetailsService {
 
-  private ClientDetailRepository clientDetailRepository;
+  private final ClientDetailRepository clientDetailRepository;
 
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
