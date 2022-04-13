@@ -9,7 +9,7 @@ import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
-@NodeEntity(value = "user")
+@NodeEntity(value = "USER")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +19,8 @@ public class UserEntity {
   @Id
   @GeneratedValue
   private Long id;
+
+  private Long userId;
 
   private String username;
 
@@ -33,5 +35,4 @@ public class UserEntity {
   private String providerId;
 
   private String imageUrl;
-
 }

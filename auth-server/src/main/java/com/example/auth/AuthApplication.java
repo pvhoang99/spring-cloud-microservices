@@ -10,11 +10,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
-@EnableEurekaClient
+@SpringCloudApplication
 @EnableCaching
 public class AuthApplication {
 
@@ -36,7 +36,7 @@ public class AuthApplication {
         clientDetailEntity.setResourceIds("hoang,auth-server,order-server,chat-server");
         clientDetailEntity.setScope("read,write,server");
         clientDetailEntity.setWebServerRedirectUri(
-            "http://192.168.238.1:8085/chat-server/oauth2/callback/hoang,http://localhost:3000/sso");
+            "http://192.168.238.1:8085/chat-server/oauth2/callback/hoang,http://localhost:3000/sso,http://localhost:8085/chat-server/oauth2/callback/hoang");
         oauthClientDetailRepository.save(clientDetailEntity);
       }
       if (!userRepository.existsByUsername("hoangpv")) {

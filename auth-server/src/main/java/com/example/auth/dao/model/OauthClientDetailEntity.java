@@ -33,7 +33,7 @@ public class OauthClientDetailEntity implements Serializable {
   @Column(name = "authorized_grant_types")
   private String authorizedGrantTypes;
 
-  @Column(name = "web_server_redirect_uri")
+  @Column(name = "web_server_redirect_uri", length = 1000)
   private String webServerRedirectUri;
 
   private String authorities;

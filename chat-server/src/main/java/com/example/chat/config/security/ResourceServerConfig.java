@@ -2,6 +2,7 @@ package com.example.chat.config.security;
 
 import com.google.common.collect.ImmutableList;
 import feign.RequestInterceptor;
+import javax.servlet.Filter;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -96,8 +97,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/api/v1/login", "/api/v1/user",
-            "/api/v1/user/sync", "/api/v1/**", "/oauth2/**")
+        .antMatchers("/api/v1/login",
+            "/api/v1/user/sync", "/oauth2/**")
         .permitAll()
         .antMatchers("/ws**", "/ws/**").permitAll()
         .anyRequest().authenticated()

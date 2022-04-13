@@ -8,7 +8,11 @@ import com.example.chat.dao.repositoty.RoomRepository;
 import com.example.chat.dao.repositoty.UserRepository;
 import com.example.chat.type.ChatType;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,12 @@ public class ChatServiceV1 {
   private final RoomRepository roomRepository;
 
   private final UserServiceV1 userServiceV1;
+
+  private final MessageServiceV1 messageServiceV1;
+
+  private final RoomServiceV1 roomServiceV1;
+
+  private final Executor executor;
 
   public MessageEntity chat(MessageEntity messageEntity) {
 
@@ -64,15 +74,30 @@ public class ChatServiceV1 {
   }
 
   private void sendPrivateMessage(MessageEntity messageEntity) {
-    UserEntity to = userServiceV1.findById(messageEntity.getToUser());
+    UserEntity to = userServiceV1.findByUserId(messageEntity.getToUser());
+    UserEntity from = userServiceV1.findByUserId(messageEntity.getFromUser());
+    messageEntity.setUserSend(from);
+    messageEntity.setUserReceive(to);
+    messageServiceV1.save(messageEntity);
 
-    webSocketMessagingTemplate
-        .convertAndSendToUser(to.getUsername(), "/user/queue", messageEntity.getText());
+    webSocketMessagingTemplate.convertAndSendToUser(to.getUsername(), "/user/queue",
+        messageEntity.getText());
   }
 
   private void sendPublicMessage(MessageEntity messageEntity) {
-    webSocketMessagingTemplate
-        .convertAndSend("/topic", messageEntity);
+
+    RoomEntity roomEntity = roomServiceV1.findById(messageEntity.getToGroup());
+
+    List<UserEntity> listMember = roomEntity.getMembers();
+
+    listMember.parallelStream().forEach(userEntity -> CompletableFuture.runAsync(
+        () -> webSocketMessagingTemplate.convertAndSendToUser(userEntity.getUsername(),
+            "/user/queue",
+            messageEntity.getText()), executor));
+
+    messageEntity.setRoomEntity(roomEntity);
+
+    messageServiceV1.save(messageEntity);
   }
 
 }

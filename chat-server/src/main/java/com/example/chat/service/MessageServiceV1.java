@@ -15,4 +15,8 @@ public class MessageServiceV1 {
     return messageRepository.findById(id).orElse(null);
   }
 
+  public MessageEntity save(MessageEntity messageEntity) {
+    return messageRepository.save(messageEntity);
+  }
+
 }

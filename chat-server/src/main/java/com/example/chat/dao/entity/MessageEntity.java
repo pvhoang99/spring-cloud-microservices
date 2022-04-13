@@ -33,6 +33,9 @@ public class MessageEntity {
   private Long toUser;
 
   @Transient
+  private Long toGroup;
+
+  @Transient
   private ChatType chatType;
 
   @Relationship(type = "SEND", direction = Relationship.INCOMING)

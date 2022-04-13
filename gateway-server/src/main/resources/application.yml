@@ -24,6 +24,7 @@ spring:
           uri: lb:ws://chat-server
           predicates:
             - Path=/chat-server/ws/**
+      
 management:
   endpoints:
     web:
