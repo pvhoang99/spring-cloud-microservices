@@ -51,7 +51,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Autowired
   private DataSource dataSource;
 
-
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
     security
