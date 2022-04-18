@@ -5,6 +5,7 @@ import com.example.auth.dao.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAccessTokenConverter extends JwtAccessTokenConverter {
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   private UserRepository userRepository;
 
   @Override

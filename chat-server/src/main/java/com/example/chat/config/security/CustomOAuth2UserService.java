@@ -11,6 +11,7 @@ import com.example.chat.dao.repositoty.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -22,7 +23,7 @@ import org.springframework.util.StringUtils;
 
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   private UserRepository userRepository;
 
   @Override

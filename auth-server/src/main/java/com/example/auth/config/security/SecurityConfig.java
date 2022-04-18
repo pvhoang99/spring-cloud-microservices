@@ -1,5 +1,6 @@
 package com.example.auth.config.security;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -24,11 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   @Qualifier("customUserDetailsService")
   private UserDetailsService userDetailsService;
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   private PasswordEncoder passwordEncoder;
 
   @Override

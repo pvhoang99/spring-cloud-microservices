@@ -2,6 +2,7 @@ package com.example.auth.config.security;
 
 import java.security.KeyPair;
 import javax.sql.DataSource;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   @Qualifier("customClientDetailService")
   private ClientDetailsService clientDetailsService;
 
@@ -34,21 +35,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     return NoOpPasswordEncoder.getInstance();
   }
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   @Qualifier("customUserDetailsService")
   private UserDetailsService userDetailsService;
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   private AuthenticationManager authenticationManager;
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   private RedisConnectionFactory redisConnectionFactory;
 
-  @Autowired
+  @Setter(onMethod = @__({@Autowired}))
   private KeyUtil keyUtil;
 
-  @Autowired
-  private DataSource dataSource;
+//  @Setter(onMethod = @__({@Autowired}))
+//  private DataSource dataSource;
 
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -74,7 +75,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .userDetailsService(userDetailsService)
     ;
   }
-
 
   // Lưu token vào redis
   @Bean
