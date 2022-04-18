@@ -41,7 +41,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Autowired
   private AuthenticationManager authenticationManager;
 
-
   @Autowired
   private RedisConnectionFactory redisConnectionFactory;
 
@@ -54,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
     security
-        .checkTokenAccess("isAuthenticated()")
+        .checkTokenAccess("permitAll()")
         .tokenKeyAccess("permitAll()")
         .allowFormAuthenticationForClients()
         .passwordEncoder(passwordEncoder());

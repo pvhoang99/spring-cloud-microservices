@@ -11,7 +11,7 @@
   <groupId>service.discovery</groupId>
   <artifactId>eureka-service-discovery</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>eureka-service-discovery</name>
+  <name>discovery-server</name>
   <description>eureka-service-discovery project for Spring Boot</description>
 
   <properties>
