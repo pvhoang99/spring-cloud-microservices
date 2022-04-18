@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>service.discovery</groupId>
-  <artifactId>eureka-service-discovery</artifactId>
+  <artifactId>discovery-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>discovery-server</name>
   <description>eureka-service-discovery project for Spring Boot</description>
@@ -57,12 +57,14 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
 </project>

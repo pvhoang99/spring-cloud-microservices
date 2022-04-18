@@ -10,7 +10,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>oauth2</artifactId>
+  <artifactId>auth-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>auth-server</name>
   <description>Auth Server</description>
@@ -91,7 +91,6 @@
       <artifactId>json-smart</artifactId>
       <version>2.3</version>
     </dependency>
-
   </dependencies>
 
   <dependencyManagement>
@@ -108,12 +107,13 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
-
 </project>
