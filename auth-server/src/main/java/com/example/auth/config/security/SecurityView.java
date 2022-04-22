@@ -4,6 +4,7 @@ import com.example.auth.config.security.Views.Role;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.NonNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -17,8 +18,9 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJack
 public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
 
   @Override
-  protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType,
-      MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
+  protected void beforeBodyWriteInternal(@NonNull MappingJacksonValue bodyContainer,
+      @NonNull MediaType contentType, @NonNull MethodParameter returnType, @NonNull ServerHttpRequest request,
+      @NonNull ServerHttpResponse response) {
     if (SecurityContextHolder.getContext().getAuthentication() != null
         && SecurityContextHolder.getContext().getAuthentication().getAuthorities() != null) {
 

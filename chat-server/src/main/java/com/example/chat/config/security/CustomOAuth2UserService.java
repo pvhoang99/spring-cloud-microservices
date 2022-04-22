@@ -36,7 +36,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     } catch (AuthenticationException ex) {
       throw ex;
     } catch (Exception ex) {
-      // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
       throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
     }
   }
@@ -74,7 +73,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     UserEntity user = new UserEntity();
     user.setProvider(
         AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
-    user.setUserId(Long.getLong(oAuth2UserInfo.getId()));
+    user.setUserId(Long.parseLong(oAuth2UserInfo.getId()));
     user.setUsername(oAuth2UserInfo.getUsername());
     user.setProviderId(oAuth2UserInfo.getId());
     user.setFullName(oAuth2UserInfo.getName());

@@ -71,6 +71,11 @@ public class UserServiceV1 {
     return userRepository.findById(id).orElse(null);
   }
 
+  public UserEntity findByUsername(String username) {
+    return userRepository.findByUsername(username)
+        .orElseThrow(() -> new RuntimeException("Khong ton tai username: " + username));
+  }
+
   public UserEntity findByUserId(Long userId) {
     return userRepository.findByUserId(userId)
         .orElseThrow(() -> new RuntimeException("khong ton tai user with userId: " + userId));

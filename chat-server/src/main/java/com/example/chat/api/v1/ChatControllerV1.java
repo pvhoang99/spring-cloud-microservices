@@ -6,9 +6,11 @@ import com.example.chat.service.ChatServiceV1;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +41,12 @@ public class ChatControllerV1 {
   }
 
   @MessageMapping("/send.message")
-  public void sendMessage(@Payload MessageEntity messageEntity, Principal principal,
-      SimpMessageHeaderAccessor headerAccessor) {
-    chatServiceV1.sendMessage(messageEntity);
+  public void sendMessage(@Payload MessageEntity messageEntity, Principal principal) {
+    chatServiceV1.sendMessage(messageEntity, principal);
+  }
+
+  @SubscribeMapping("/old.message/{userId}")
+  public ResponseEntity<?> oldMessage(@DestinationVariable("userId") Long id) {
+    return ResponseEntity.ok(chatServiceV1.getOldMessage(id));
   }
 }

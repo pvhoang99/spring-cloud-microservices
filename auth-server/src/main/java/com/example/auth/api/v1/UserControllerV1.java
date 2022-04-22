@@ -3,7 +3,10 @@ package com.example.auth.api.v1;
 import com.example.auth.dao.model.UserEntity;
 import java.security.Principal;
 import java.util.Optional;
+import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +26,7 @@ public class UserControllerV1 {
   private final UserServiceV1 userService;
 
   @RequestMapping(path = "/me", method = RequestMethod.GET)
-  @PreAuthorize("hasRole('USER') OR #oauth2.hasScope('server')")
+  @PreAuthorize("hasRole('USER')")
   public ResponseEntity<UserEntity> me(Principal principal) {
     UserEntity user = null;
     if (principal != null) {
@@ -34,7 +37,7 @@ public class UserControllerV1 {
         .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
   }
 
-  @PostMapping()
+  @PostMapping
   public ResponseEntity<UserEntity> register(@RequestBody UserEntity userEntity) {
 
     return ResponseEntity.ok(userService.saveUser(userEntity));
@@ -43,5 +46,10 @@ public class UserControllerV1 {
   @GetMapping("/get-all")
   public ResponseEntity<?> findAll() {
     return ResponseEntity.ok(userService.findAll());
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<?> search(@PageableDefault Pageable pageable) {
+    return ResponseEntity.ok(userService.search(pageable));
   }
 }

@@ -1,6 +1,8 @@
 package com.example.chat.dao.entity;
 
 import com.example.chat.type.ChatType;
+import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +14,17 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.annotation.Transient;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @NodeEntity(value = "message")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageEntity {
+public class MessageEntity extends BaseEntity {
 
   @Id
   @GeneratedValue
@@ -49,6 +55,5 @@ public class MessageEntity {
   @Relationship(type = "HAVE", direction = Relationship.INCOMING)
   @EndNode
   private RoomEntity roomEntity;
-
 
 }

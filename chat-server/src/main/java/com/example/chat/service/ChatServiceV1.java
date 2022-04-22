@@ -7,12 +7,13 @@ import com.example.chat.dao.repositoty.MessageRepository;
 import com.example.chat.dao.repositoty.RoomRepository;
 import com.example.chat.dao.repositoty.UserRepository;
 import com.example.chat.type.ChatType;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.util.Streamable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -61,26 +62,25 @@ public class ChatServiceV1 {
 
   }
 
-  public void sendMessage(MessageEntity messageEntity) {
+  public void sendMessage(MessageEntity messageEntity, Principal principal) {
 
     if (ChatType.PRIVATE.equals(messageEntity.getChatType())) {
-      this.sendPrivateMessage(messageEntity);
+      this.sendPrivateMessage(messageEntity, principal);
     } else if (ChatType.PUBLIC.equals(messageEntity.getChatType())) {
       this.sendPublicMessage(messageEntity);
     } else {
       throw new RuntimeException();
     }
-
   }
 
-  private void sendPrivateMessage(MessageEntity messageEntity) {
+  private void sendPrivateMessage(MessageEntity messageEntity, Principal principal) {
     UserEntity to = userServiceV1.findByUserId(messageEntity.getToUser());
-    UserEntity from = userServiceV1.findByUserId(messageEntity.getFromUser());
+    UserEntity from = userServiceV1.findByUsername(principal.getName());
     messageEntity.setUserSend(from);
     messageEntity.setUserReceive(to);
     messageServiceV1.save(messageEntity);
 
-    webSocketMessagingTemplate.convertAndSendToUser(to.getUsername(), "/user/queue",
+    webSocketMessagingTemplate.convertAndSendToUser(to.getUsername(), "/queue/reply",
         messageEntity.getText());
   }
 
@@ -98,6 +98,14 @@ public class ChatServiceV1 {
     messageEntity.setRoomEntity(roomEntity);
 
     messageServiceV1.save(messageEntity);
+  }
+
+  public List<MessageEntity> getOldMessage(Long userId) {
+    UserEntity userEntity = this.userServiceV1.getCurrentUser();
+
+    Streamable<MessageEntity> oldMessages = messageRepository.oldMessage(userEntity.getUserId(),
+        userId);
+    return oldMessages.toList();
   }
 
 }

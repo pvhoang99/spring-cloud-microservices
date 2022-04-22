@@ -20,9 +20,9 @@ spring:
             clientName: chat-server
         provider:
           hoang:
-            authorizationUri: http://192.168.1.244:8000/auth-server/oauth/authorize
-            tokenUri: http://192.168.1.244:8000/auth-server/oauth/token
-            userInfoUri: http://192.168.1.244:8000/auth-server/api/v1/user/me
+            authorizationUri: http://172.17.0.1:8000/auth-server/oauth/authorize
+            tokenUri: http://172.17.0.1:8000/auth-server/oauth/token
+            userInfoUri: http://172.17.0.1:8000/auth-server/api/v1/user/me
             userNameAttribute: username
 eureka:
   instance:

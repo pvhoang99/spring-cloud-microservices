@@ -44,4 +44,5 @@ public interface UserRepository extends Neo4jRepository<UserEntity, Long> {
       "RETURN nonFriend as User, mutualFriends as Weight " +
       "ORDER BY Weight DESC")
   Streamable<RankedUser> recommendedFriends(Long userId);
+
 }

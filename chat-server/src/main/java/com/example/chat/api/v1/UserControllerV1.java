@@ -22,6 +22,15 @@ public class UserControllerV1 {
   private final AuthServiceFeignClient authServiceFeignClient;
   private final UserServiceV1 userServiceV1;
 
+  @GetMapping("/me")
+  public ResponseEntity<?> getCurrentUser() {
+    return ResponseEntity.ok(authServiceFeignClient.getCurrentUser());
+  }
+
+  @GetMapping("/all")
+  public ResponseEntity<?> getAllUserInAuth() {
+    return ResponseEntity.ok(authServiceFeignClient.getAll());
+  }
   @GetMapping
   public Object getAllUser() {
     return userServiceV1.getAll();

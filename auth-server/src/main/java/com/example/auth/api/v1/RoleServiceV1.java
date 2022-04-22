@@ -20,4 +20,9 @@ public class RoleServiceV1 {
   public RoleEntity save(RoleEntity roleEntity) {
     return roleRepository.save(roleEntity);
   }
+
+  public RoleEntity findByValue(String value) {
+    return roleRepository.findByValue(value)
+        .orElseThrow(() -> new RuntimeException("not exist roleEntity with value: " + value));
+  }
 }
