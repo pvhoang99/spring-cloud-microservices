@@ -25,7 +25,7 @@ public class HoangOauth2UserInfo extends OAuth2UserInfo {
 
   @Override
   public String getImageUrl() {
-    //Todo: cần thêm imageUrl
+    //  Todo: cần thêm imageUrl
     return null;
 
   }

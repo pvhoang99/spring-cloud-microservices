@@ -3,23 +3,28 @@ package com.example.chat.service;
 import com.example.chat.dao.entity.MessageEntity;
 import com.example.chat.dao.entity.RoomEntity;
 import com.example.chat.dao.entity.UserEntity;
-import com.example.chat.dao.repositoty.MessageRepository;
-import com.example.chat.dao.repositoty.RoomRepository;
-import com.example.chat.dao.repositoty.UserRepository;
+import com.example.chat.dao.repository.MessageRepository;
+import com.example.chat.dao.repository.RoomRepository;
+import com.example.chat.dao.repository.UserRepository;
 import com.example.chat.type.ChatType;
+import com.google.gson.Gson;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Streamable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChatServiceV1 {
+
+  private final Gson gson;
 
   private final SimpMessagingTemplate webSocketMessagingTemplate;
 
@@ -64,9 +69,9 @@ public class ChatServiceV1 {
 
   public void sendMessage(MessageEntity messageEntity, Principal principal) {
 
-    if (ChatType.PRIVATE.equals(messageEntity.getChatType())) {
+    if (ChatType.PERSONAL.equals(messageEntity.getChatType())) {
       this.sendPrivateMessage(messageEntity, principal);
-    } else if (ChatType.PUBLIC.equals(messageEntity.getChatType())) {
+    } else if (ChatType.GROUP.equals(messageEntity.getChatType())) {
       this.sendPublicMessage(messageEntity);
     } else {
       throw new RuntimeException();
@@ -80,8 +85,13 @@ public class ChatServiceV1 {
     messageEntity.setUserReceive(to);
     messageServiceV1.save(messageEntity);
 
-    webSocketMessagingTemplate.convertAndSendToUser(to.getUsername(), "/queue/reply",
-        messageEntity.getText());
+    CompletableFuture
+        .runAsync(() -> webSocketMessagingTemplate.convertAndSendToUser(from.getUsername(),
+            "/queue/reply", gson.toJson(messageEntity)), executor)
+        .thenRun(
+            () -> webSocketMessagingTemplate.convertAndSendToUser(to.getUsername(), "/queue/reply",
+                gson.toJson(messageEntity)));
+
   }
 
   private void sendPublicMessage(MessageEntity messageEntity) {
@@ -102,6 +112,7 @@ public class ChatServiceV1 {
 
   public List<MessageEntity> getOldMessage(Long userId) {
     UserEntity userEntity = this.userServiceV1.getCurrentUser();
+    log.debug("currentUserId {}, friendId {}", userEntity.getUserId(), userId);
 
     Streamable<MessageEntity> oldMessages = messageRepository.oldMessage(userEntity.getUserId(),
         userId);

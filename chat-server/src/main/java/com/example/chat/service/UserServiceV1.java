@@ -3,7 +3,7 @@ package com.example.chat.service;
 import com.example.chat.client.AuthServiceFeignClient;
 import com.example.chat.dao.entity.RankedUser;
 import com.example.chat.dao.entity.UserEntity;
-import com.example.chat.dao.repositoty.UserRepository;
+import com.example.chat.dao.repository.UserRepository;
 import com.example.chat.dto.UserDTO;
 import java.util.List;
 import java.util.stream.Collectors;

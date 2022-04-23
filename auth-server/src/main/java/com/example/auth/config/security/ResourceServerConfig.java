@@ -1,8 +1,10 @@
 package com.example.auth.config.security;
 
+import com.example.common.config.ConfigurationGlobal;
 import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -23,6 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableResourceServer
+@Import(ConfigurationGlobal.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
@@ -80,8 +83,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     final CorsConfiguration configuration = new CorsConfiguration();
 
     configuration
-        .setAllowedOrigins(ImmutableList.of("*")); // www - obligatory
-//        configuration.setAllowedOrigins(ImmutableList.of("*"));  //set access from all domains
+        .setAllowedOrigins(ImmutableList.of("*"));
     configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
     configuration.setAllowCredentials(true);
     configuration

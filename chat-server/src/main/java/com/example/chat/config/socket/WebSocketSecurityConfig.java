@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 
 @Configuration
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
   @Override

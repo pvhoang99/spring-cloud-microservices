@@ -1,6 +1,0 @@
-mysql.port: 3306
-mysql.host: localhost
-mysql.username: root
-mysql.password: 123456
-mysql.url: jdbc:mysql://${mysql.host:localhost}:${mysql.port}/
-mysql.database-name: reactive

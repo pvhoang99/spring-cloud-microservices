@@ -1,5 +1,6 @@
 package com.example.chat.config.socket;
 
+import com.example.chat.config.socket.exceptionHandler.SocketExceptionHandler;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
@@ -34,6 +35,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registry.addEndpoint("/ws")
         .setAllowedOrigins("*")
         .withSockJS();
+    registry.setErrorHandler(new SocketExceptionHandler());
   }
 
   @Override

@@ -1,7 +1,7 @@
 package com.example.chat.service;
 
 import com.example.chat.dao.entity.RoomEntity;
-import com.example.chat.dao.repositoty.RoomRepository;
+import com.example.chat.dao.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

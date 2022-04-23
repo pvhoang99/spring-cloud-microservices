@@ -21,8 +21,7 @@ public class OAuth2UserInfoFactory {
     }
   }
 
-  public static enum AuthProvider {
-    local,
+  public enum AuthProvider {
     facebook,
     google,
     github,

@@ -7,7 +7,7 @@ import com.example.chat.config.security.user.OAuth2UserInfoFactory;
 import com.example.chat.config.security.user.OAuth2UserInfoFactory.AuthProvider;
 import com.example.chat.config.security.user.UserPrincipal;
 import com.example.chat.dao.entity.UserEntity;
-import com.example.chat.dao.repositoty.UserRepository;
+import com.example.chat.dao.repository.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

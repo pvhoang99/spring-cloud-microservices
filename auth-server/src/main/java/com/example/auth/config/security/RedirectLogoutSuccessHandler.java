@@ -16,7 +16,8 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 public class RedirectLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
-  private final Gson gson = new Gson();
+  @Setter(onMethod = @__({@Autowired}))
+  private Gson gson;
 
   @Setter(onMethod = @__({@Autowired}))
   private ConsumerTokenServices tokenServices;
