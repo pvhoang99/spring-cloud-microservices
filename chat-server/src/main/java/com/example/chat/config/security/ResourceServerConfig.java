@@ -14,9 +14,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.token.AccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsAccessTokenProvider;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -48,8 +51,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Bean
   public RequestInterceptor oauth2FeignRequestInterceptor() {
-    return new OAuth2FeignRequestInterceptor(oAuth2ClientContext,
-        clientCredentialsResourceDetails());
+    CustomOAuth2FeignRequestInterceptor customOAuth2FeignRequestInterceptor = new CustomOAuth2FeignRequestInterceptor(
+        oAuth2ClientContext, clientCredentialsResourceDetails());
+    customOAuth2FeignRequestInterceptor.setAccessTokenProvider(accessTokenProvider());
+    return customOAuth2FeignRequestInterceptor;
+  }
+
+  @Bean
+  public AccessTokenProvider accessTokenProvider() {
+    return new ClientCredentialsAccessTokenProvider();
   }
 
   @Bean
@@ -101,7 +111,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http
         .authorizeRequests()
         .antMatchers("/api/v1/login",
-            "/api/v1/user/sync", "/oauth2/**")
+            "/api/v1/user/all", "/oauth2/**")
         .permitAll()
         .antMatchers("/ws**", "/ws/**").permitAll()
         .anyRequest().authenticated()

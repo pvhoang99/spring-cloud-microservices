@@ -2,7 +2,7 @@ security:
   oauth2:
     resource:
       token-info-uri: http://localhost:8082/auth-server/oauth/check_token
-      user-info-uri: http://localhost:8082/auth-server/api/user
+      user-info-uri: http://localhost:8082/auth-server/api/v1/user/me
       id: chat-server
     client:
       client-id: hoang
