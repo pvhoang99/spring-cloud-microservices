@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -26,7 +25,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   @ResponseBody
   @ExceptionHandler(value = MethodArgumentNotValidException.class)
   public CommonResult handleValidException(MethodArgumentNotValidException e) {
-    BindingResult bindingResult = e.getBindingResult();
+    return getCommonResult(e.getBindingResult(), e);
+  }
+
+  private CommonResult getCommonResult(BindingResult bindingResult2,
+      Exception e) {
+    BindingResult bindingResult = bindingResult2;
     String message = null;
     if (bindingResult.hasErrors()) {
       FieldError fieldError = bindingResult.getFieldError();
@@ -40,14 +44,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   @ResponseBody
   @ExceptionHandler(value = BindException.class)
   public CommonResult<?> handleValidException(BindException e) {
-    BindingResult bindingResult = e.getBindingResult();
-    String message = null;
-    if (bindingResult.hasErrors()) {
-      FieldError fieldError = bindingResult.getFieldError();
-      if (fieldError != null) {
-        message = fieldError.getField() + fieldError.getDefaultMessage();
-      }
-    }
-    return CommonResult.validateFailed(message);
+    return getCommonResult(e.getBindingResult(), e);
   }
 }

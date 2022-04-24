@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.Optional;
 import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserControllerV1 {
 
   private final UserServiceV1 userService;
@@ -28,6 +30,7 @@ public class UserControllerV1 {
   @RequestMapping(path = "/me", method = RequestMethod.GET)
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<UserEntity> me(Principal principal) {
+    log.info("====UserControllerV1 me====");
     UserEntity user = null;
     if (principal != null) {
       user = userService.getUserByUsername(principal.getName()).orElse(null);
@@ -45,6 +48,7 @@ public class UserControllerV1 {
 
   @GetMapping("/get-all")
   public ResponseEntity<?> findAll() {
+    log.info("====UserControllerV1 findAll====");
     return ResponseEntity.ok(userService.findAll());
   }
 

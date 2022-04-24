@@ -24,6 +24,8 @@ spring:
             tokenUri: http://192.168.1.244:8000/auth-server/oauth/token
             userInfoUri: http://192.168.1.244:8000/auth-server/api/v1/user/me
             userNameAttribute: username
+  zipkin:
+    base-url: http://localhost:9411/
 eureka:
   instance:
     prefer-ip-address: true
