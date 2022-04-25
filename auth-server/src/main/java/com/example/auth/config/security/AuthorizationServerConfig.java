@@ -70,7 +70,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
     endpoints
         .authenticationManager(authenticationManager)
-        .tokenStore(tokenStore())
+        .tokenStore(redisTokenStore())
         .tokenEnhancer(tokenEnhancer())
         .userDetailsService(userDetailsService)
     ;
@@ -78,7 +78,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   // Lưu token vào redis
   @Bean
-  public TokenStore tokenStore() {
+  public TokenStore redisTokenStore() {
     return new RedisTokenStore(redisConnectionFactory);
   }
 

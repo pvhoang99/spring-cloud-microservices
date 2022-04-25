@@ -22,7 +22,6 @@ public class AsyncConfig implements AsyncConfigurer {
     taskExecutor.setQueueCapacity(10);
     taskExecutor.initialize();
     return taskExecutor;
-
   }
 
 }

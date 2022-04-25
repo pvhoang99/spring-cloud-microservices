@@ -19,11 +19,15 @@ public class UserServiceV1 {
   private final UserRepository userRepository;
   private final RoleServiceV1 roleServiceV1;
 
-  @HystrixCommand
+  @HystrixCommand(fallbackMethod = "getUserByUsernameFallBack")
   @Cacheable(value = "user", key = "#username")
   public Optional<UserEntity> getUserByUsername(String username) {
 
     return userRepository.findByUsername(username);
+  }
+
+  public Optional<UserEntity> getUserByUsernameFallBack() {
+    return Optional.empty();
   }
 
   public UserEntity saveUser(UserEntity userEntity) {
@@ -31,7 +35,7 @@ public class UserServiceV1 {
     if (userRepository.existsByUsername(userEntity.getUsername())) {
       throw new RuntimeException("user is exist with: " + userEntity.getUsername());
     }
-    //hardcore
+    //hardcode
     RoleEntity roleEntity = roleServiceV1.findByValue("USER");
     userEntity.setRoleEntity(roleEntity);
     return userRepository.save(userEntity);

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AuthServiceFeignClient {
 
   @GetMapping(value = "/auth-server/api/v1/user/me")
-  @Deprecated()
   UserDTO getCurrentUser();
 
   @PostMapping(value = "/auth-server/oauth/token")
+  @Deprecated
   Map<String, Object> login(@RequestParam Map<String, String> parameters);
 
   @GetMapping(value = "/auth-server/api/v1/user/get-all")

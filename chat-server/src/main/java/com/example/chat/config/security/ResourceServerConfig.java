@@ -43,6 +43,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   private final OAuth2ClientContext oAuth2ClientContext;
 
+  private final CorsConfigurationSource corsConfigurationSource;
+
   @Bean
   @ConfigurationProperties(prefix = "security.oauth2.client")
   public ClientCredentialsResourceDetails clientCredentialsResourceDetails() {
@@ -134,7 +136,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .successHandler(oAuth2AuthenticationSuccessHandler())
         .failureHandler(oAuth2AuthenticationFailureHandler());
     http.csrf().disable();
-    http.cors().configurationSource(corsConfigurationSource());
+    http.cors().configurationSource(corsConfigurationSource);
     http.httpBasic().disable();
   }
 
@@ -143,23 +145,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.tokenServices(remoteTokenServices());
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);
-  }
-
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    final CorsConfiguration configuration = new CorsConfiguration();
-
-    configuration
-        .setAllowedOrigins(ImmutableList.of("*"));
-    configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
-    configuration.setAllowCredentials(true);
-    configuration
-        .setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
-
-    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-
-    return source;
   }
 
 }
