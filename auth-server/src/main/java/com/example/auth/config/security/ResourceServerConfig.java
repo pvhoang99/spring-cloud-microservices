@@ -2,6 +2,7 @@ package com.example.auth.config.security;
 
 import com.example.common.config.ConfigurationGlobal;
 import com.google.common.collect.ImmutableList;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -26,7 +27,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableResourceServer
 @Import(ConfigurationGlobal.class)
+@RequiredArgsConstructor
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+  private final CorsConfigurationSource corsConfigurationSource;
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -37,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http.csrf().disable();
-    http.cors().configurationSource(corsConfigurationSource());
+    http.cors().configurationSource(corsConfigurationSource);
     http.httpBasic().disable();
 
     http.requestMatchers()
@@ -76,22 +80,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   public HttpSessionSecurityContextRepository contextRepository() {
     return new HttpSessionSecurityContextRepository();
-  }
-
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    final CorsConfiguration configuration = new CorsConfiguration();
-
-    configuration
-        .setAllowedOrigins(ImmutableList.of("*"));
-    configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
-    configuration.setAllowCredentials(true);
-    configuration
-        .setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
-
-    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-
-    return source;
   }
 }
