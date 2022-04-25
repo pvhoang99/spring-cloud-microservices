@@ -1,21 +1,25 @@
 spring:
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedHeaders: "*"
-            allowedMethods: "*"
       routes:
         - id: authModule
           uri: lb://auth-server
           predicates:
             - Path=/auth-server/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: chatModule1
           uri: lb://chat-server
           predicates:
             - Path=/chat-server/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: chatModule2
           uri: lb://chat-server
           predicates:
@@ -24,7 +28,9 @@ spring:
           uri: lb:ws://chat-server
           predicates:
             - Path=/chat-server/ws/**
-      
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
 management:
   endpoints:
     web:
