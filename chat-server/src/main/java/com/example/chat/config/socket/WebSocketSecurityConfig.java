@@ -20,7 +20,7 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
             SimpMessageType.UNSUBSCRIBE).permitAll()
         .simpDestMatchers("/user/queue/reply").hasRole("USER")
         .simpMessageDestMatchers("/app/**").hasRole("USER")
-        .anyMessage().authenticated();
+        .anyMessage().denyAll();
   }
 
   @Override
