@@ -26,7 +26,7 @@ public class UserServiceV1 {
     return userRepository.findByUsername(username);
   }
 
-  public Optional<UserEntity> getUserByUsernameFallBack() {
+  public Optional<UserEntity> getUserByUsernameFallBack(String username) {
     return Optional.empty();
   }
 
