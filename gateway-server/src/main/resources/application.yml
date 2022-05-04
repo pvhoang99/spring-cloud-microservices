@@ -11,6 +11,24 @@ spring:
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback/message
+        - id: inventoryModule
+          uri: lb://inventory-service
+          predicates:
+            - Path=/inventory/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
+        - id: shoppingCartModule
+          uri: lb://shopping-cart-service
+          predicates:
+            - Path=/cart/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: chatModule1
           uri: lb://chat-server
           predicates:

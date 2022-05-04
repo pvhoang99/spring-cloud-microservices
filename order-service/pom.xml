@@ -10,17 +10,19 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>auth-server</artifactId>
+  <artifactId>order-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>auth-server</name>
-  <description>Auth Server</description>
-
+  <name>order-service</name>
+  <description>order-service</description>
   <properties>
     <java.version>1.8</java.version>
     <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
   </properties>
-
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-hateoas</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.example</groupId>
       <artifactId>common</artifactId>
@@ -33,6 +35,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-rest</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -85,11 +91,14 @@
       <artifactId>slf4j-api</artifactId>
       <version>1.7.29</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/net.minidev/json-smart -->
     <dependency>
-      <groupId>net.minidev</groupId>
-      <artifactId>json-smart</artifactId>
-      <version>2.3</version>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <version>2.5.0.M2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
     </dependency>
   </dependencies>
 
