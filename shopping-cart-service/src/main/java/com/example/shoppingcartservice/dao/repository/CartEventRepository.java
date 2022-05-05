@@ -1,7 +1,7 @@
 package com.example.shoppingcartservice.dao.repository;
 
 import com.example.shoppingcartservice.dao.entity.CartEvent;
-import java.util.stream.Stream;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +21,5 @@ public interface CartEventRepository extends JpaRepository<CartEvent, Long> {
       "RIGHT JOIN cart_event c ON c.user_id = t.user_id\n" +
       "WHERE c.created_at BETWEEN coalesce(t.created_at, 0) AND 9223372036854775807 AND coalesce(t.id, -1) != c.id\n" +
       "ORDER BY c.created_at ASC", nativeQuery = true)
-  Stream<CartEvent> getCartEventStreamByUserId(@Param("userId") Long userId);
+  List<CartEvent> getCartEventStreamByUserId(@Param("userId") Long userId);
 }

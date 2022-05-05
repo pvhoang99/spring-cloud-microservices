@@ -11,10 +11,10 @@ spring:
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback/message
-        - id: inventoryModule
-          uri: lb://inventory-service
+        - id: catalogModule
+          uri: lb://catalog-service
           predicates:
-            - Path=/inventory/**
+            - Path=/catalog/**
           filters:
             - name: CircuitBreaker
               args:

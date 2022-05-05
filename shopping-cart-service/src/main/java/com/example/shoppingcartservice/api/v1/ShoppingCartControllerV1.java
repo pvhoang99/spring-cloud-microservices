@@ -29,6 +29,6 @@ public class ShoppingCartControllerV1 {
   public ResponseEntity<?> checkoutCart() throws Exception {
     return Optional.ofNullable(shoppingCartService.checkout())
         .map(checkoutResult -> new ResponseEntity<>(checkoutResult, HttpStatus.OK))
-        .orElseThrow(() -> new Exception("Could not checkout"));
+        .orElseThrow(() -> new RuntimeException("Could not checkout"));
   }
 }

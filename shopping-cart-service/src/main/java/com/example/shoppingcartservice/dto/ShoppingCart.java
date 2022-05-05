@@ -46,7 +46,7 @@ public class ShoppingCart {
     return (cartEventType == CartEventType.CLEAR_CART || cartEventType == CartEventType.CHECKOUT);
   }
 
-  public void getCartItems() {
+  public List<CartItem> getCartItems() {
     cartItems = productMap.entrySet().stream()
         .map(item -> new CartItem(catalog.getProducts().stream()
             .filter(product -> Objects.equals(product.getProductId(), item.getKey()))
@@ -58,6 +58,7 @@ public class ShoppingCart {
     if (cartItems.stream().anyMatch(item -> item.getProduct() == null)) {
       throw new RuntimeException("cartItems is empty");
     }
+    return cartItems;
   }
 
 }
