@@ -1,0 +1,27 @@
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8082/auth-server/oauth/check_token
+      user-info-uri: http://localhost:8082/auth-server/api/v1/user/me
+      id: order-service
+    client:
+      client-id: hoang
+      client-secret: 1
+      access-token-uri: http://localhost:8082/auth-server/oauth/token
+      scope: read
+spring:
+  data:
+    mongodb:
+      database: order-service
+      host: localhost
+      port: 27017
+server:
+  port: 8088
+eureka:
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+

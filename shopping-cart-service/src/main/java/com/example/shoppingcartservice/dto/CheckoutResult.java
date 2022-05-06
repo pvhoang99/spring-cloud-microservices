@@ -1,6 +1,5 @@
 package com.example.shoppingcartservice.dto;
 
-import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +10,6 @@ import lombok.Setter;
 public class CheckoutResult {
 
   private String resultMessage;
-  private List<CartItem> cartItems;
+  private Order order;
 
 }

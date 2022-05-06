@@ -26,9 +26,16 @@ public class ShoppingCartControllerV1 {
   }
 
   @RequestMapping(path = "/checkout", method = RequestMethod.POST)
-  public ResponseEntity<?> checkoutCart() throws Exception {
+  public ResponseEntity<?> checkoutCart() {
     return Optional.ofNullable(shoppingCartService.checkout())
         .map(checkoutResult -> new ResponseEntity<>(checkoutResult, HttpStatus.OK))
         .orElseThrow(() -> new RuntimeException("Could not checkout"));
+  }
+
+  @RequestMapping(path = "/cart", method = RequestMethod.GET)
+  public ResponseEntity<?> getCart() throws Exception {
+    return Optional.ofNullable(shoppingCartService.getShoppingCart())
+        .map(cart -> new ResponseEntity<>(cart, HttpStatus.OK))
+        .orElseThrow(() -> new Exception("Could not find shopping cart"));
   }
 }
