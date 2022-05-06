@@ -27,7 +27,7 @@ public class SagaServerApplication {
     return args -> {
 
       StateMachine<States, Events> machineService = statesEventsStateMachineService.acquireStateMachine(
-          "id1");
+          "id2");
       Message<Events> message = MessageBuilder.withPayload(Events.E1)
           .build();
       Flux<StateMachineEventResult<States, Events>> resultFlux = machineService.sendEvent(

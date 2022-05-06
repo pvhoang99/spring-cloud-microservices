@@ -1,4 +1,4 @@
-package com.example.shoppingcartservice.dto;
+package com.example.orderservice.dto;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
@@ -16,5 +16,4 @@ public class Address implements Serializable {
   private String city;
   private String district;
   private String street1;
-
 }

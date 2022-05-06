@@ -29,6 +29,15 @@ spring:
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback/message
+        - id: orderModule
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: chatModule1
           uri: lb://chat-server
           predicates:
