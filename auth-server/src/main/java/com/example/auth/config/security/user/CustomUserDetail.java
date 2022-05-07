@@ -2,8 +2,8 @@ package com.example.auth.config.security.user;
 
 import com.example.auth.dao.model.RoleEntity;
 import com.example.auth.dao.model.UserEntity;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +20,7 @@ public class CustomUserDetail implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     RoleEntity roleEntity = userEntity.getRoleEntity();
     if (roleEntity != null) {
-      return Arrays.asList(new SimpleGrantedAuthority("ROLE_" + roleEntity.getValue()));
+      return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + roleEntity.getValue()));
     }
     return null;
   }

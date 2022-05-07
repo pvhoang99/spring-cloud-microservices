@@ -4,8 +4,6 @@ import com.google.common.collect.ImmutableList;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collections;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;

@@ -2,11 +2,9 @@ package com.example.catalog;
 
 import com.example.catalog.dao.entity.Catalog;
 import com.example.catalog.dao.entity.Product;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;

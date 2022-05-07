@@ -3,7 +3,6 @@ package com.example.auth.api.v1;
 import com.example.auth.dao.model.UserEntity;
 import java.security.Principal;
 import java.util.Optional;
-import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,6 @@
 package com.example.auth.config.security;
 
 import java.security.KeyPair;
-import javax.sql.DataSource;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
