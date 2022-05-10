@@ -11,7 +11,7 @@
   <artifactId>catalog</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>catalog</name>
-  <description>catalog</description>
+  <description>catalog-service</description>
   <properties>
     <neo4j.version>3.5.0</neo4j.version>
   </properties>
