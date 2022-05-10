@@ -4,19 +4,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.1.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <groupId>com.example</groupId>
+    <artifactId>microservices</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.example</groupId>
-  <artifactId>inventory</artifactId>
+  <artifactId>catalog</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>inventory</name>
+  <name>catalog</name>
   <description>catalog</description>
   <properties>
-    <java.version>1.8</java.version>
-    <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
     <neo4j.version>3.5.0</neo4j.version>
   </properties>
   <dependencies>
@@ -103,29 +99,5 @@
       <artifactId>hibernate-core</artifactId>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <build>
-    <finalName>${project.artifactId}</finalName>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
 
 </project>
