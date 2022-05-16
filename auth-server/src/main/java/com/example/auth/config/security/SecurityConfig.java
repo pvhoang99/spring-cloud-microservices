@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .antMatcher("/**")
         .authorizeRequests()
-        .antMatchers("/login**", "/oauth/token", "/logout**")
+        .antMatchers("/login**", "/oauth/token", "/logout**", "/")
         .permitAll()
         .and()
         .authorizeRequests()

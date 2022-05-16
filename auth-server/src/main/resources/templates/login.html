@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="vi">
 <head>
   <title>Spring Security OAuth 2.0 Sample</title>
   <meta charset="utf-8"/>
@@ -11,7 +11,6 @@
 <body>
 <div class="container">
   <h1>Login</h1>
-  <p th:if="${error}" style="font-weight:bold;color:red;">Wrong username or password</p>
   <form th:action="@{/login}" method="post">
     <div class="form-row">
       <div class="form-group">

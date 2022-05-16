@@ -1,6 +1,7 @@
 package com.example.shoppingcartservice.security;
 
 import com.example.common.config.ConfigurationGlobal;
+import com.example.common.filter.UserContextFilter;
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -23,6 +24,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -93,6 +95,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.csrf().disable();
     http.cors().configurationSource(corsConfigurationSource);
     http.httpBasic().disable();
+    http.addFilterAfter(userContextFilter(), AbstractPreAuthenticatedProcessingFilter.class);
   }
 
   @Override
@@ -100,6 +103,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.tokenServices(remoteTokenServices());
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);
+  }
+
+  @Bean
+  public UserContextFilter userContextFilter() {
+    return new UserContextFilterImpl();
   }
 
 }

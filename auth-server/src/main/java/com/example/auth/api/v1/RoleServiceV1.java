@@ -5,6 +5,7 @@ import com.example.auth.dao.repository.RoleRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,6 @@ public class RoleServiceV1 {
   public List<RoleEntity> getAll() {
     return roleRepository.findAll(Sort.by("name"));
   }
-
   public RoleEntity save(RoleEntity roleEntity) {
     return roleRepository.save(roleEntity);
   }

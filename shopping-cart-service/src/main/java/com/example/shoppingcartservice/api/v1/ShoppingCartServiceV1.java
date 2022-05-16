@@ -1,5 +1,7 @@
 package com.example.shoppingcartservice.api.v1;
 
+import com.example.common.utils.UserContextHolder;
+import com.example.common.utils.UserContextHolder.UserContext;
 import com.example.shoppingcartservice.client.AuthServiceFeignClient;
 import com.example.shoppingcartservice.client.CatalogServiceFeignClient;
 import com.example.shoppingcartservice.dao.entity.CartEvent;
@@ -27,9 +29,9 @@ public class ShoppingCartServiceV1 {
   private final CartEventRepository cartEventRepository;
 
   public Boolean addCartEvent(CartEvent cartEvent) {
-    User user = authServiceFeignClient.getCurrentUser();
-    if (user != null) {
-      cartEvent.setUserId(user.getUserId());
+    UserContext context = UserContextHolder.getContext();
+    if (context != null) {
+      cartEvent.setUserId(context.getUserId());
       cartEventRepository.save(cartEvent);
     } else {
       return null;
@@ -63,7 +65,7 @@ public class ShoppingCartServiceV1 {
   }
 
   private boolean checkAvailableProduct(ShoppingCart currentCart, List<Product> products) {
-      //TODO: must retrieval
+    //TODO: must retrieval
 //    return currentCart.getCartItems().stream().anyMatch(e -> {
 //      Product product = products.stream()
 //          .filter(k -> Objects.equals(k.getProductId(), e.getProduct().getProductId())).findFirst()
