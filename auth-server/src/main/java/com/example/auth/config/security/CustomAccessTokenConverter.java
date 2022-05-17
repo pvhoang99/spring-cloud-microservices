@@ -42,9 +42,6 @@ public class CustomAccessTokenConverter extends JwtAccessTokenConverter {
     */
     ((DefaultOAuth2AccessToken) accessToken)
         .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(10)));
-
-    oAuth2AccessToken = super.enhance(accessToken, authentication);
-    oAuth2AccessToken.getAdditionalInformation().putAll(information);
-    return oAuth2AccessToken;
+    return super.enhance(accessToken, authentication);
   }
 }

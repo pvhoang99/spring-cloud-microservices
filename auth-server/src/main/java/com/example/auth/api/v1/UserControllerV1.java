@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +55,11 @@ public class UserControllerV1 {
   @GetMapping("/search")
   public ResponseEntity<?> search(@PageableDefault Pageable pageable) {
     return ResponseEntity.ok(userService.search(pageable));
+  }
+
+  @GetMapping("/{id}")
+  @PreAuthorize("@securityService.hasUser(#id)")
+  public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+    return ResponseEntity.ok("data");
   }
 }

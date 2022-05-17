@@ -1,16 +1,21 @@
 package com.example.auth.config.security;
 
+import com.example.auth.config.security.expression.PermissionEvaluatorImpl;
+import com.example.auth.config.security.expression.SecurityService;
+import com.example.auth.config.security.expression.SecurityServiceImpl;
 import com.example.common.config.ConfigurationGlobal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.spel.spi.EvaluationContextExtension;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -66,9 +71,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
     DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
     defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
+    defaultWebSecurityExpressionHandler.setPermissionEvaluator(new PermissionEvaluatorImpl());
     return defaultWebSecurityExpressionHandler;
   }
 
+  /*
+   * metadataSource --get attribute (antMatchers(....).hasAnyRole(...) --> AccessDecisionManager ---> AccessDecisionVoter ----> RoleHierarchyVoter
+   * */
   @Bean
   public RoleHierarchyVoter roleHierarchyVoter() {
     return new RoleHierarchyVoter(roleHierarchy());
@@ -77,5 +86,20 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   public HttpSessionSecurityContextRepository contextRepository() {
     return new HttpSessionSecurityContextRepository();
+  }
+
+  /*
+  * Advanced SpEL expressions
+  * @Query("select u from User u where u.emailAddress = ?#{principal.emailAddress}")
+    List<User> findCurrentUserWithCustomQuery();
+  * */
+  @Bean
+  public EvaluationContextExtension securityExtension() {
+    return new SecurityEvaluationContextExtension();
+  }
+
+  @Bean("securityService")
+  public SecurityService securityService() {
+    return new SecurityServiceImpl();
   }
 }
