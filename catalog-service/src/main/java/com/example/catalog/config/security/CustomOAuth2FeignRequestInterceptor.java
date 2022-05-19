@@ -1,4 +1,4 @@
-package com.example.catalog.security;
+package com.example.catalog.config.security;
 
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;

@@ -48,6 +48,14 @@ public class SagaService {
     this.signalStateMachine(message);
   }
 
+  public void sendEventPayment() {
+
+  }
+
+  public void subtractProduct(StateContext<OrderStatus, OrderEvents> context) {
+
+  }
+
   public void createInvoice(StateContext<OrderStatus, OrderEvents> context) {
     Message<OrderEvents> message = context.getMessage();
     String orderId = message.getHeaders().get("orderId", String.class);

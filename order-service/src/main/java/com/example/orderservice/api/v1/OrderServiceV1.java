@@ -4,6 +4,7 @@ import com.example.orderservice.dao.entity.Order;
 import com.example.orderservice.dao.entity.Order.OrderStatus;
 import com.example.orderservice.dao.repository.OrderRepository;
 import com.example.orderservice.saga.SagaService;
+import java.util.concurrent.CompletableFuture;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class OrderServiceV1 {
     order.setOrderStatus(OrderStatus.NEW);
 
     order = orderRepository.save(order);
-    sagaService.sendEventCreatNewOrder(order);
-
+    final Order finalOrder = order;
+    CompletableFuture.runAsync(() -> sagaService.sendEventCreatNewOrder(finalOrder));
     return order;
   }
 

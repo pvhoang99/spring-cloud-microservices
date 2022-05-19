@@ -1,4 +1,4 @@
-package com.example.catalog.security;
+package com.example.catalog.config.security;
 
 import com.example.common.config.ConfigurationGlobal;
 import feign.RequestInterceptor;

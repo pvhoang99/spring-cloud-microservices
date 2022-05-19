@@ -40,6 +40,7 @@ public class Order extends BaseEntity {
   }
 
   public enum OrderEvents {
+    PAYED,
     PURCHASED,
     CREAT,
     ORDERED,

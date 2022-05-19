@@ -30,3 +30,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+file:
+  upload-dir: ./upload

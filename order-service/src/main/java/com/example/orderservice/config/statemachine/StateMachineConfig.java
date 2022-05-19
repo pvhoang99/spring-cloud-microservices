@@ -53,6 +53,10 @@ public class StateMachineConfig
         .source(OrderStatus.NEW)
         .target(OrderStatus.PENDING)
         .event(OrderEvents.CREAT)
-        .action(sagaService::createInvoice);
+        .action(sagaService::createInvoice)
+        .source(OrderStatus.PENDING)
+        .event(OrderEvents.PAYED)
+        .action(sagaService::subtractProduct)
+    ;
   }
 }

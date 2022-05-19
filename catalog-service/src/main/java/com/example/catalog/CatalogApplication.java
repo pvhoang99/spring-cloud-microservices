@@ -3,6 +3,7 @@ package com.example.catalog;
 import com.example.catalog.dao.entity.Catalog;
 import com.example.catalog.dao.entity.Product;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 @SpringCloudApplication
 @EnableNeo4jRepositories
 @EnableConfigurationProperties
+@ConfigurationPropertiesScan(value = "com.example.catalog")
 public class CatalogApplication {
 
   public static void main(String[] args) {
