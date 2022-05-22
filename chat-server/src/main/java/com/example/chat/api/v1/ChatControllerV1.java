@@ -1,7 +1,6 @@
 package com.example.chat.api.v1;
 
 import com.example.chat.dao.entity.MessageEntity;
-import com.example.chat.dao.entity.RoomEntity;
 import com.example.chat.service.ChatServiceV1;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
@@ -29,26 +28,20 @@ public class ChatControllerV1 {
     return ResponseEntity.ok(chatServiceV1.chat(messageEntity));
   }
 
-  @PostMapping("/api/v1/chat/create-room")
-  @ResponseBody
-  public ResponseEntity<?> createRoom(@RequestBody RoomEntity roomEntity) {
-    return ResponseEntity.ok(chatServiceV1.createGroup(roomEntity));
-  }
-
-  @PostMapping("/api/v1/chat/join-room")
-  @ResponseBody
-  public ResponseEntity<?> joinRoom(@RequestBody RoomEntity roomEntity) {
-    return ResponseEntity.ok(chatServiceV1.joinRoom(roomEntity));
-  }
-
   @MessageMapping("/send.message")
   public void sendMessage(@Payload MessageEntity messageEntity, Principal principal) {
     chatServiceV1.sendMessage(messageEntity, principal);
   }
 
-  @SubscribeMapping("/old.message/{userId}")
-  public ResponseEntity<?> oldMessage(@DestinationVariable("userId") Long id) {
-    log.info("====ChatControllerV1 oldMessage subscribeMapping old message with userId ---> {}", id);
-    return ResponseEntity.ok(chatServiceV1.getOldMessage(id));
+  @SubscribeMapping("/private.old.message/{userId}")
+  public ResponseEntity<?> personalOldMessage(@DestinationVariable("userId") Long id) {
+    log.info("====ChatControllerV1 oldMessage subscribeMapping old message with userId ---> {}",
+        id);
+    return ResponseEntity.ok(chatServiceV1.getPersonalOldMessage(id));
+  }
+
+  @SubscribeMapping("/room.old.message/{roomId}")
+  public ResponseEntity<?> roomOldMessage(@DestinationVariable("roomId") Long roomId) {
+    return ResponseEntity.ok(chatServiceV1.getRoomOldMessage(roomId));
   }
 }

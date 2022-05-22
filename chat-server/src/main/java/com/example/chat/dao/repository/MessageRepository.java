@@ -10,8 +10,11 @@ import org.springframework.stereotype.Repository;
 public interface MessageRepository extends Neo4jRepository<MessageEntity, Long> {
 
   @Query("MATCH (userA:USER)-[]-"
-      + "(message:message)-[]-(userB:USER) "
+      + "(message:MESSAGE)-[]-(userB:USER) "
       + "WHERE (userA.userId=$userId AND userB.userId=$friendId) "
-      + "return (message) order by (message.createdAt)")
-  Streamable<MessageEntity> oldMessage(Long userId, Long friendId);
+      + "return (message) order by (message.createdAt) DESC")
+  Streamable<MessageEntity> personalOldMessage(Long userId, Long friendId);
+
+  @Query("MATCH (room:ROOM {room.id = $roomId})-[]-(message:MESSAGE) return (message) order by (message.createdAt) DESC")
+  Streamable<MessageEntity> roomOldMessage(Long roomId);
 }

@@ -1,5 +1,6 @@
 package com.example.catalog.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;

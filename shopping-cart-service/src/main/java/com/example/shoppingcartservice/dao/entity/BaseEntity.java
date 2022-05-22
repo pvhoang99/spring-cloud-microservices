@@ -18,7 +18,7 @@ public abstract class BaseEntity implements Serializable {
   @CreatedDate
   private Date createdAt;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
   public Date getLastModified() {
     return lastModified;
   }

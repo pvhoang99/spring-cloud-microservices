@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
@@ -30,6 +31,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableResourceServer
 @AllArgsConstructor
 @Import(ConfigurationGlobal.class)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   private final ResourceServerProperties sso;
@@ -101,5 +103,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);
   }
+
 
 }

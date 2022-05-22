@@ -16,7 +16,6 @@ public interface AuthServiceFeignClient {
   UserDTO getCurrentUser();
 
   @PostMapping(value = "/auth-server/oauth/token")
-  @Deprecated
   Map<String, Object> login(@RequestParam Map<String, String> parameters);
 
   @GetMapping(value = "/auth-server/api/v1/user/get-all")

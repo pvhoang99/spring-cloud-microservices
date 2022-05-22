@@ -1,5 +1,6 @@
 package com.example.auth.config.security;
 
+import com.example.auth.config.security.user.LoginSuccessHandler;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,9 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated()
         .and()
         .formLogin()
-        .usernameParameter("username")
-        .passwordParameter("password")
-        .loginPage("/login")
+        .successHandler(new LoginSuccessHandler())
         .permitAll()
         .and()
         .logout()

@@ -1,4 +1,4 @@
-package com.example.auth.config.security.expression;
+package com.example.auth.config.security.aop;
 
 public interface SecurityService {
 

@@ -28,7 +28,7 @@ public class GatewayServerApplication {
             .slidingWindowSize(10)
             .build())
         .timeLimiterConfig(
-            TimeLimiterConfig.custom().timeoutDuration(Duration.ofMillis(200)).build()).build());
+            TimeLimiterConfig.custom().timeoutDuration(Duration.ofMillis(2000)).build()).build());
   }
 
   @Bean

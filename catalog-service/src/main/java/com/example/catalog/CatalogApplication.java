@@ -3,9 +3,11 @@ package com.example.catalog;
 import com.example.catalog.dao.entity.Catalog;
 import com.example.catalog.dao.entity.Product;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -15,6 +17,8 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 @EnableNeo4jRepositories
 @EnableConfigurationProperties
 @ConfigurationPropertiesScan(value = "com.example.catalog")
+@EnableOAuth2Sso
+@EnableFeignClients
 public class CatalogApplication {
 
   public static void main(String[] args) {

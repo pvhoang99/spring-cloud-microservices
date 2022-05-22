@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
-@NodeEntity(label = "CATALOG")
+@NodeEntity(label = "FILE")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -15,7 +16,15 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class FileEntity extends BaseEntity {
 
   @Id
-  private String id;
+  @GeneratedValue
+  private Long id;
+
+  private String fileId;
 
   private String url;
+
+  public FileEntity(String fileId, String url) {
+    this.fileId = fileId;
+    this.url = url;
+  }
 }

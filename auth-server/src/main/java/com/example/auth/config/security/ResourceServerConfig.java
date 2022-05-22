@@ -1,8 +1,8 @@
 package com.example.auth.config.security;
 
-import com.example.auth.config.security.expression.PermissionEvaluatorImpl;
-import com.example.auth.config.security.expression.SecurityService;
-import com.example.auth.config.security.expression.SecurityServiceImpl;
+import com.example.auth.config.security.aop.PermissionEvaluatorImpl;
+import com.example.auth.config.security.aop.SecurityService;
+import com.example.auth.config.security.aop.SecurityServiceImpl;
 import com.example.common.config.ConfigurationGlobal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.example.catalog.config;
+package com.example.catalog.config.mvc;
 
 import com.example.catalog.file.FileStorageProperties;
 import java.util.List;

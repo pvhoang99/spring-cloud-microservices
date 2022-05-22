@@ -4,6 +4,7 @@ import com.example.chat.dao.entity.RankedUser;
 import com.example.chat.dao.entity.UserEntity;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
@@ -44,5 +45,9 @@ public interface UserRepository extends Neo4jRepository<UserEntity, Long> {
       "RETURN nonFriend as User, mutualFriends as Weight " +
       "ORDER BY Weight DESC")
   Streamable<RankedUser> recommendedFriends(Long userId);
+
+  @Query("MATCH (user:User) "
+      + "WHERE user.userId IN $ids")
+  Set<UserEntity> findByUserIds(Set<Long> ids);
 
 }

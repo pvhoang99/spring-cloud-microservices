@@ -3,7 +3,6 @@ package com.example.catalog.dao.api.v1;
 import com.example.catalog.dao.entity.FileEntity;
 import com.example.catalog.dao.repository.FileRepository;
 import com.example.catalog.exception.FileStorageException;
-import com.example.catalog.exception.MyFileNotFoundException;
 import com.example.catalog.file.FileStorageProperties;
 import com.example.catalog.utils.DateUtils;
 import java.io.File;
@@ -15,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Slf4j
 public class FileStorageService {
 
   private final Path fileStorageLocation;
@@ -46,7 +47,6 @@ public class FileStorageService {
   }
 
   public String storeFile(MultipartFile file) {
-    // Normalize file name
     String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
     try {
       if (fileName.contains("..")) {
@@ -63,7 +63,7 @@ public class FileStorageService {
 
       String path = fileStorageLocation.relativize(targetLocation).toString();
       FileEntity upload = fileRepository.save(new FileEntity(fileId, path));
-      return upload.getId();
+      return upload.getFileId();
     } catch (IOException ex) {
       throw new FileStorageException("Could not store file " + fileName + ". Please try again!",
           ex);
@@ -71,8 +71,7 @@ public class FileStorageService {
   }
 
   public Resource loadFileAsResource(String fileId) {
-    FileEntity fileEntity = fileRepository.findById(fileId)
-        .orElseThrow(() -> new MyFileNotFoundException("file not exist"));
+    FileEntity fileEntity = this.findById(fileId);
     String fileName = fileEntity.getUrl();
 
     try {
@@ -91,5 +90,10 @@ public class FileStorageService {
     } catch (MalformedURLException ex) {
       throw new RuntimeException("File not found " + fileName);
     }
+  }
+
+  public FileEntity findById(String fileId) {
+    return fileRepository.findByFileId(fileId)
+        .orElseThrow(() -> new RuntimeException("Cannot find file with id: " + fileId));
   }
 }

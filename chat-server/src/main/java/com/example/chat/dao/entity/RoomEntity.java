@@ -1,7 +1,7 @@
 package com.example.chat.dao.entity;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.Transient;
 
-@NodeEntity(value = "group")
+@NodeEntity(value = "ROOM")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,5 +29,5 @@ public class RoomEntity {
   private Long userId;
 
   @Relationship(type = "CONTAIN")
-  private List<UserEntity> members = new LinkedList<>();
+  private Set<UserEntity> members = new HashSet<>();
 }

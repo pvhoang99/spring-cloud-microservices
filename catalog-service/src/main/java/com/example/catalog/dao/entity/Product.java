@@ -1,38 +1,31 @@
 package com.example.catalog.dao.entity;
 
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.Transient;
 
 @NodeEntity(label = "PRODUCT")
 @Setter
 @Getter
 @NoArgsConstructor
-public class Product implements Serializable {
+public class Product extends BaseEntity {
 
   @Id
   @GeneratedValue
   private Long id;
-  private String name, productId, description;
-  private Double unitPrice;
-  private int quantity;
 
-  public Product(String name, String productId, Double unitPrice, int quantity) {
-    this.name = name;
-    this.productId = productId;
-    this.unitPrice = unitPrice;
-    this.quantity = quantity;
-  }
+  private String name;
 
-  public Product(String name, String productId, String description, Double unitPrice) {
-    this.name = name;
-    this.productId = productId;
-    this.description = description;
-    this.unitPrice = unitPrice;
-  }
+  private String description;
 
+  @Transient
+  private String fileId;
+
+  @Relationship(value = "HAS_IMAGE")
+  private FileEntity fileEntity;
 }

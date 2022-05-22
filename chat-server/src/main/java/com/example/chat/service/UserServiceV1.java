@@ -6,6 +6,7 @@ import com.example.chat.dao.entity.UserEntity;
 import com.example.chat.dao.repository.UserRepository;
 import com.example.chat.dto.UserDTO;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Streamable;
@@ -34,7 +35,7 @@ public class UserServiceV1 {
     userEntity.setUsername(userDTO.getUsername());
     userEntity.setEmail(userDTO.getEmail());
     userEntity.setFullName(userDTO.getFullName());
-    userEntity.setId(userDTO.getId());
+    userEntity.setId(userDTO.getUserId());
     return userEntity;
   }
 
@@ -79,5 +80,9 @@ public class UserServiceV1 {
   public UserEntity findByUserId(Long userId) {
     return userRepository.findByUserId(userId)
         .orElseThrow(() -> new RuntimeException("khong ton tai user with userId: " + userId));
+  }
+
+  public Set<UserEntity> findByIds(Set<Long> userIds) {
+    return userRepository.findByUserIds(userIds);
   }
 }
