@@ -1,13 +1,10 @@
 package com.example.chat.service;
 
-import com.example.chat.client.AuthServiceFeignClient;
 import com.example.chat.dao.entity.RankedUser;
 import com.example.chat.dao.entity.UserEntity;
 import com.example.chat.dao.repository.UserRepository;
-import com.example.chat.dto.UserDTO;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.core.Authentication;
@@ -18,26 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceV1 {
 
-  private final AuthServiceFeignClient authServiceFeignClient;
   private final UserRepository userRepository;
-
-  public void syncUser() {
-    List<UserDTO> userDTOS = authServiceFeignClient.getAll();
-    if (!userDTOS.isEmpty()) {
-      userRepository.saveAll(
-          userDTOS.stream().filter(e -> !userRepository.existsByUsername(e.getUsername()))
-              .map(this::mapToUserEntity).collect(Collectors.toList()));
-    }
-  }
-
-  private UserEntity mapToUserEntity(UserDTO userDTO) {
-    UserEntity userEntity = new UserEntity();
-    userEntity.setUsername(userDTO.getUsername());
-    userEntity.setEmail(userDTO.getEmail());
-    userEntity.setFullName(userDTO.getFullName());
-    userEntity.setId(userDTO.getId());
-    return userEntity;
-  }
 
   public Streamable<UserEntity> mutualFriends(Long friendId) {
 
@@ -68,10 +46,6 @@ public class UserServiceV1 {
     return userRepository.save(userEntity);
   }
 
-  public UserEntity findById(Long id) {
-    return userRepository.findById(id).orElse(null);
-  }
-
   public UserEntity findByUsername(String username) {
     return userRepository.findByUsername(username)
         .orElseThrow(() -> new RuntimeException("Khong ton tai username: " + username));
@@ -90,5 +64,15 @@ public class UserServiceV1 {
   public void removeFriend(Long friendId) {
     UserEntity userEntity = this.getCurrentUser();
     userRepository.removeFriend(userEntity.getUserId(), friendId);
+  }
+
+  public List<UserEntity> getUsersIsNotFriend() {
+    UserEntity userEntity = this.getCurrentUser();
+    return userRepository.getUserIsNotFriend(userEntity.getUserId()).toList();
+  }
+
+  public List<UserEntity> getUsersIsFriend() {
+    UserEntity userEntity = this.getCurrentUser();
+    return userRepository.getUserIsFriend(userEntity.getUserId()).toList();
   }
 }

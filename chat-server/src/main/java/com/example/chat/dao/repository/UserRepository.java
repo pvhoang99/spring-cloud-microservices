@@ -13,25 +13,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends Neo4jRepository<UserEntity, Long> {
 
-  boolean existsByUsername(String username);
-
   Optional<UserEntity> findByUsername(String username);
 
   Optional<UserEntity> findByUserId(Long userId);
 
   boolean existsByUserId(Long userId);
 
-  @Query("MATCH (userA:User) , (userB:User)"
+  @Query("MATCH (userA:USER) , (userB:USER) "
       + " WHERE userA.userId = $fromId and userB.userId = $toId "
-      + " CREATE (userA) -[:FRIEND {since : $since]->(userB) ")
+      + " CREATE (userA) -[r:FRIEND {since : $since}]->(userB) ")
   void addFriend(@Param("fromId") Long fromId, @Param("toId") Long toId, @Param("since") Date date);
 
-  @Query("MATCH (userA:User)-[r:FRIEND]-(userB:User) "
+  @Query("MATCH (userA:USER)-[r:FRIEND]-(userB:USER) "
       + "WHERE userA.userId = $fromId and userB.userId = $toId "
-      + "REMOVE r")
+      + "DELETE r")
   void removeFriend(@Param("fromId") Long fromId, @Param("toId") Long toId);
 
-  @Query("MATCH (userA:User), (userB:User) " +
+  @Query("MATCH (userA:USER), (userB:USER) " +
       "WHERE userA.userId = $userId AND userB.userId = $friendId" +
       "MATCH (userA)-[:FRIEND]-(fof:User)-[:FRIEND]-(userB) " +
       "RETURN DISTINCT fof")
@@ -45,4 +43,13 @@ public interface UserRepository extends Neo4jRepository<UserEntity, Long> {
       "ORDER BY Weight DESC")
   Streamable<RankedUser> recommendedFriends(Long userId);
 
+  @Query("MATCH (user:USER),(userB:USER {userId:$me} ) "
+      + "WHERE NOT (userB)-[:FRIEND]-(user) and user.userId <> $me "
+      + "RETURN user")
+  Streamable<UserEntity> getUserIsNotFriend(Long me);
+
+  @Query("MATCH (user:USER),(userB:USER {userId:$me} ) "
+      + "WHERE (userB)-[:FRIEND]-(user) and user.userId <> $me "
+      + "RETURN user")
+  Streamable<UserEntity> getUserIsFriend(Long me);
 }

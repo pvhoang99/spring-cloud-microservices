@@ -28,8 +28,6 @@ public class UserEntity {
 
   private String email;
 
-  private String token;
-
   private OAuth2UserInfoFactory.AuthProvider provider;
 
   private String providerId;

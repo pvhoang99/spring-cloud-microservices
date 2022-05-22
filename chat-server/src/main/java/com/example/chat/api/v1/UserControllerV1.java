@@ -30,20 +30,8 @@ public class UserControllerV1 {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<?> getAllUserInAuth() {
-    log.info("====UserControllerV1 getAllUserInAuth====");
-    return ResponseEntity.ok(authServiceFeignClient.getAll());
-  }
-
-  @GetMapping
   public ResponseEntity<?> getAllUser() {
     return ResponseEntity.ok(userServiceV1.getAll());
-  }
-
-  @PostMapping("/sync")
-  private ResponseEntity<?> syncUser() {
-    userServiceV1.syncUser();
-    return ResponseEntity.ok().build();
   }
 
   @PostMapping()
@@ -73,4 +61,13 @@ public class UserControllerV1 {
     return ResponseEntity.noContent().build();
   }
 
+  @GetMapping(path = "/get-users-is-not-friend")
+  public ResponseEntity<?> getUsersIsNotFriend() {
+    return ResponseEntity.ok(userServiceV1.getUsersIsNotFriend());
+  }
+
+  @GetMapping(path = "/get-users-is-friend")
+  public ResponseEntity<?> getUsersIsFriend() {
+    return ResponseEntity.ok(userServiceV1.getUsersIsFriend());
+  }
 }
