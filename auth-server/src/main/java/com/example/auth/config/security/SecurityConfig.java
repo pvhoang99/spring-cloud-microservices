@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
@@ -49,16 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .antMatcher("/**")
         .authorizeRequests()
-        .antMatchers("/login**", "/oauth/token", "/logout**", "/")
+        .antMatchers("/login**", "/oauth/token", "/logout**", "/", "/api/v1/**")
         .permitAll()
         .and()
         .authorizeRequests()
         .anyRequest().authenticated()
         .and()
         .formLogin()
-        .usernameParameter("username")
-        .passwordParameter("password")
-        .loginPage("/login")
         .permitAll()
         .and()
         .logout()
@@ -74,5 +73,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public RedirectLogoutSuccessHandler redirectLogoutSuccessHandler() {
     return new RedirectLogoutSuccessHandler();
   }
-
 }

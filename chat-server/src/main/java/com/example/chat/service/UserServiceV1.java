@@ -5,6 +5,7 @@ import com.example.chat.dao.entity.RankedUser;
 import com.example.chat.dao.entity.UserEntity;
 import com.example.chat.dao.repository.UserRepository;
 import com.example.chat.dto.UserDTO;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -79,5 +80,15 @@ public class UserServiceV1 {
   public UserEntity findByUserId(Long userId) {
     return userRepository.findByUserId(userId)
         .orElseThrow(() -> new RuntimeException("khong ton tai user with userId: " + userId));
+  }
+
+  public void addFriend(Long friendId) {
+    UserEntity userEntity = this.getCurrentUser();
+    userRepository.addFriend(userEntity.getUserId(), friendId, new Date());
+  }
+
+  public void removeFriend(Long friendId) {
+    UserEntity userEntity = this.getCurrentUser();
+    userRepository.removeFriend(userEntity.getUserId(), friendId);
   }
 }

@@ -13,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,7 +39,7 @@ public class UserControllerV1 {
         .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
   }
 
-  @PostMapping
+  @RequestMapping(path = "/register", method = RequestMethod.POST)
   public ResponseEntity<UserEntity> register(@RequestBody UserEntity userEntity) {
 
     return ResponseEntity.ok(userService.saveUser(userEntity));

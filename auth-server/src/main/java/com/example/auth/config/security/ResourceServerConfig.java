@@ -50,7 +50,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers("/api/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/api/v1/user/revoke").permitAll()
+        .antMatchers("/api/v1/user/revoke", "/api/v1/user/register", "/api/v1/file/upload-file",
+            "/api/v1/file/download-file/**")
+        .permitAll()
         .expressionHandler(webExpressionHandler())
         .anyRequest().authenticated()
         .and()

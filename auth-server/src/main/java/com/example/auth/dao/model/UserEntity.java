@@ -1,6 +1,5 @@
 package com.example.auth.dao.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,7 +35,6 @@ public class UserEntity implements Serializable {
 
   @Column(name = "password", nullable = false, length = 1000)
 //  @JsonView(Views.Admin.class)
-  @JsonIgnore
   private String password;
 
   @Column(name = "full_name")
@@ -48,6 +46,9 @@ public class UserEntity implements Serializable {
   @Column(name = "email")
 //  @JsonView(Views.User.class)
   private String email;
+
+  @Column(name = "image")
+  private String image;
 
   @Column(name = "role_id")
   private Long roleId;

@@ -36,8 +36,8 @@ public class UserControllerV1 {
   }
 
   @GetMapping
-  public Object getAllUser() {
-    return userServiceV1.getAll();
+  public ResponseEntity<?> getAllUser() {
+    return ResponseEntity.ok(userServiceV1.getAll());
   }
 
   @PostMapping("/sync")
@@ -59,6 +59,18 @@ public class UserControllerV1 {
   @GetMapping(path = "/recommend-friends")
   public Flux<RankedUser> getRecommendFriends() {
     return Flux.fromIterable(userServiceV1.recommendFriend());
+  }
+
+  @PostMapping(path = "/add-friend/{friendId}")
+  public ResponseEntity<?> addFriend(@PathVariable("friendId") Long friendId) {
+    userServiceV1.addFriend(friendId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping(path = "/remove-friend/{friendId}")
+  public ResponseEntity<?> removeFriend(@PathVariable("friendId") Long friendId) {
+    userServiceV1.removeFriend(friendId);
+    return ResponseEntity.noContent().build();
   }
 
 }

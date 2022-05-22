@@ -8,12 +8,16 @@ import com.example.auth.dao.repository.RoleRepository;
 import com.example.auth.dao.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringCloudApplication
 @EnableCaching
+@EnableConfigurationProperties
+@ConfigurationPropertiesScan(value = "com.example.auth")
 public class AuthApplication {
 
   public static void main(String[] args) {
@@ -47,7 +51,7 @@ public class AuthApplication {
         userEntity.setPassword("1");
         userEntity.setEmail("phamviethoang1418@gmail.com");
         userEntity.setUsername("hoangpv");
-        userEntity.setRoleId(roleEntity.getId());
+        userEntity.setRoleEntity(roleEntity);
         userRepository.save(userEntity);
       }
     };

@@ -27,7 +27,6 @@ public class CustomAccessTokenConverter extends JwtAccessTokenConverter {
     /*
     Thêm thông tin vào token
     */
-    OAuth2AccessToken oAuth2AccessToken;
     if (userEntity != null) {
       information.put("username", userEntity.getUsername());
       information.put("fullName", userEntity.getFullName());
