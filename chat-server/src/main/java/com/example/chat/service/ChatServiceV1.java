@@ -83,6 +83,8 @@ public class ChatServiceV1 {
     UserEntity from = userServiceV1.findByUsername(principal.getName());
     messageEntity.setUserSend(from);
     messageEntity.setUserReceive(to);
+    messageEntity.setFromUser(from.getUserId());
+    messageEntity.setToUser(to.getUserId());
     messageServiceV1.save(messageEntity);
 
     CompletableFuture

@@ -70,4 +70,9 @@ public class UserControllerV1 {
   public ResponseEntity<?> getUsersIsFriend() {
     return ResponseEntity.ok(userServiceV1.getUsersIsFriend());
   }
+
+  @GetMapping(path = "/get-users-chat-recently")
+  public ResponseEntity<?> getUsersChatRecently() {
+    return ResponseEntity.ok(userServiceV1.getUsersChatRecently());
+  }
 }

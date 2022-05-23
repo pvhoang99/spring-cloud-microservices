@@ -52,4 +52,8 @@ public interface UserRepository extends Neo4jRepository<UserEntity, Long> {
       + "WHERE (userB)-[:FRIEND]-(user) and user.userId <> $me "
       + "RETURN user")
   Streamable<UserEntity> getUserIsFriend(Long me);
+
+  @Query("MATCH (user:USER)-[]-(message:message)-[]-(me:USER {userId: $me}) "
+      + "RETURN user orderBY message.createdAt DESC")
+  Streamable<UserEntity> getUsersChatRecently(Long me);
 }

@@ -29,10 +29,8 @@ public class MessageEntity extends BaseEntity {
 
   private String text;
 
-  @Transient
   private Long fromUser;
 
-  @Transient
   private Long toUser;
 
   @Transient

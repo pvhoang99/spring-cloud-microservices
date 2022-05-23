@@ -75,4 +75,9 @@ public class UserServiceV1 {
     UserEntity userEntity = this.getCurrentUser();
     return userRepository.getUserIsFriend(userEntity.getUserId()).toList();
   }
+
+  public List<UserEntity> getUsersChatRecently() {
+    UserEntity userEntity = this.getCurrentUser();
+    return userRepository.getUsersChatRecently(userEntity.getUserId()).toList();
+  }
 }
