@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -57,9 +58,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .anyRequest().authenticated()
         .and()
-        .formLogin()
-        .permitAll()
-        .and()
+        .formLogin(form -> form
+            .loginPage("/login")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .permitAll()
+            .successHandler(new SavedRequestAwareAuthenticationSuccessHandler())
+        )
         .logout()
         .invalidateHttpSession(true)
         .clearAuthentication(true)

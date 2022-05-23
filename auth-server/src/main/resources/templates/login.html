@@ -1,32 +1,22 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="vi">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-  <title>Spring Security OAuth 2.0 Sample</title>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css"
-        th:href="@{/webjars/bootstrap/css/bootstrap.css}"/>
+  <title>Please Log In</title>
 </head>
 <body>
-<div class="container">
-  <h1>Login</h1>
-  <form th:action="@{/login}" method="post">
-    <div class="form-row">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" autofocus="autofocus" class="form-control">
-        <small class="form-text text-muted">user1 / password</small>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control">
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Log in</button>
-  </form>
-</div>
+<h1>Please Log In</h1>
+<div th:if="${param.error}">
+  Invalid username and password.</div>
+<div th:if="${param.logout}">
+  You have been logged out.</div>
+<form th:action="@{/login}" method="post">
+  <div>
+    <input type="text" name="username" placeholder="Username"/>
+  </div>
+  <div>
+    <input type="password" name="password" placeholder="Password"/>
+  </div>
+  <input type="submit" value="Log in" />
+</form>
 </body>
 </html>
