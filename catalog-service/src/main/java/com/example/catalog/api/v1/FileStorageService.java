@@ -1,4 +1,4 @@
-package com.example.catalog.dao.api.v1;
+package com.example.catalog.api.v1;
 
 import com.example.catalog.dao.entity.FileEntity;
 import com.example.catalog.dao.repository.FileRepository;

@@ -4,6 +4,7 @@ eureka:
   server:
     enable-self-preservation: true
     renewal-percent-threshold: 0.3
+    expected-client-renewal-interval-seconds: 15
 #eureka.server.enable-self-preservation: Configuration for disabling self-preservation – the default value is true
 #eureka.server.expected-client-renewal-interval-seconds: The server expects client heartbeats at an interval configured with this property – the default value is 30
 #eureka.instance.lease-expiration-duration-in-seconds: Indicates the time in seconds that the Eureka server waits since it received the last heartbeat from a client before it can remove that client from its registry – the default value is 90

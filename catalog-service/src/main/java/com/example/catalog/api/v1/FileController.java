@@ -1,4 +1,4 @@
-package com.example.catalog.dao.api.v1;
+package com.example.catalog.api.v1;
 
 import com.example.catalog.file.UploadFileResponse;
 import java.io.IOException;
