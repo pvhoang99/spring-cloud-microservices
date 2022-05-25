@@ -57,7 +57,7 @@ public class ShoppingCartServiceV1 {
               .collect(Collectors.joining(",")));
 
       if (checkAvailableProduct(currentCart, products)) {
-
+        //create order
       }
     }
 
@@ -65,23 +65,19 @@ public class ShoppingCartServiceV1 {
   }
 
   private boolean checkAvailableProduct(ShoppingCart currentCart, List<Product> products) {
-    //TODO: must retrieval
-//    return currentCart.getCartItems().stream().anyMatch(e -> {
-//      Product product = products.stream()
-//          .filter(k -> Objects.equals(k.getProductId(), e.getProduct().getProductId())).findFirst()
-//          .orElseThrow(() -> new RuntimeException("product in cart not exist in catalog"));
-//      return product.getQuantity() >= e.getQuantity();
-//    });
-
-    return true;
+    return currentCart.getCartItems().stream().anyMatch(e -> {
+      Product product = products.stream()
+          .filter(k -> Objects.equals(k.getProductId(), e.getProduct().getProductId())).findFirst()
+          .orElseThrow(() -> new RuntimeException("product in cart not exist in catalog"));
+      return product.getQuantity() >= e.getQuantity();
+    });
   }
-
 
   public ShoppingCart getShoppingCart() throws Exception {
     User user = authServiceFeignClient.getCurrentUser();
     ShoppingCart shoppingCart = null;
     if (user != null) {
-      Catalog catalog = catalogServiceFeignClient.catalog(1L);
+      Catalog catalog = catalogServiceFeignClient.getCatalog();
       shoppingCart = aggregateCartEvents(user, catalog);
     }
     return shoppingCart;

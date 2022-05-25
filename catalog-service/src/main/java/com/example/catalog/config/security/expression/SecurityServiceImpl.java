@@ -1,4 +1,4 @@
-package com.example.auth.config.security.expression;
+package com.example.catalog.config.security.expression;
 
 public class SecurityServiceImpl implements SecurityService {
 
@@ -11,6 +11,7 @@ public class SecurityServiceImpl implements SecurityService {
 
   @Override
   public boolean isOwn(String createdBy) {
+
     return false;
   }
 }

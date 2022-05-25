@@ -1,12 +1,11 @@
 package com.example.catalog.api.v1;
 
-import com.example.catalog.dao.entity.FileEntity;
+import com.example.catalog.dao.entity.File;
 import com.example.catalog.dao.repository.FileRepository;
 import com.example.catalog.exception.FileStorageException;
 import com.example.catalog.exception.MyFileNotFoundException;
 import com.example.catalog.file.FileStorageProperties;
 import com.example.catalog.utils.DateUtils;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -62,7 +61,7 @@ public class FileStorageService {
       Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
       String path = fileStorageLocation.relativize(targetLocation).toString();
-      FileEntity upload = fileRepository.save(new FileEntity(fileId, path));
+      File upload = fileRepository.save(new File(fileId, path));
       return upload.getId();
     } catch (IOException ex) {
       throw new FileStorageException("Could not store file " + fileName + ". Please try again!",
@@ -71,12 +70,12 @@ public class FileStorageService {
   }
 
   public Resource loadFileAsResource(String fileId) {
-    FileEntity fileEntity = fileRepository.findById(fileId)
+    File file = fileRepository.findById(fileId)
         .orElseThrow(() -> new MyFileNotFoundException("file not exist"));
-    String fileName = fileEntity.getUrl();
+    String fileName = file.getUrl();
 
     try {
-      File f = fileStorageLocation.toFile();
+      java.io.File f = fileStorageLocation.toFile();
       if (!f.exists()) {
         throw new RuntimeException();
       }

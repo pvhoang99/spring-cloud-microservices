@@ -1,6 +1,9 @@
 package com.example.auth.config.security;
 
 import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +20,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
@@ -39,6 +44,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   private UserDetailsService userDetailsService;
 
   @Setter(onMethod = @__({@Autowired}))
+  @Qualifier("authenticationManagerBean")
   private AuthenticationManager authenticationManager;
 
   @Setter(onMethod = @__({@Autowired}))
@@ -72,7 +78,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .tokenStore(redisTokenStore())
         .tokenEnhancer(tokenEnhancer())
         .userDetailsService(userDetailsService)
+        .tokenGranter(tokenGranter(endpoints))
     ;
+  }
+
+  private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
+    List<TokenGranter> granters = new ArrayList<TokenGranter>(
+        Collections.singletonList(endpoints.getTokenGranter()));
+    return new CompositeTokenGranter(granters);
   }
 
   // Lưu token vào redis

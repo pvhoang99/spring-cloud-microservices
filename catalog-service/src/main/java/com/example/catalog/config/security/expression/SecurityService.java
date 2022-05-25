@@ -1,4 +1,4 @@
-package com.example.auth.config.security.expression;
+package com.example.catalog.config.security.expression;
 
 public interface SecurityService {
 

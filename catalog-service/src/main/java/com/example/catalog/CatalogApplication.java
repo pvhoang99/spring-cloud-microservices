@@ -1,6 +1,6 @@
 package com.example.catalog;
 
-import com.example.catalog.dao.entity.Catalog;
+import com.example.catalog.dto.Catalog;
 import com.example.catalog.dao.entity.Product;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;

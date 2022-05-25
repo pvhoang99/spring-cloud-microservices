@@ -7,12 +7,12 @@ import lombok.Setter;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
-@NodeEntity(label = "CATALOG")
+@NodeEntity(label = "FILE")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileEntity extends BaseEntity {
+public class File extends BaseEntity {
 
   @Id
   private String id;
