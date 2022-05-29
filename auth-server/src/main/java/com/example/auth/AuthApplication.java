@@ -45,7 +45,6 @@ public class AuthApplication {
       if (!userRepository.existsByUsername("hoangpv")) {
         RoleEntity roleEntity = new RoleEntity("USER", "User");
         UserEntity userEntity = new UserEntity();
-        roleEntity = roleRepository.save(roleEntity);
         userEntity.setFullName("Phạm Việt Hoàng");
         userEntity.setIsActive(true);
         userEntity.setPassword("1");

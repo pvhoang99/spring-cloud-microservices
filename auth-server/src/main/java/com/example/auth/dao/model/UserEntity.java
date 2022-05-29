@@ -50,10 +50,7 @@ public class UserEntity implements Serializable {
   @Column(name = "image")
   private String image;
 
-  @Column(name = "role_id")
-  private Long roleId;
-
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
+  @JoinColumn(name = "role_id", referencedColumnName = "id")
   private RoleEntity roleEntity;
 }

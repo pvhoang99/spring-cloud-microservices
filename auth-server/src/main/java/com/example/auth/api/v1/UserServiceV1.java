@@ -37,7 +37,6 @@ public class UserServiceV1 {
     }
     //hardcode
     RoleEntity roleEntity = roleServiceV1.findByValue("USER");
-    userEntity.setRoleId(roleEntity.getId());
     userEntity.setRoleEntity(roleEntity);
     return userRepository.save(userEntity);
 
