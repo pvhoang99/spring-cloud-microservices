@@ -106,7 +106,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/api/v1/login",
+        .antMatchers("/api/v1/login-grpc",
             "/api/v1/user/all", "/oauth2/**")
         .permitAll()
         .antMatchers("/ws**", "/ws/**").permitAll()

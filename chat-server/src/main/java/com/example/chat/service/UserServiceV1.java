@@ -3,9 +3,16 @@ package com.example.chat.service;
 import com.example.chat.dao.entity.RankedUser;
 import com.example.chat.dao.entity.UserEntity;
 import com.example.chat.dao.repository.UserRepository;
+import com.example.chat.dto.LoginByUsernameAndPasswordDTO;
+import com.example.grpc.auth.AuthServiceGrpc;
+import com.example.grpc.auth.LoginRequest;
+import com.example.grpc.auth.LoginResponse;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +23,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceV1 {
 
   private final UserRepository userRepository;
+
+  @GrpcClient("auth-server")
+  private AuthServiceGrpc.AuthServiceBlockingStub serviceBlockingStub;
 
   public Streamable<UserEntity> mutualFriends(Long friendId) {
 
@@ -79,5 +89,19 @@ public class UserServiceV1 {
   public List<UserEntity> getUsersChatRecently() {
     UserEntity userEntity = this.getCurrentUser();
     return userRepository.getUsersChatRecently(userEntity.getUserId()).toList();
+  }
+
+  public Map<String, Object> loginResponse(LoginByUsernameAndPasswordDTO login) {
+    LoginResponse loginResponse = serviceBlockingStub.login(
+        LoginRequest.newBuilder()
+            .setUsername(login.getUsername())
+            .setPassword(login.getPassword())
+            .setClientId("chat-server")
+            .setGrantType("grant_type")
+            .setClientSecret("1")
+            .build());
+    return new HashMap<>() {{
+      put("token", loginResponse.getAccessToken());
+    }};
   }
 }

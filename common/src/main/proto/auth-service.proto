@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package net.devh.boot.grpc.example;
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc.auth";
+option java_outer_classname = "GrpcAuthService";
+
+service AuthService {
+  // Sends a greeting
+  rpc login (LoginRequest) returns (LoginResponse) {
+  }
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+  string grant_type = 3;
+  string client_id = 4;
+  string client_secret = 5;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+
+}
