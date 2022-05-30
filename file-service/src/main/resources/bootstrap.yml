@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: file-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888
+      username: hoang
+      password: hoang
+  main:
+    allow-bean-definition-overriding: true
+server:
+  servlet:
+    context-path: /file-service
+  port: 8087

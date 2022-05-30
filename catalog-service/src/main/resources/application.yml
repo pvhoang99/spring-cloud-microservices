@@ -10,11 +10,10 @@ security:
       access-token-uri: http://localhost:8082/auth-server/oauth/token
       scope: read
 spring:
-  data:
-    neo4j:
-      uri: bolt://localhost:7687
-      username: neo4j
-      password: s3cr3t
+  datasource:
+    url: jdbc:mysql://localhost:3306/catalog?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
   jpa:
     generate-ddl: true
     hibernate:
@@ -30,5 +29,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-file:
-  upload-dir: ./upload
+graphql:
+  servlet:
+    mapping: /api/v1/graphql
+

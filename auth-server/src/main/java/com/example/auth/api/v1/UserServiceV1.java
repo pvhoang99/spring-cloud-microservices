@@ -85,6 +85,5 @@ public class UserServiceV1 extends AuthServiceGrpc.AuthServiceImplBase {
     } catch (Exception e) {
       responseObserver.onError(new RuntimeException("error login"));
     }
-
   }
 }

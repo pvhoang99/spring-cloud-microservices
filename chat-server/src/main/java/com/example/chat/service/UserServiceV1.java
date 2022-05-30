@@ -97,11 +97,12 @@ public class UserServiceV1 {
             .setUsername(login.getUsername())
             .setPassword(login.getPassword())
             .setClientId("chat-server")
-            .setGrantType("grant_type")
+            .setGrantType("password")
             .setClientSecret("1")
             .build());
     return new HashMap<>() {{
-      put("token", loginResponse.getAccessToken());
+      put("access_token", loginResponse.getAccessToken());
+      put("refresh_token", loginResponse.getRefreshToken());
     }};
   }
 }

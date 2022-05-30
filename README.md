@@ -10,3 +10,5 @@
   + spring state machine (persist, mongodb)
   + event sourcing (shopping-cart-service reference https://github.com/chaokunyang/microservices-event-sourcing)
   + CircuitBreaker pattern
+  + grpc protocol
+  + graphql (updating)

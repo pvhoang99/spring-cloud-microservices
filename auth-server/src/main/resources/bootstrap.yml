@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: true
+  application:
+    name: auth-server

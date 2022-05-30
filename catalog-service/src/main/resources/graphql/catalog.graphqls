@@ -1,0 +1,21 @@
+type Catalog {
+  id: ID
+  name: String!,
+  code: String!,
+  disease : [Disease]!
+}
+
+type Disease {
+      id: ID,
+      name : String!,
+      code : String!,
+      catalog : Catalog
+}
+
+type Mutation {
+	createCatalog(name: String!, code: String!): Catalog!
+}
+
+type Query {
+  findAllCatalogs : [Catalog]!
+}

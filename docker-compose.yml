@@ -1,0 +1,58 @@
+version: '2.2'
+
+services:
+
+  config-server:
+    container_name: config-server
+    build: ./config-server
+    restart: on-failure
+    ports:
+      - "8888:8888"
+    networks:
+      - default-network
+    volumes:
+      - "./config-server/target:/microservices/config-server"
+
+  discovery-server:
+    container_name: discovery-server
+    build: ./discovery-server
+    restart: on-failure
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - default-network
+    command: >
+      -c "
+      while ! (nc -z config-server 8888); do sleep 5; echo 'Waiting for config-server services to start-up...'; done;
+      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8888,suspend=n -jar -Dspring.profiles.active=docker /app.jar
+      "
+    volumes:
+      - "./discovery-server/target:/microservices/discovery-server"
+    environment:
+      - -Dspring.profiles.active=docker
+
+  auth-server:
+    container_name: auth-server
+    build: ./auth-server
+    restart: on-failure
+    ports:
+      - "8082:8082"
+    depends_on:
+      - config-server
+    command: >
+      -c "
+      while ! (nc -z config-server 8888); do sleep 5; echo 'Waiting for config-server services to start-up...'; done;
+      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8888,suspend=n -jar -Dspring.profiles.active=docker /app.jar
+      "
+    networks:
+      - default-network
+    volumes:
+      - "./auth-server/target:/microservices/auth-server"
+    environment:
+      - -Dspring.profiles.active=docker
+
+networks:
+  default-network:
+    driver: bridge

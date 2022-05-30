@@ -108,13 +108,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     resources.stateless(true);
   }
 
-  @Bean
-  public EvaluationContextExtension securityExtension() {
-    return new SecurityEvaluationContextExtension();
-  }
-
-  @Bean("securityService")
-  public SecurityService securityService() {
-    return new SecurityServiceImpl();
-  }
+//  @Bean
+//  public EvaluationContextExtension securityExtension() {
+//    return new SecurityEvaluationContextExtension();
+//  }
+//
+//  @Bean("securityService")
+//  public SecurityService securityService() {
+//    return new SecurityServiceImpl();
+//  }
 }
