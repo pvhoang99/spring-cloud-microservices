@@ -10,14 +10,16 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "oauth_refresh_token")
+@Getter
+@Setter
 public class OauthRefreshTokenEntity implements Serializable {
 
   @Id

@@ -36,7 +36,7 @@ public class AuthApplication {
         clientDetailEntity.setAutoApprove(true);
         clientDetailEntity.setClientSecret("1");
         clientDetailEntity.setResourceIds(
-            "hoang,auth-server,order-server,chat-server,catalog-service,shopping-cart-service,file-service");
+            "hoang,auth-server,order-server,chat-server,catalog-service,shopping-cart-service,file-service,patient-service");
         clientDetailEntity.setScope("read,write,server");
         clientDetailEntity.setWebServerRedirectUri(
             "http://192.168.238.1:8085/chat-server/oauth2/callback/hoang,http://localhost:3000/sso,http://localhost:8085/chat-server/oauth2/callback/hoang");

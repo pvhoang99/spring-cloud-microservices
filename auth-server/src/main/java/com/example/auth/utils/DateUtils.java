@@ -16,8 +16,7 @@ public class DateUtils {
       return null;
     }
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-    ZonedDateTime date = ZonedDateTime.parse(timeString, formatter);
-    return date;
+    return ZonedDateTime.parse(timeString, formatter);
   }
 
   public static String format(LocalDate d, String format) {

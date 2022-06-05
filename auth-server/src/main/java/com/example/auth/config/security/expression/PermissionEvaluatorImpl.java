@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
 import org.springframework.security.access.PermissionEvaluator;
-import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 

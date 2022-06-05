@@ -73,7 +73,7 @@ public class UserServiceV1 extends AuthServiceGrpc.AuthServiceImplBase {
         put("client_secret", request.getClientSecret());
       }};
       ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(
-          new UsernamePasswordAuthenticationToken(request.getUsername(), null, new ArrayList<>()),
+          new UsernamePasswordAuthenticationToken(request.getClientId(), null, new ArrayList<>()),
           parameters);
       OAuth2AccessToken accessToken = response.getBody();
       assert accessToken != null;

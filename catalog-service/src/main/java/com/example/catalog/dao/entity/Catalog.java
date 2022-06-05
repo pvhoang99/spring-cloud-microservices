@@ -2,6 +2,7 @@ package com.example.catalog.dao.entity;
 
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,8 +26,10 @@ public class Catalog extends BaseEntity {
   @GeneratedValue
   private Long id;
 
+  @Column(name = "name")
   private String name;
 
+  @Column(name = "code")
   private String code;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "catalog", cascade = CascadeType.ALL)

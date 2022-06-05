@@ -5,7 +5,6 @@ import com.example.auth.dao.repository.RoleRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.stereotype.Service;
 
 @Service

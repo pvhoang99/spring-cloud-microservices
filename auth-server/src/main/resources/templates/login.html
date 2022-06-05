@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="vi">
 <head>
   <title>Please Log In</title>
 </head>
@@ -11,10 +11,14 @@
   You have been logged out.</div>
 <form th:action="@{/login}" method="post">
   <div>
-    <input type="text" name="username" placeholder="Username"/>
+    <label>
+      <input type="text" name="username" placeholder="Username"/>
+    </label>
   </div>
   <div>
-    <input type="password" name="password" placeholder="Password"/>
+    <label>
+      <input type="password" name="password" placeholder="Password"/>
+    </label>
   </div>
   <input type="submit" value="Log in" />
 </form>

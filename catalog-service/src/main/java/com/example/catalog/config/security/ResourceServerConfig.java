@@ -1,7 +1,5 @@
 package com.example.catalog.config.security;
 
-import com.example.catalog.config.security.expression.SecurityService;
-import com.example.catalog.config.security.expression.SecurityServiceImpl;
 import com.example.common.config.ConfigurationGlobal;
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
@@ -12,10 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.spel.spi.EvaluationContextExtension;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;

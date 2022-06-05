@@ -102,7 +102,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   }
 
   @Override
-  public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+  public void configure(ResourceServerSecurityConfigurer resources) {
     resources.tokenServices(remoteTokenServices());
     resources.resourceId(sso.getResourceId());
     resources.stateless(true);

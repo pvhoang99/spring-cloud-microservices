@@ -17,6 +17,3 @@ eureka:
     prefer-ip-address: true
   client:
     fetch-registry: true
-
-file:
-  upload-dir: ./upload
