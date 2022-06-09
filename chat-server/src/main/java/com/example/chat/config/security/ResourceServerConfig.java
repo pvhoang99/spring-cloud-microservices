@@ -3,6 +3,10 @@ package com.example.chat.config.security;
 import com.example.common.config.ConfigurationGlobal;
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -10,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
@@ -61,7 +67,27 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   @LoadBalanced
   public OAuth2RestOperations restTemplate() {
-    return new OAuth2RestTemplate(clientCredentialsResourceDetails(), oAuth2ClientContext);
+    OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(
+        clientCredentialsResourceDetails(), oAuth2ClientContext);
+    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    connectionManager.setMaxTotal(100);
+    connectionManager.setDefaultMaxPerRoute(20);
+
+    RequestConfig requestConfig = RequestConfig
+        .custom()
+        .setConnectionRequestTimeout(5000)
+        .setSocketTimeout(5000)
+        .setConnectTimeout(5000)
+        .build();
+
+    HttpClient httpClient = HttpClientBuilder.create()
+        .setConnectionManager(connectionManager)
+        .setDefaultRequestConfig(requestConfig).build();
+
+    ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
+        httpClient);
+    oAuth2RestTemplate.setRequestFactory(requestFactory);
+    return oAuth2RestTemplate;
   }
 
   @LoadBalanced

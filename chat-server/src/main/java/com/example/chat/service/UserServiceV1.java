@@ -25,7 +25,7 @@ public class UserServiceV1 {
   private final UserRepository userRepository;
 
   @GrpcClient("auth-server")
-  private final AuthServiceGrpc.AuthServiceBlockingStub serviceBlockingStub;
+  private AuthServiceGrpc.AuthServiceBlockingStub serviceBlockingStub;
 
   public Streamable<UserEntity> mutualFriends(Long friendId) {
 
