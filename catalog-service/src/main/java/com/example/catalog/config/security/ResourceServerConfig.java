@@ -1,8 +1,18 @@
 package com.example.catalog.config.security;
 
 import com.example.common.config.ConfigurationGlobal;
+import com.example.grpc.catalog.CatalogServiceGrpc;
 import feign.RequestInterceptor;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
+import net.devh.boot.grpc.server.security.authentication.BearerAuthenticationReader;
+import net.devh.boot.grpc.server.security.authentication.CompositeGrpcAuthenticationReader;
+import net.devh.boot.grpc.server.security.authentication.GrpcAuthenticationReader;
+import net.devh.boot.grpc.server.security.check.AccessPredicate;
+import net.devh.boot.grpc.server.security.check.AccessPredicateVoter;
+import net.devh.boot.grpc.server.security.check.GrpcSecurityMetadataSource;
+import net.devh.boot.grpc.server.security.check.ManualGrpcSecurityMetadataSource;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -10,6 +20,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -24,6 +37,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -113,4 +127,28 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //  public SecurityService securityService() {
 //    return new SecurityServiceImpl();
 //  }
+
+  @Bean
+  public GrpcAuthenticationReader authenticationReader() {
+    final List<GrpcAuthenticationReader> readers = new ArrayList<>();
+    // The actual token class is dependent on your spring-security library (OAuth2/JWT/...)
+    readers.add(new BearerAuthenticationReader(
+        BearerTokenAuthenticationToken::new));
+    return new CompositeGrpcAuthenticationReader(readers);
+  }
+
+  @Bean
+  public GrpcSecurityMetadataSource grpcSecurityMetadataSource() {
+    final ManualGrpcSecurityMetadataSource source = new ManualGrpcSecurityMetadataSource();
+    source.set(CatalogServiceGrpc.getGetDiseaseMethod(), AccessPredicate.permitAll());
+    source.setDefault(AccessPredicate.denyAll());
+    return source;
+  }
+
+  @Bean
+  public AccessDecisionManager accessDecisionManager() {
+    final List<AccessDecisionVoter<?>> voters = new ArrayList<>();
+    voters.add(new AccessPredicateVoter());
+    return new UnanimousBased(voters);
+  }
 }

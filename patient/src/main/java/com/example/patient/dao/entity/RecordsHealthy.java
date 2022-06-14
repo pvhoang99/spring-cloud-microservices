@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Patient {
+public class RecordsHealthy {
 
   @MongoId
   private ObjectId objectId;

@@ -9,14 +9,15 @@ import com.example.grpc.catalog.DiseaseResponse;
 import com.example.grpc.catalog.GetDiseaseByIdRequest;
 import com.example.grpc.catalog.GetDiseaseByIdResponse;
 import io.grpc.stub.StreamObserver;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import net.devh.boot.grpc.server.service.GrpcService;
 
-@Service
+@GrpcService
 @RequiredArgsConstructor
 public class CatalogServiceV1 extends CatalogServiceGrpc.CatalogServiceImplBase {
 
@@ -38,13 +39,18 @@ public class CatalogServiceV1 extends CatalogServiceGrpc.CatalogServiceImplBase 
   public void getDisease(GetDiseaseByIdRequest request,
       StreamObserver<GetDiseaseByIdResponse> responseObserver) {
     try {
-      List<Long> ids = Arrays.stream(request.getIds().split(",")).map(Long::parseLong).collect(
-          Collectors.toList());
+      List<Long> ids = Arrays.stream(request.getIds().split(",")).map(Long::parseLong)
+          .collect(Collectors.toList());
       List<Disease> results = diseaseRepository.getDiseaseByIds(ids);
 
-      Iterable<DiseaseResponse> diseases = results.stream().map(this.mapToDiseaseResponse())
-          .collect(
-              Collectors.toList());
+      List<DiseaseResponse> diseases = new ArrayList<>();
+      for (Disease disease : results) {
+        diseases.add(DiseaseResponse.newBuilder()
+            .setName(disease.getName())
+            .setImageUrl(disease.getImageUrl())
+            .setCode(disease.getCode())
+            .build());
+      }
 
       GetDiseaseByIdResponse response = GetDiseaseByIdResponse.newBuilder()
           .addAllDisease(diseases)

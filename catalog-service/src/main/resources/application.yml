@@ -34,4 +34,4 @@ graphql:
 
 grpc:
   server:
-    port: 1901
+    port: 2000

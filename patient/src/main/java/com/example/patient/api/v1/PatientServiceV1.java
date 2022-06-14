@@ -1,12 +1,12 @@
 package com.example.patient.api.v1;
 
-import com.example.grpc.catalog.CatalogServiceGrpc.CatalogServiceBlockingStub;
+import com.example.grpc.catalog.CatalogServiceGrpc;
 import com.example.grpc.catalog.DiseaseResponse;
 import com.example.grpc.catalog.GetDiseaseByIdRequest;
 import com.example.grpc.catalog.GetDiseaseByIdResponse;
 import com.example.patient.dao.entity.Disease;
-import com.example.patient.dao.entity.Patient;
-import com.example.patient.dao.repository.PatientRepository;
+import com.example.patient.dao.entity.RecordsHealthy;
+import com.example.patient.dao.repository.RecordsHealthyRepository;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -19,20 +19,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PatientServiceV1 {
 
-  private final PatientRepository patientRepository;
+  private final RecordsHealthyRepository recordsHealthyRepository;
 
   @GrpcClient("catalog-service")
-  private CatalogServiceBlockingStub catalogServiceBlockingStub;
+  private CatalogServiceGrpc.CatalogServiceBlockingStub catalogServiceBlockingStub;
 
-
-  public Patient postCreatPatient(Patient patient) {
+  public RecordsHealthy postCreatRecordHealthy(RecordsHealthy recordsHealthy) {
 
     List<Disease> diseases = null;
-    if (StringUtils.isNotEmpty(patient.getDiseaseIds())) {
-      diseases = this.getDiseaseByIds(patient.getDiseaseIds());
+    if (StringUtils.isNotEmpty(recordsHealthy.getDiseaseIds())) {
+      diseases = this.getDiseaseByIds(recordsHealthy.getDiseaseIds());
     }
-    patient.setDiseases(diseases);
-    return patientRepository.save(patient);
+    recordsHealthy.setDiseases(diseases);
+    return recordsHealthyRepository.save(recordsHealthy);
   }
 
   public List<Disease> getDiseaseByIds(String ids) {
