@@ -89,14 +89,6 @@
       <version>2.2.1</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-messaging</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
     </dependency>
@@ -118,6 +110,11 @@
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java-tools</artifactId>
       <version>5.2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>net.devh</groupId>
+      <artifactId>grpc-server-spring-boot-starter</artifactId>
+      <version>2.12.0.RELEASE</version>
     </dependency>
   </dependencies>
 

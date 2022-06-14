@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package net.devh.boot.grpc.example;
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc.catalog";
+option java_outer_classname = "GrpcCatalogService";
+
+service CatalogService {
+
+  rpc getDisease (GetDiseaseByIdRequest) returns (GetDiseaseByIdResponse) {
+  }
+}
+
+message GetDiseaseByIdRequest {
+  string ids = 1;
+}
+
+message DiseaseResponse {
+  string name = 1;
+  string code = 2;
+  string imageUrl = 3;
+}
+message GetDiseaseByIdResponse {
+  repeated DiseaseResponse disease = 1;
+}

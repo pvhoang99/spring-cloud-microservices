@@ -15,7 +15,6 @@ spring:
     username: root
     password: 123456
   jpa:
-    generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -33,3 +32,6 @@ graphql:
   servlet:
     mapping: /api/v1/graphql
 
+grpc:
+  server:
+    port: 1901

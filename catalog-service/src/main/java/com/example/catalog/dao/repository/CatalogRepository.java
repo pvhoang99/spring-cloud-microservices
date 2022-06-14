@@ -10,4 +10,5 @@ public interface CatalogRepository extends JpaRepository<Catalog, Long> {
 
   Optional<Catalog> findByCode(String code);
 
+  boolean existsByCode(String code);
 }
