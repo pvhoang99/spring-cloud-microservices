@@ -6,6 +6,7 @@ import feign.RequestInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import net.devh.boot.grpc.common.util.InterceptorOrder;
 import net.devh.boot.grpc.server.security.authentication.BearerAuthenticationReader;
 import net.devh.boot.grpc.server.security.authentication.CompositeGrpcAuthenticationReader;
 import net.devh.boot.grpc.server.security.authentication.GrpcAuthenticationReader;
@@ -13,6 +14,7 @@ import net.devh.boot.grpc.server.security.check.AccessPredicate;
 import net.devh.boot.grpc.server.security.check.AccessPredicateVoter;
 import net.devh.boot.grpc.server.security.check.GrpcSecurityMetadataSource;
 import net.devh.boot.grpc.server.security.check.ManualGrpcSecurityMetadataSource;
+import net.devh.boot.grpc.server.security.interceptors.DefaultAuthenticatingServerInterceptor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -20,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.UnanimousBased;
@@ -34,9 +37,11 @@ import org.springframework.security.oauth2.client.token.grant.client.ClientCrede
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -87,7 +92,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Bean
   @Primary
-  public RemoteTokenServices remoteTokenServices() {
+  public ResourceServerTokenServices remoteTokenServices() {
     RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
     remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientId());
     remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientSecret());
@@ -131,7 +136,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   public GrpcAuthenticationReader authenticationReader() {
     final List<GrpcAuthenticationReader> readers = new ArrayList<>();
-    // The actual token class is dependent on your spring-security library (OAuth2/JWT/...)
     readers.add(new BearerAuthenticationReader(
         BearerTokenAuthenticationToken::new));
     return new CompositeGrpcAuthenticationReader(readers);
@@ -143,6 +147,17 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     source.set(CatalogServiceGrpc.getGetDiseaseMethod(), AccessPredicate.permitAll());
     source.setDefault(AccessPredicate.denyAll());
     return source;
+  }
+
+  @Bean
+  @Order(InterceptorOrder.ORDER_SECURITY_AUTHENTICATION)
+  public DefaultAuthenticatingServerInterceptor authenticatingServerInterceptor() {
+    OAuth2AuthenticationManager oAuth2AuthenticationManager = new OAuth2AuthenticationManager();
+    oAuth2AuthenticationManager.setTokenServices(remoteTokenServices());
+    oAuth2AuthenticationManager.setResourceId(sso.getResourceId());
+    oAuth2AuthenticationManager.setClientDetailsService(null);
+    return new DefaultAuthenticatingServerInterceptor(oAuth2AuthenticationManager,
+        authenticationReader());
   }
 
   @Bean

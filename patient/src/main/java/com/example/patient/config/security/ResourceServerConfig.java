@@ -133,7 +133,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   }
 
   @Bean
-  GlobalClientInterceptorConfigurer globalClientInterceptorConfigurer() {
+  public GlobalClientInterceptorConfigurer globalClientInterceptorConfigurer() {
     return interceptors -> interceptors.add(
         MetadataUtils.newAttachHeadersInterceptor(new Metadata()));
   }

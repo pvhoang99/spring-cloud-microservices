@@ -15,10 +15,14 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.apache.commons.lang.StringUtils;
 
 @GrpcService
 @RequiredArgsConstructor
+@Slf4j
 public class CatalogServiceV1 extends CatalogServiceGrpc.CatalogServiceImplBase {
 
   private final CatalogRepository catalogRepository;
@@ -47,7 +51,7 @@ public class CatalogServiceV1 extends CatalogServiceGrpc.CatalogServiceImplBase 
       for (Disease disease : results) {
         diseases.add(DiseaseResponse.newBuilder()
             .setName(disease.getName())
-            .setImageUrl(disease.getImageUrl())
+            .setImageUrl(StringUtils.isNotEmpty(disease.getImageUrl()) ? disease.getImageUrl() : "")
             .setCode(disease.getCode())
             .build());
       }
@@ -58,6 +62,7 @@ public class CatalogServiceV1 extends CatalogServiceGrpc.CatalogServiceImplBase 
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     } catch (Exception e) {
+      log.error("====CatalogServiceV1 getDisease with error ----> ", e);
       responseObserver.onError(e);
     }
   }
