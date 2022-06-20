@@ -5,6 +5,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
@@ -46,7 +47,7 @@ public class KeyUtil {
       String result = "";
       ClassLoader classLoader = FileUtils.class.getClassLoader();
       try {
-        result = IOUtils.toString(classLoader.getResourceAsStream(fileName), "UTF-8");
+        result = IOUtils.toString(Objects.requireNonNull(classLoader.getResourceAsStream(fileName)), "UTF-8");
       } catch (Exception e) {
         e.printStackTrace();
       }

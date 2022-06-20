@@ -3,6 +3,7 @@ package com.example.patient.dao.entity;
 import java.util.LinkedList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RecordsHealthy {
+public class RecordsHealthy extends BaseEntity {
 
   @MongoId
   private ObjectId objectId;
@@ -35,4 +36,19 @@ public class RecordsHealthy {
   private String diseaseIds;
 
   private List<Disease> diseases = new LinkedList<>();
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @Builder
+  @AllArgsConstructor
+  public static class Disease {
+
+    private String name;
+
+    private String code;
+
+    private String imageUrl;
+  }
+
 }
