@@ -1,5 +1,6 @@
 package com.example.chat.config.socket.listener;
 
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -12,7 +13,7 @@ public class WebSocketConnectEventListener implements ApplicationListener<Sessio
   private final Logger logger = LoggerFactory.getLogger(WebSocketConnectEventListener.class);
 
   @Override
-  public void onApplicationEvent(SessionConnectedEvent event) {
+  public void onApplicationEvent(@NonNull final SessionConnectedEvent event) {
     logger.info("Socket connect");
   }
 }

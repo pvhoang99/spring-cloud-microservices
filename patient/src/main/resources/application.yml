@@ -1,13 +1,13 @@
 security:
   oauth2:
     resource:
-      token-info-uri: http://localhost:8082/auth-server/oauth/check_token
-      user-info-uri: http://localhost:8082/auth-server/api/v1/user/me
+      token-info-uri: http://auth-server/auth-server/oauth/check_token
+      user-info-uri: http://auth-server/auth-server/api/v1/user/me
       id: patient-service
     client:
       client-id: hoang
       client-secret: 1
-      access-token-uri: http://localhost:8082/auth-server/oauth/token
+      access-token-uri: http://auth-server/auth-server/oauth/token
       scope: read
 spring:
   data:
@@ -36,4 +36,9 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+
+ribbon:
+  http:
+    client:
+      enabled: true
 

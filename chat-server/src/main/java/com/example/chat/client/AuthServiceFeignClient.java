@@ -1,6 +1,5 @@
 package com.example.chat.client;
 
-
 import com.example.chat.dto.UserDTO;
 import java.util.List;
 import java.util.Map;

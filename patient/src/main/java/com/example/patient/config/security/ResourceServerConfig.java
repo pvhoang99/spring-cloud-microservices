@@ -16,6 +16,8 @@ import net.devh.boot.grpc.server.security.authentication.GrpcAuthenticationReade
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
+import org.springframework.cloud.netflix.ribbon.RibbonClientHttpRequestFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -80,8 +82,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @LoadBalanced
   @Bean("loadBalancedRestTemplate")
-  public RestTemplate loadBalancedRestTemplate() {
-    return new RestTemplate();
+  public RestTemplate loadBalancedRestTemplate(final RemoteTokenServices remoteTokenServices) {
+    RestTemplate restTemplate = new RestTemplate();
+    remoteTokenServices.setRestTemplate(restTemplate);
+    return restTemplate;
+  }
+
+  @Bean
+  public RestTemplateCustomizer ribbonClientRestTemplateCustomizer(
+      final RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory) {
+    return restTemplate -> restTemplate.setRequestFactory(ribbonClientHttpRequestFactory);
   }
 
   @Bean
@@ -92,7 +102,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientSecret());
     remoteTokenServices
         .setCheckTokenEndpointUrl(clientCredentialsResourceDetails().getAccessTokenUri());
-    remoteTokenServices.setRestTemplate(loadBalancedRestTemplate());
     return remoteTokenServices;
   }
 
