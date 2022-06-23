@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,6 +52,25 @@ public class PatientServiceV1 {
         .name(e.getName())
         .imageUrl(e.getImageUrl())
         .build();
+  }
+
+  public RecordsHealthy getRecordsHealthyById(String id) {
+    return recordsHealthyRepository.findById(new ObjectId(id)).orElse(null);
+  }
+
+  public List<RecordsHealthy> getAllRecordsHealthy() {
+    return recordsHealthyRepository.findAll();
+  }
+
+  public boolean putChangeToNFT(String id) {
+
+    RecordsHealthy recordsHealthy = recordsHealthyRepository.findById(new ObjectId(id))
+        .orElse(null);
+    if (recordsHealthy != null) {
+      recordsHealthy.setNFT(true);
+      recordsHealthyRepository.save(recordsHealthy);
+    }
+    return recordsHealthy != null;
   }
 
 }

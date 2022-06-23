@@ -31,4 +31,11 @@ public class CatalogControllerV1 {
         .map(rs -> new ResponseEntity<>(rs, HttpStatus.CREATED))
         .orElse(new ResponseEntity<>(HttpStatus.NOT_MODIFIED));
   }
+
+  @RequestMapping(path = "/disease/all", method = RequestMethod.GET, name = "getAllDisease")
+  public ResponseEntity<?> getAllDisease() {
+    return Optional.ofNullable(catalogService.getAllDisease())
+        .map(rs -> new ResponseEntity<>(rs, HttpStatus.OK))
+        .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
+  }
 }

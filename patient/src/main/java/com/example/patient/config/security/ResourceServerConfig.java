@@ -109,7 +109,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/api/v1/login").permitAll()
+        .antMatchers("/api/v1/login", "/api/v1/records-healthy/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling()

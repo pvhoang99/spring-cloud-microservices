@@ -1,5 +1,7 @@
 package com.example.patient.dao.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.LinkedList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -20,17 +22,20 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 public class RecordsHealthy extends BaseEntity {
 
   @MongoId
+  @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId objectId;
 
   private String fullName;
 
-  private String imageUrl;
+  private String imageId;
 
   private String icNumber;
 
   private String phoneNumber;
 
   private String fullAddress;
+
+  private boolean isNFT;
 
   @Transient
   private String diseaseIds;

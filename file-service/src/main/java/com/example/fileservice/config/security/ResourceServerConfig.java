@@ -126,6 +126,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
+        .antMatchers("/api/v1/file/downloadFile/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling()

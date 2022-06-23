@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.apache.commons.lang.StringUtils;
@@ -73,5 +72,9 @@ public class CatalogServiceV1 extends CatalogServiceGrpc.CatalogServiceImplBase 
         .setName(e.getName())
         .setImageUrl(e.getImageUrl())
         .build();
+  }
+
+  public List<Disease> getAllDisease() {
+    return diseaseRepository.findAll();
   }
 }
