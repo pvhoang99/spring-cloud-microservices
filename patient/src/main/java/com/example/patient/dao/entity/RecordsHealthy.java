@@ -35,7 +35,7 @@ public class RecordsHealthy extends BaseEntity {
 
   private String fullAddress;
 
-  private boolean isNFT;
+  private Boolean isNFT;
 
   @Transient
   private String diseaseIds;

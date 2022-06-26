@@ -1,70 +1,75 @@
 spring:
   cloud:
     gateway:
+      globalCors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
       routes:
         - id: patientModule
           uri: lb://patient-service
           predicates:
             - Path=/patient-service/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: fileModule
           uri: lb://file-service
           predicates:
             - Path=/file-service/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: authModule
           uri: lb://auth-server
           predicates:
             - Path=/auth-server/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: catalogModule
           uri: lb://catalog-service
           predicates:
             - Path=/catalog/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: shoppingCartModule
           uri: lb://shopping-cart-service
           predicates:
             - Path=/cart/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: orderModule
           uri: lb://order-service
           predicates:
             - Path=/order/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: chatModule1
           uri: lb://chat-server
           predicates:
             - Path=/chat-server/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/fallback/message
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
         - id: chatModule2
           uri: lb://chat-server
           predicates:
@@ -86,3 +91,4 @@ eureka:
     prefer-ip-address: true
   client:
     fetch-registry: true
+

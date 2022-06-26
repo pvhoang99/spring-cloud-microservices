@@ -1,5 +1,6 @@
 package com.example.patient.api.v1;
 
+import com.example.common.utils.Helper;
 import com.example.grpc.catalog.CatalogServiceGrpc;
 import com.example.grpc.catalog.DiseaseResponse;
 import com.example.grpc.catalog.GetDiseaseByIdRequest;
@@ -15,6 +16,7 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -67,10 +69,24 @@ public class PatientServiceV1 {
     RecordsHealthy recordsHealthy = recordsHealthyRepository.findById(new ObjectId(id))
         .orElse(null);
     if (recordsHealthy != null) {
-      recordsHealthy.setNFT(true);
+      recordsHealthy.setIsNFT(true);
       recordsHealthyRepository.save(recordsHealthy);
     }
     return recordsHealthy != null;
+  }
+
+  public RecordsHealthy putUpdateRecordsHealthy(RecordsHealthy recordsHealthy) {
+
+    if (ObjectUtils.isEmpty(recordsHealthy.getObjectId())) {
+      throw new RuntimeException();
+    }
+
+    RecordsHealthy healthy = recordsHealthyRepository.findById(recordsHealthy.getObjectId())
+        .orElse(null);
+    assert healthy != null;
+    Helper.copyNonNullProperties(recordsHealthy, healthy);
+
+    return recordsHealthyRepository.save(healthy);
   }
 
 }

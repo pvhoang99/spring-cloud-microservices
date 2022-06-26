@@ -41,4 +41,9 @@ public class PatientControllerV1 {
   public boolean putChangeRecordsHealthyToNft(@PathVariable("id") String id) {
     return patientServiceV1.putChangeToNFT(id);
   }
+
+  @RequestMapping(value = "/records-healthy/update", method = RequestMethod.PATCH)
+  public ResponseEntity<?> putUpdateRecordsHealthy(@RequestBody RecordsHealthy recordsHealthy) {
+    return ResponseEntity.ok(patientServiceV1.putUpdateRecordsHealthy(recordsHealthy));
+  }
 }
