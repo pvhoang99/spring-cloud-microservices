@@ -92,3 +92,5 @@ eureka:
   client:
     fetch-registry: true
 
+server:
+  port: 8000

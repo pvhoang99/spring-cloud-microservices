@@ -3,54 +3,123 @@ version: '2.2'
 services:
   config-server:
     container_name: config-server
-    build: ./config-server
-    restart: on-failure
-    ports:
-      - "8888:8888"
+    build:
+      dockerfile: Dockerfile
+      context: ./
     networks:
       - default-network
     volumes:
-      - "./config-server/target:/microservices/config-server"
+      - .:/microservices
+      - m2_data:/root/.m2/repository
+    environment:
+      - DIR=config-server
+      - JAVA_OPTS=-Xms1024M -Xmx2024M
+    working_dir: /microservices
+    mem_limit: 1024m
+    mem_reservation: 512m
+    cpus: 1
+
   discovery-server:
     container_name: discovery-server
-    build: ./discovery-server
-    restart: on-failure
+    build:
+      dockerfile: Dockerfile
+      context: ./
     ports:
       - "8761:8761"
-    depends_on:
-      - config-server
     networks:
       - default-network
-    command: >
-      -c "
-      while ! (nc -z config-server 8888); do sleep 5; echo 'Waiting for config-server services to start-up...'; done;
-      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8888,suspend=n -jar -Dspring.profiles.active=docker /app.jar
-      "
     volumes:
-      - "./discovery-server/target:/microservices/discovery-server"
+      - .:/microservices
+      - m2_data:/root/.m2/repository
     environment:
-      - -Dspring.profiles.active=docker
+      - DIR=discovery-server
+      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - WAIT_SERVICE=config-server:8888
+    working_dir: /microservices
+    mem_limit: 1024m
+    mem_reservation: 512m
+    cpus: 1
+    depends_on:
+      - config-server
+
+  gateway-server:
+    container_name: gateway-server
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    ports:
+      - "8000:8000"
+    networks:
+      - default-network
+    volumes:
+      - .:/microservices
+      - m2_data:/root/.m2/repository
+    environment:
+      - DIR=gateway-server
+      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - WAIT_SERVICE=config-server:8888 discovery-server:8761
+    working_dir: /microservices
+    mem_limit: 1024m
+    mem_reservation: 512m
+    cpus: 1
+    depends_on:
+      - config-server
+      - discovery-server
 
   auth-server:
     container_name: auth-server
-    build: ./auth-server
-    restart: on-failure
-    ports:
-      - "8082:8082"
-    depends_on:
-      - config-server
-    command: >
-      -c "
-      while ! (nc -z config-server 8888); do sleep 5; echo 'Waiting for config-server services to start-up...'; done;
-      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8888,suspend=n -jar -Dspring.profiles.active=docker /app.jar
-      "
+    build:
+      dockerfile: Dockerfile
+      context: ./
     networks:
       - default-network
     volumes:
-      - "./auth-server/target:/microservices/auth-server"
+      - .:/microservices
+      - m2_data:/root/.m2/repository
     environment:
-      - -Dspring.profiles.active=docker
+      - DIR=auth-server
+      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - WAIT_SERVICE=config-server:8888 discovery-server:8761 gateway-server:8000
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/auth_server?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_REDIS_HOST=redis
+    working_dir: /microservices
+    mem_limit: 2048m
+    mem_reservation: 512m
+    cpus: 1
+    depends_on:
+      - config-server
+      - discovery-server
+      - gateway-server
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    networks:
+      - default-network
+
+  redis:
+    image: redis:latest
+    networks:
+      - default-network
+
+  neo4j:
+    image: neo4j:latest
+    networks:
+      - default-network
+
+
 
 networks:
   default-network:
     driver: bridge
+
+volumes:
+  m2_data: { }

@@ -5,4 +5,4 @@ spring:
       username: hoang
       password: hoang
   application:
-    name: eureka-server
+    name: discovery-server
