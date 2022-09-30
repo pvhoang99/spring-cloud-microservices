@@ -7,7 +7,6 @@ spring:
   security:
     oauth2:
       client:
-
         registration:
           hoang:
             clientId: hoang
@@ -25,6 +24,18 @@ spring:
             tokenUri: http://192.168.1.244:8000/auth-server/oauth/token
             userInfoUri: http://192.168.1.244:8000/auth-server/api/v1/user/me
             userNameAttribute: username
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://auth-server/auth-server/oauth/check_token
+      user-info-uri: http://auth-server/auth-server/api/v1/user/me
+      id: chat-server
+    client:
+      client-id: hoang
+      client-secret: 1
+      access-token-uri: http://auth-server/auth-server/oauth/token
+      scope: read
+      id: chat-server
   zipkin:
     base-url: http://localhost:9411/
 eureka:
@@ -32,3 +43,10 @@ eureka:
     prefer-ip-address: true
   client:
     fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8085
+ribbon:
+  eureka:
+    enabled: true

@@ -15,4 +15,4 @@ done
 # shellcheck disable=SC2164
 cd "${DIR}"
 
-java -jar target/*.jar
+java -Duser.timezone='Asia/Ho_Chi_Minh' -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=18000 -jar target/*.jar

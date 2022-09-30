@@ -24,8 +24,6 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./
-    ports:
-      - "8761:8761"
     networks:
       - default-network
     volumes:
