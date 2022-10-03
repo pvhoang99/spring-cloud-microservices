@@ -1,4 +1,4 @@
-version: '2.2'
+version: '3.4'
 
 services:
   config-server:
@@ -6,6 +6,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./
+      target: java
     networks:
       - default-network
     volumes:
@@ -16,15 +17,22 @@ services:
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SERVER_PORT=8888
     working_dir: /microservices
-    mem_limit: 1024m
-    mem_reservation: 512m
-    cpus: 1
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1024M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+
 
   discovery-server:
     container_name: discovery-server
     build:
       dockerfile: Dockerfile
       context: ./
+      target: java
     networks:
       - default-network
     volumes:
@@ -37,19 +45,21 @@ services:
       - WAIT_SERVICE=config-server:8888
       - SERVER_PORT=8761
     working_dir: /microservices
-    mem_limit: 1024m
-    mem_reservation: 512m
-    cpus: 1
-    depends_on:
-      - config-server
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1024M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
 
   gateway-server:
     container_name: gateway-server
     build:
       dockerfile: Dockerfile
       context: ./
-    ports:
-      - "8000:8000"
+      target: java
     networks:
       - default-network
     volumes:
@@ -63,18 +73,21 @@ services:
       - WAIT_SERVICE=config-server:8888 discovery-server:8761
       - SERVER_PORT=8000
     working_dir: /microservices
-    mem_limit: 1024m
-    mem_reservation: 512m
-    cpus: 1
-    depends_on:
-      - config-server
-      - discovery-server
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: "2048M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
 
   auth-server:
     container_name: auth-server
     build:
       dockerfile: Dockerfile
       context: ./
+      target: java
     networks:
       - default-network
     volumes:
@@ -92,18 +105,21 @@ services:
       - SPRING_REDIS_HOST=redis
       - SERVER_PORT=8082
     working_dir: /microservices
-    mem_limit: 2048m
-    mem_reservation: 512m
-    cpus: 1
-    depends_on:
-      - config-server
-      - discovery-server
-      - gateway-server
+    deploy:
+      resources:
+        limits:
+          cpus: "3"
+          memory: "4096M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
 
   mysql:
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3306:3306"
     networks:
       - default-network
 
@@ -116,7 +132,24 @@ services:
     image: neo4j:latest
     networks:
       - default-network
-
+  nginx:
+    container_name: nginx
+    image: nginx:1.17.10
+    networks:
+      - default-network
+    ports:
+      - "80:80"
+    volumes:
+      - ./_nginx:/etc/nginx/conf.d/
+  axon-server:
+    image: axoniq/axonserver
+    hostname: axon-server
+    ports:
+      - '8024:8024'
+      - '8124:8124'
+      - '8224:8224'
+    networks:
+      - default-network
 
 
 networks:

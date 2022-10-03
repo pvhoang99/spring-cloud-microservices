@@ -1,11 +1,13 @@
 package com.example.auth;
 
+import com.example.auth.command.role.CreateRoleCommand;
 import com.example.auth.config.security.client.ClientDetailRepository;
 import com.example.auth.dao.model.OauthClientDetailEntity;
 import com.example.auth.dao.model.RoleEntity;
 import com.example.auth.dao.model.UserEntity;
 import com.example.auth.dao.repository.RoleRepository;
 import com.example.auth.dao.repository.UserRepository;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
