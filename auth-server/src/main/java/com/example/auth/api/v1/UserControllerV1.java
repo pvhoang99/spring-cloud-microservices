@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/v1/user")
 @RequiredArgsConstructor
 @Slf4j
 public class UserControllerV1 {

@@ -10,7 +10,7 @@ spring:
         - id: patientModule
           uri: lb://patient-service
           predicates:
-            - Path=/patient-service/**
+            - Path=/api/patient-service/**
         #          filters:
         #            - name: CircuitBreaker
         #              args:
@@ -19,7 +19,7 @@ spring:
         - id: fileModule
           uri: lb://file-service
           predicates:
-            - Path=/file-service/**
+            - Path=/api/file-service/**
         #          filters:
         #            - name: CircuitBreaker
         #              args:
@@ -28,7 +28,7 @@ spring:
         - id: authModule
           uri: lb://auth-server
           predicates:
-            - Path=/auth-server/**
+            - Path=/api/auth-server/**
         #          filters:
         #            - name: CircuitBreaker
         #              args:
@@ -55,7 +55,7 @@ spring:
         - id: orderModule
           uri: lb://order-service
           predicates:
-            - Path=/order/**
+            - Path=/api/order/**
         #          filters:
         #            - name: CircuitBreaker
         #              args:
@@ -64,7 +64,7 @@ spring:
         - id: chatModule1
           uri: lb://chat-server
           predicates:
-            - Path=/chat-server/**
+            - Path=/api/chat-server/**
         #          filters:
         #            - name: CircuitBreaker
         #              args:
@@ -73,11 +73,11 @@ spring:
         - id: chatModule2
           uri: lb://chat-server
           predicates:
-            - Path=/chat-server/ws/info/**
+            - Path=/api/chat-server/ws/info/**
         - id: chatModule3
           uri: lb:ws://chat-server
           predicates:
-            - Path=/chat-server/ws/**
+            - Path=/api/chat-server/ws/**
 #      default-filters:
 #        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 

@@ -17,7 +17,7 @@ spring:
     show-sql: true
 server:
   servlet:
-    context-path: /auth-server
+    context-path: /api/auth-server
   port: 8082
 grpc:
   server:

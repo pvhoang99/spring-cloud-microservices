@@ -61,7 +61,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.httpBasic().disable();
 
     http.requestMatchers()
-        .antMatchers("/api/**")
+        .antMatchers("/v1/**")
         .and()
         .authorizeRequests()
         .antMatchers("/api/v1/user/revoke", "/api/v1/user/register", "/api/v1/file/upload-file",

@@ -14,6 +14,7 @@ services:
     environment:
       - DIR=config-server
       - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - SERVER_PORT=8888
     working_dir: /microservices
     mem_limit: 1024m
     mem_reservation: 512m
@@ -34,6 +35,7 @@ services:
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - WAIT_SERVICE=config-server:8888
+      - SERVER_PORT=8761
     working_dir: /microservices
     mem_limit: 1024m
     mem_reservation: 512m
@@ -59,6 +61,7 @@ services:
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - WAIT_SERVICE=config-server:8888 discovery-server:8761
+      - SERVER_PORT=8000
     working_dir: /microservices
     mem_limit: 1024m
     mem_reservation: 512m
@@ -87,6 +90,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_REDIS_HOST=redis
+      - SERVER_PORT=8082
     working_dir: /microservices
     mem_limit: 2048m
     mem_reservation: 512m
