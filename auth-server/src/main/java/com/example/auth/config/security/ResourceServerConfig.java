@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.spel.spi.EvaluationContextExtension;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
@@ -64,9 +65,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers("/v1/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/api/v1/user/revoke", "/api/v1/user/register", "/api/v1/file/upload-file",
-            "/api/v1/file/download-file/**")
-        .permitAll()
+        .antMatchers(HttpMethod.POST, "/v1/user/create", "/v1/auth/*").permitAll()
         .expressionHandler(webExpressionHandler())
         .anyRequest().authenticated()
         .and()

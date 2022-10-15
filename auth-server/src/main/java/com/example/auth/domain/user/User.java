@@ -1,5 +1,6 @@
-package com.example.auth.dao.model;
+package com.example.auth.domain.user;
 
+import com.example.auth.domain.role.Role;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,13 +20,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
-//@JsonView(Views.User.class)
-public class UserEntity implements Serializable {
+public class User implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,6 @@ public class UserEntity implements Serializable {
   private String username;
 
   @Column(name = "password", nullable = false, length = 1000)
-//  @JsonView(Views.Admin.class)
   private String password;
 
   @Column(name = "full_name")
@@ -46,7 +45,6 @@ public class UserEntity implements Serializable {
   private Boolean isActive = true;
 
   @Column(name = "email")
-//  @JsonView(Views.User.class)
   private String email;
 
   @Column(name = "image")
@@ -54,5 +52,17 @@ public class UserEntity implements Serializable {
 
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "role_id", referencedColumnName = "id")
-  private RoleEntity roleEntity;
+  private Role role;
+
+  public static User create(String username, String password, String fullName, String email, String image, Role role) {
+    final User user = new User();
+    user.setUsername(username);
+    user.setPassword(password);
+    user.setFullName(fullName);
+    user.setEmail(email);
+    user.setImage(image);
+    user.setRole(role);
+    return user;
+  }
+
 }

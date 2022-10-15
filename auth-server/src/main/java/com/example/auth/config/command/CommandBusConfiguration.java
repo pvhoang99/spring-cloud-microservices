@@ -9,7 +9,6 @@ public class CommandBusConfiguration {
 
   @Autowired
   public void configCommandBus(CommandBus commandBus) {
-    commandBus.registerDispatchInterceptor(new MyCommandDispatchInterceptor());
   }
 
 }

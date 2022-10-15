@@ -1,6 +1,6 @@
 package com.example.auth.config.security.client;
 
-import com.example.auth.dao.model.OauthClientDetailEntity;
+import com.example.auth.domain.authentication.OauthClientDetailEntity;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

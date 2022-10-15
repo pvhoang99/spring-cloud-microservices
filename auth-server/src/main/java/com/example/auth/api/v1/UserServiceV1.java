@@ -1,8 +1,8 @@
 package com.example.auth.api.v1;
 
-import com.example.auth.dao.model.RoleEntity;
-import com.example.auth.dao.model.UserEntity;
-import com.example.auth.dao.repository.UserRepository;
+import com.example.auth.domain.role.Role;
+import com.example.auth.domain.user.User;
+import com.example.auth.repository.UserRepository;
 import com.example.grpc.auth.AuthServiceGrpc;
 import com.example.grpc.auth.LoginRequest;
 import com.example.grpc.auth.LoginResponse;
@@ -33,32 +33,32 @@ public class UserServiceV1 extends AuthServiceGrpc.AuthServiceImplBase {
 
   @HystrixCommand(fallbackMethod = "getUserByUsernameFallBack")
   @Cacheable(value = "user", key = "#username")
-  public Optional<UserEntity> getUserByUsername(String username) {
+  public Optional<User> getUserByUsername(String username) {
 
     return userRepository.findByUsername(username);
   }
 
-  public Optional<UserEntity> getUserByUsernameFallBack(String username) {
+  public Optional<User> getUserByUsernameFallBack(String username) {
     return Optional.empty();
   }
 
-  public UserEntity saveUser(UserEntity userEntity) {
+  public User saveUser(User user) {
 
-    if (userRepository.existsByUsername(userEntity.getUsername())) {
-      throw new RuntimeException("user is exist with: " + userEntity.getUsername());
+    if (userRepository.existsByUsername(user.getUsername())) {
+      throw new RuntimeException("user is exist with: " + user.getUsername());
     }
     //hardcode
-    RoleEntity roleEntity = roleServiceV1.findByValue("USER");
-    userEntity.setRoleEntity(roleEntity);
-    return userRepository.save(userEntity);
+    Role role = roleServiceV1.findByValue("USER");
+    user.setRole(role);
+    return userRepository.save(user);
 
   }
 
-  public List<UserEntity> findAll() {
+  public List<User> findAll() {
     return userRepository.findAll();
   }
 
-  public Page<UserEntity> search(Pageable pageable) {
+  public Page<User> search(Pageable pageable) {
     return userRepository.search(pageable);
   }
 

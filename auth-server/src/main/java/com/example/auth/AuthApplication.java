@@ -1,13 +1,11 @@
 package com.example.auth;
 
-import com.example.auth.command.role.CreateRoleCommand;
 import com.example.auth.config.security.client.ClientDetailRepository;
-import com.example.auth.dao.model.OauthClientDetailEntity;
-import com.example.auth.dao.model.RoleEntity;
-import com.example.auth.dao.model.UserEntity;
-import com.example.auth.dao.repository.RoleRepository;
-import com.example.auth.dao.repository.UserRepository;
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import com.example.auth.domain.authentication.OauthClientDetailEntity;
+import com.example.auth.domain.role.Role;
+import com.example.auth.domain.user.User;
+import com.example.auth.repository.RoleRepository;
+import com.example.auth.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -45,14 +43,14 @@ public class AuthApplication {
         oauthClientDetailRepository.save(clientDetailEntity);
       }
       if (!userRepository.existsByUsername("hoangpv")) {
-        RoleEntity roleEntity = new RoleEntity("USER", "User");
-        UserEntity userEntity = new UserEntity();
+        Role roleEntity = new Role("USER", "User");
+        User userEntity = new User();
         userEntity.setFullName("Phạm Việt Hoàng");
         userEntity.setIsActive(true);
         userEntity.setPassword("1");
         userEntity.setEmail("phamviethoang1418@gmail.com");
         userEntity.setUsername("hoangpv");
-        userEntity.setRoleEntity(roleEntity);
+        userEntity.setRole(roleEntity);
         userRepository.save(userEntity);
       }
     };

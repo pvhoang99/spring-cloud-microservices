@@ -1,6 +1,6 @@
 package com.example.auth.config.security.client;
 
-import com.example.auth.dao.model.OauthClientDetailEntity;
+import com.example.auth.domain.authentication.OauthClientDetailEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.oauth2.provider.ClientDetails;

@@ -1,4 +1,4 @@
-package com.example.auth.dao.model;
+package com.example.auth.domain.authentication;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -14,12 +14,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "oauth_refresh_token")
+
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "oauth_refresh_token")
 public class OauthRefreshTokenEntity implements Serializable {
 
   @Id

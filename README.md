@@ -12,3 +12,6 @@
   + CircuitBreaker pattern
   + grpc protocol
   + graphql (updating)
+  + CQRS
+
+![img.png](img.png)

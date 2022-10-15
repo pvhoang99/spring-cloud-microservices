@@ -1,4 +1,4 @@
-package com.example.auth.dao.model;
+package com.example.auth.domain.authentication;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -17,9 +17,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "oauth_access_token", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"authentication", "authentication_id"})})
 public class OauthAccessTokenEntity implements Serializable {

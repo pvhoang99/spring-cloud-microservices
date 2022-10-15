@@ -1,7 +1,7 @@
 package com.example.auth.config.security.user;
 
-import com.example.auth.dao.model.UserEntity;
-import com.example.auth.dao.repository.UserRepository;
+import com.example.auth.domain.user.User;
+import com.example.auth.repository.UserRepository;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,9 +18,9 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    UserEntity userEntity = userRepository.findByUsername(username)
+    User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new RuntimeException("k ton tai" + username));
 
-    return new CustomUserDetail(userEntity);
+    return new CustomUserDetail(user);
   }
 }

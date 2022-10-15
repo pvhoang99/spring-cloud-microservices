@@ -1,40 +1,31 @@
-package com.example.auth.dao.model;
+package com.example.auth.domain.authentication;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Entity
-@Table(name = "role")
-//@JsonView(Views.Admin.class)
-public class RoleEntity implements Serializable {
-
-  public RoleEntity(String value, String name) {
-    this.value = value;
-    this.name = name;
-  }
+@Table(name = "oauth_code")
+public class OauthCodeEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
   private Long id;
 
-  private String value;
+  private String code;
 
-  private String name;
-
+  @Lob
+  private byte[] authentication;
 }

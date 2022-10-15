@@ -1,4 +1,4 @@
-package com.example.auth.dao.model;
+package com.example.auth.domain;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -17,12 +17,12 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
 
   @Column(name = "created_at", nullable = false, updatable = false)

@@ -1,7 +1,7 @@
 package com.example.auth.config.security;
 
-import com.example.auth.dao.model.UserEntity;
-import com.example.auth.dao.repository.UserRepository;
+import com.example.auth.domain.user.User;
+import com.example.auth.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,15 +23,15 @@ public class CustomAccessTokenConverter extends JwtAccessTokenConverter {
   public OAuth2AccessToken enhance(OAuth2AccessToken accessToken,
       OAuth2Authentication authentication) {
     final Map<String, Object> information = new HashMap<>();
-    UserEntity userEntity = userRepository.findByUsername(authentication.getName()).orElse(null);
+    User user = userRepository.findByUsername(authentication.getName()).orElse(null);
     /*
     Thêm thông tin vào token
     */
-    if (userEntity != null) {
-      information.put("username", userEntity.getUsername());
-      information.put("fullName", userEntity.getFullName());
-      information.put("email", userEntity.getEmail());
-      information.put("role", userEntity.getRoleEntity().getValue());
+    if (user != null) {
+      information.put("username", user.getUsername());
+      information.put("fullName", user.getFullName());
+      information.put("email", user.getEmail());
+      information.put("role", user.getRole().getValue());
 
     }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(information);

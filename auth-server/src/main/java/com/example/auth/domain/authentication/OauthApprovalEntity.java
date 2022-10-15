@@ -1,4 +1,4 @@
-package com.example.auth.dao.model;
+package com.example.auth.domain.authentication;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,9 +14,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "oauth_approvals")
 public class OauthApprovalEntity implements Serializable {
 

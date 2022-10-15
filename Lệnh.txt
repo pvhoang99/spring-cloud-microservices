@@ -90,3 +90,7 @@ dockerHub: hoangpv99/hoangdepzai99
 
 https://github.com/joeltadeu/event-driven-axon-microservices
 isofh/9CyzXwC(4!LZSDz
+
+https://github.com/wangrui821/mall-jhipster-axon.git
+
+0965d7b19e31 bde67c005f24 fba62c0066c5 03867f69165d

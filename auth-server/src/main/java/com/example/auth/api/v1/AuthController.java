@@ -1,32 +1,26 @@
 package com.example.auth.api.v1;
 
-import com.example.auth.command.role.CreateRoleCommand;
+import com.example.auth.command.authentication.LoginCommand;
+import com.example.common.config.CommonResult;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/role")
 @RequiredArgsConstructor
-public class RoleControllerV1 {
+@RequestMapping("/v1/auth")
+public class AuthController {
 
-  private final RoleServiceV1 roleServiceV1;
   private final CommandGateway commandGateway;
 
-  @GetMapping
-  public ResponseEntity<?> getAll() {
-    return ResponseEntity.ok(roleServiceV1.getAll());
-  }
+  @PostMapping("/login")
+  public ResponseEntity<?> login(@RequestBody LoginCommand command) {
+    CommonResult<?> result = commandGateway.sendAndWait(command);
 
-  @PostMapping
-  public ResponseEntity<?> save(@RequestBody CreateRoleCommand createRoleCommand) {
-    commandGateway.send(createRoleCommand);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(result);
   }
-
 }

@@ -1,6 +1,6 @@
-package com.example.auth.dao.repository;
+package com.example.auth.repository;
 
-import com.example.auth.dao.model.UserEntity;
+import com.example.auth.domain.user.User;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,12 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-  Optional<UserEntity> findByUsername(String name);
+  Optional<User> findByUsername(String name);
 
-  @Query(value = "select e from UserEntity e")
-  Page<UserEntity> search(Pageable pageable);
+  @Query(value = "select e from User e")
+  Page<User> search(Pageable pageable);
 
   boolean existsByUsername(String username);
 }

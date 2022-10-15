@@ -1,6 +1,6 @@
 package com.example.auth.config.security.client;
 
-import com.example.auth.dao.model.OauthClientDetailEntity;
+import com.example.auth.domain.authentication.OauthClientDetailEntity;
 import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Collections;

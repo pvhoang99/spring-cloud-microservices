@@ -116,16 +116,23 @@
       <version>6.0.53</version>
       <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.axonframework/axon-spring-boot-starter -->
     <dependency>
       <groupId>org.axonframework</groupId>
       <artifactId>axon-spring-boot-starter</artifactId>
-      <version>4.6.0</version>
+      <version>3.4.4</version>
       <exclusions>
         <exclusion>
           <groupId>org.axonframework</groupId>
           <artifactId>axon-server-connector</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.axonframework.extensions.springcloud/axon-springcloud -->
+    <dependency>
+      <groupId>org.axonframework.extensions.springcloud</groupId>
+      <artifactId>axon-springcloud</artifactId>
+      <version>4.1</version>
     </dependency>
   </dependencies>
 
