@@ -11,11 +11,12 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
-@AllArgsConstructor
 @Data
-public class CustomClientDetail implements ClientDetails {
+@AllArgsConstructor
+public class ClientDetailImpl implements ClientDetails {
 
   private OauthClientDetailEntity client;
+  private final static String REGEX = ",";
 
   @Override
   public String getClientId() {
@@ -29,7 +30,7 @@ public class CustomClientDetail implements ClientDetails {
 
     if (resourceList != null) {
 
-      String[] resourceIds = resourceList.split(",");
+      String[] resourceIds = resourceList.split(REGEX);
 
       return Sets.newHashSet(resourceIds);
     }
@@ -58,7 +59,7 @@ public class CustomClientDetail implements ClientDetails {
 
     if (scopes != null) {
 
-      String[] arrayScope = scopes.split(",");
+      String[] arrayScope = scopes.split(REGEX);
 
       return Sets.newHashSet(arrayScope);
     }
@@ -72,7 +73,7 @@ public class CustomClientDetail implements ClientDetails {
 
     if (grants != null) {
 
-      String[] arrayGrant = grants.split(",");
+      String[] arrayGrant = grants.split(REGEX);
 
       return Sets.newHashSet(arrayGrant);
     }
@@ -83,7 +84,7 @@ public class CustomClientDetail implements ClientDetails {
   public Set<String> getRegisteredRedirectUri() {
     String listRegisters = client.getWebServerRedirectUri();
     if (listRegisters != null) {
-      String[] registers = listRegisters.split(",");
+      String[] registers = listRegisters.split(REGEX);
       return Sets.newHashSet(registers);
     }
     return null;

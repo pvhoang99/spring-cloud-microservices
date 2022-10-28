@@ -1,7 +1,7 @@
 package com.example.auth.api.v1;
 
 import com.example.auth.command.authentication.LoginCommand;
-import com.example.common.config.CommonResult;
+import com.example.common.api.CommonResult;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;

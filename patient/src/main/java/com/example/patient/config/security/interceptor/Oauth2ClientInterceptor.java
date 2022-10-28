@@ -26,9 +26,9 @@ import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitA
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-@GrpcGlobalClientInterceptor
 @Slf4j
 @RequiredArgsConstructor
+@GrpcGlobalClientInterceptor
 public class Oauth2ClientInterceptor implements ClientInterceptor {
 
   private final HttpServletRequest request;
@@ -39,8 +39,7 @@ public class Oauth2ClientInterceptor implements ClientInterceptor {
           new ResourceOwnerPasswordAccessTokenProvider(),
           new ClientCredentialsAccessTokenProvider()));
 
-  static final Metadata.Key<String> CUSTOM_HEADER_KEY =
-      Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
+  static final Metadata.Key<String> CUSTOM_HEADER_KEY = Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
 
   @Override
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
@@ -84,14 +83,12 @@ public class Oauth2ClientInterceptor implements ClientInterceptor {
         this.oAuth2ClientContext.setAccessToken(existingToken);
       }
 
-      OAuth2AccessToken obtainableAccessToken = this.accessTokenProvider.obtainAccessToken(
-          this.resource, tokenRequest);
+      OAuth2AccessToken obtainableAccessToken = this.accessTokenProvider.obtainAccessToken(this.resource, tokenRequest);
       if (obtainableAccessToken != null && obtainableAccessToken.getValue() != null) {
         this.oAuth2ClientContext.setAccessToken(obtainableAccessToken);
         return obtainableAccessToken;
       } else {
-        throw new IllegalStateException(
-            " Access token provider returned a null token, which is illegal according to the contract.");
+        throw new IllegalStateException(" Access token provider returned a null token, which is illegal according to the contract.");
       }
     }
   }

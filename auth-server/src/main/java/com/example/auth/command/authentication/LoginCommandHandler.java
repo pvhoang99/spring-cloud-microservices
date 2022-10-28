@@ -1,7 +1,6 @@
-package com.example.auth.command.authentication.handler;
+package com.example.auth.command.authentication;
 
-import com.example.auth.command.authentication.LoginCommand;
-import com.example.common.config.CommonResult;
+import com.example.common.api.CommonResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationHandler {
+public class LoginCommandHandler {
 
   private final TokenEndpoint tokenEndpoint;
 
@@ -30,9 +29,7 @@ public class AuthenticationHandler {
       put("client_secret", "1");
     }};
     try {
-      ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(
-          new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>()),
-          parameters);
+      ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>()), parameters);
       OAuth2AccessToken accessToken = response.getBody();
       assert accessToken != null;
       return CommonResult.success(accessToken);
@@ -40,5 +37,4 @@ public class AuthenticationHandler {
       throw new RuntimeException(e);
     }
   }
-
 }

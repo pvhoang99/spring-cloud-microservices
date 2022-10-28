@@ -11,17 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 @AllArgsConstructor
-public class CustomClientDetailService implements ClientDetailsService {
+public class ClientDetailServiceImpl implements ClientDetailsService {
 
   private final ClientDetailRepository clientDetailRepository;
 
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+    OauthClientDetailEntity oauthClientDetailEntity = clientDetailRepository.findByClientId(clientId).orElseThrow(() -> new RuntimeException("k tim thay client with client id = " + clientId));
 
-    OauthClientDetailEntity oauthClientDetailEntity = clientDetailRepository
-        .findByClientId(clientId)
-        .orElseThrow(() -> new RuntimeException("k tim thay client with client id = " + clientId));
-
-    return new CustomClientDetail(oauthClientDetailEntity);
+    return new ClientDetailImpl(oauthClientDetailEntity);
   }
 }

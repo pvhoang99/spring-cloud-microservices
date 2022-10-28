@@ -1,6 +1,6 @@
 package com.example.common.exception;
 
-import com.example.common.config.CommonResult;
+import com.example.common.api.CommonResult;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

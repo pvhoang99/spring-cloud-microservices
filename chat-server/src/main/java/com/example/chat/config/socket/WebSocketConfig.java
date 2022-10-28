@@ -62,8 +62,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             accessToken = accessToken.substring(7);
           }
 
-          Authentication authentication = resourceServerTokenServices
-              .loadAuthentication(accessToken);
+          Authentication authentication = resourceServerTokenServices.loadAuthentication(accessToken);
           accessor.setUser(authentication);
         }
         return message;

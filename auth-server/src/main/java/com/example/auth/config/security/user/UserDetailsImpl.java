@@ -12,17 +12,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @AllArgsConstructor
-public class CustomUserDetail implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
-  private User user;
+  private final User user;
+  private final Role role;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    Role role = user.getRole();
     if (role != null) {
       return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.getValue()));
     }
-    return null;
+    return Collections.singletonList(new SimpleGrantedAuthority("ROLE_AUTHENTICATED"));
   }
 
   @Override

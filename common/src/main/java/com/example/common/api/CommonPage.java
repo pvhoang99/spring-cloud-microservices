@@ -1,4 +1,4 @@
-package com.example.common.config;
+package com.example.common.api;
 
 import com.github.pagehelper.PageInfo;
 import java.util.List;

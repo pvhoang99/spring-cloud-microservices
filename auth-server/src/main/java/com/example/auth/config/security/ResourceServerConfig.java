@@ -65,7 +65,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers("/v1/**")
         .and()
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/v1/user/create", "/v1/auth/*").permitAll()
+        .antMatchers(HttpMethod.POST, "/v1/users", "/v1/auth/*").permitAll()
         .expressionHandler(webExpressionHandler())
         .anyRequest().authenticated()
         .and()
@@ -122,8 +122,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public GrpcAuthenticationReader authenticationReader() {
     final List<GrpcAuthenticationReader> readers = new ArrayList<>();
     // The actual token class is dependent on your spring-security library (OAuth2/JWT/...)
-    readers.add(new BearerAuthenticationReader(
-        BearerTokenAuthenticationToken::new));
+    readers.add(new BearerAuthenticationReader(BearerTokenAuthenticationToken::new));
     return new CompositeGrpcAuthenticationReader(readers);
   }
 

@@ -31,7 +31,6 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
   @Setter(onMethod = @__({@Autowired}))
-  @Qualifier("customClientDetailService")
   private ClientDetailsService clientDetailsService;
 
   @Bean
@@ -40,7 +39,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   }
 
   @Setter(onMethod = @__({@Autowired}))
-  @Qualifier("customUserDetailsService")
   private UserDetailsService userDetailsService;
 
   @Setter(onMethod = @__({@Autowired}))
@@ -52,9 +50,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   @Setter(onMethod = @__({@Autowired}))
   private KeyUtil keyUtil;
-
-//  @Setter(onMethod = @__({@Autowired}))
-//  private DataSource dataSource;
 
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -107,7 +102,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   @Bean
   public JwtAccessTokenConverter tokenEnhancer() {
-    JwtAccessTokenConverter converter = new CustomAccessTokenConverter();
+    JwtAccessTokenConverter converter = new JwtAccessTokenConverterImpl();
     converter.setKeyPair(keyPair());
     return converter;
   }

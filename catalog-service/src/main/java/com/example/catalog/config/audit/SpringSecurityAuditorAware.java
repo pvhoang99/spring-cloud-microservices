@@ -19,7 +19,7 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
     }
     return Optional.of(authentication)
         .map(Authentication::getPrincipal)
-        .map(e -> Optional.of((String) e))
-        .orElse(Optional.of("ANONYMOUS"));
+        .map(e -> (String) e)
+        .or(() -> Optional.of("ANONYMOUS"));
   }
 }

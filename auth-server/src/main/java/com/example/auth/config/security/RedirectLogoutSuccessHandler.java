@@ -1,6 +1,6 @@
 package com.example.auth.config.security;
 
-import com.example.common.config.CommonResult;
+import com.example.common.api.CommonResult;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;

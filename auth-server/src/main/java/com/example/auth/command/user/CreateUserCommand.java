@@ -17,8 +17,4 @@ public class CreateUserCommand {
   private String email;
 
   private String image;
-
-  @NotNull
-  private Long roleId;
-
 }
