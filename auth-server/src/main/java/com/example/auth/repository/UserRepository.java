@@ -10,4 +10,6 @@ public interface UserRepository {
   User getByUsername(String username);
 
   Optional<User> findByUsername(String username);
+
+  boolean checkExisted(String username);
 }

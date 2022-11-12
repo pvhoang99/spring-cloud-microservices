@@ -6,6 +6,7 @@ import com.example.common.api.CommonResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class UserController {
   public ResponseEntity<?> createUser(@RequestBody final CreateUserCommand command) {
     String userId = this.commandGateway.sendAndWait(command);
 
-    return ResponseEntity.ok(CommonResult.success(userId));
+    return new ResponseEntity<>(CommonResult.success(userId), HttpStatus.CREATED);
   }
 
   @PutMapping("/{id}")
@@ -34,7 +35,7 @@ public class UserController {
     command.setId(id);
     this.commandGateway.sendAndWait(command);
 
-    return ResponseEntity.ok(CommonResult.success());
+    return new ResponseEntity<>(CommonResult.success(), HttpStatus.NO_CONTENT);
   }
 
 }

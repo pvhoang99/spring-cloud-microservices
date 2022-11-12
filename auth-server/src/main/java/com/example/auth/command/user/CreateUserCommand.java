@@ -12,8 +12,10 @@ public class CreateUserCommand {
   @NotNull
   private String password;
 
+  @NotNull
   private String fullName;
 
+  @NotNull
   private String email;
 
   private String image;

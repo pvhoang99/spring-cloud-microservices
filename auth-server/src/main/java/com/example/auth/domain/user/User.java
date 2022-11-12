@@ -49,9 +49,8 @@ public class User implements Serializable {
   private String roleId;
 
   public User(String username, String password, String fullName, String email, String image, UserService userService) {
-    if (userService.checkUserExisted(username)) {
-      throw new EntityExistsException();
-    }
+   userService.checkUserExisted(username);
+
     this.id = UUID.randomUUID().toString();
     this.username = username;
     this.password = password;

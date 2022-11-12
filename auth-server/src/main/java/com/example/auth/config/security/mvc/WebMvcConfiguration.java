@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMvcConfiguration implements WebMvcConfigurer {
 
   private static final long MAX_AGE_SECS = 3600;
 

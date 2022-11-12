@@ -45,7 +45,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableResourceServer
 @Import(ConfigurationGlobal.class)
 @RequiredArgsConstructor
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
   private final CorsConfigurationSource corsConfigurationSource;
 

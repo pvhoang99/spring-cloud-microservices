@@ -1,5 +1,8 @@
 package com.example.common.api;
 
+import lombok.Getter;
+
+@Getter
 public class CommonResult<T> {
 
   private long code;
@@ -23,81 +26,47 @@ public class CommonResult<T> {
   }
 
   public static <T> CommonResult<T> success() {
-
-    return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage());
+    return new CommonResult<T>(ResponseMsg.SUCCESS.getCode(), ResponseMsg.SUCCESS.getMessage());
   }
 
   public static <T> CommonResult<T> success(T data) {
-
-    return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
+    return new CommonResult<T>(ResponseMsg.SUCCESS.getCode(), ResponseMsg.SUCCESS.getMessage(), data);
   }
 
   public static <T> CommonResult<T> success(T data, String message) {
-
-    return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
+    return new CommonResult<T>(ResponseMsg.SUCCESS.getCode(), message, data);
   }
 
-  public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-
+  public static <T> CommonResult<T> failed(IError errorCode) {
     return new CommonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
   }
 
-  public static <T> CommonResult<T> failed(IErrorCode errorCode, String message) {
-
+  public static <T> CommonResult<T> failed(IError errorCode, String message) {
     return new CommonResult<T>(errorCode.getCode(), message, null);
   }
 
   public static <T> CommonResult<T> failed(String message) {
-
-    return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
+    return new CommonResult<T>(ResponseMsg.FAILED.getCode(), message, null);
   }
 
   public static <T> CommonResult<T> failed() {
-
-    return failed(ResultCode.FAILED);
+    return failed(ResponseMsg.FAILED);
   }
 
   public static <T> CommonResult<T> validateFailed() {
-
-    return failed(ResultCode.VALIDATE_FAILED);
+    return failed(ResponseMsg.VALIDATE_FAILED);
   }
 
   public static <T> CommonResult<T> validateFailed(String message) {
-
-    return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+    return new CommonResult<T>(ResponseMsg.VALIDATE_FAILED.getCode(), message, null);
   }
 
   public static <T> CommonResult<T> unauthorized(T data) {
-
-    return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
+    return new CommonResult<T>(ResponseMsg.UNAUTHORIZED.getCode(), ResponseMsg.UNAUTHORIZED.getMessage(), data);
   }
 
   public static <T> CommonResult<T> forbidden(T data) {
-
-    return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
+    return new CommonResult<T>(ResponseMsg.FORBIDDEN.getCode(), ResponseMsg.FORBIDDEN.getMessage(), data);
   }
 
-  public long getCode() {
-    return code;
-  }
-
-  public void setCode(long code) {
-    this.code = code;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public T getData() {
-    return data;
-  }
-
-  public void setData(T data) {
-    this.data = data;
-  }
 }

@@ -1,13 +1,13 @@
 package com.example.common.exception;
 
 
-import com.example.common.api.IErrorCode;
+import com.example.common.api.IError;
 
 public class ApiException extends RuntimeException {
 
-  private IErrorCode errorCode;
+  private IError errorCode;
 
-  public ApiException(IErrorCode errorCode) {
+  public ApiException(IError errorCode) {
     super(errorCode.getMessage());
     this.errorCode = errorCode;
   }
@@ -24,7 +24,7 @@ public class ApiException extends RuntimeException {
     super(message, cause);
   }
 
-  public IErrorCode getErrorCode() {
+  public IError getErrorCode() {
     return errorCode;
   }
 }

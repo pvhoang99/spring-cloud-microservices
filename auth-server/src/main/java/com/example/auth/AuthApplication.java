@@ -10,11 +10,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @EnableCaching
 @SpringCloudApplication
 @EnableConfigurationProperties
-@ConfigurationPropertiesScan(value = "com.example.auth")
+@ComponentScan(basePackages = "com.example")
+@ConfigurationPropertiesScan(value = {"com.example.auth"})
 public class AuthApplication {
 
   public static void main(String[] args) {

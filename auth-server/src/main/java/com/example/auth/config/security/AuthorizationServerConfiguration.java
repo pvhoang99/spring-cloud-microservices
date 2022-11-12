@@ -28,7 +28,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
   @Setter(onMethod = @__({@Autowired}))
   private ClientDetailsService clientDetailsService;

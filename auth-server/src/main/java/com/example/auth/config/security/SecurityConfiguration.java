@@ -18,9 +18,9 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   @Bean
