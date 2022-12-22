@@ -9,17 +9,17 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Getter
 public class UpdateUserCommand {
 
-  @Setter
-  @JsonIgnore
-  @TargetAggregateIdentifier
-  private String id;
+    @Setter
+    @JsonIgnore
+    @TargetAggregateIdentifier
+    private String id;
 
-  @NotNull
-  private String password;
+    @NotNull
+    private String password;
 
-  private String fullName;
+    private String fullName;
 
-  private String email;
+    private String email;
 
-  private String image;
+    private String image;
 }

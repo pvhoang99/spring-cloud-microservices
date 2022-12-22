@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UpdateUserCommandHandler {
 
-  private final Repository<User> userAggregateRepository;
+    private final Repository<User> userAggregateRepository;
 
-  @CommandHandler
-  public void update(UpdateUserCommand command) {
-    Aggregate<User> userAggregate = userAggregateRepository.load(command.getId());
-    userAggregate.execute(u -> u.update(
-        command.getPassword(),
-        command.getFullName(),
-        command.getEmail(),
-        command.getImage()));
-  }
+    @CommandHandler
+    public void update(UpdateUserCommand command) {
+        Aggregate<User> userAggregate = userAggregateRepository.load(command.getId());
+        userAggregate.execute(u -> u.update(
+            command.getPassword(),
+            command.getFullName(),
+            command.getEmail(),
+            command.getImage()));
+    }
 
 }

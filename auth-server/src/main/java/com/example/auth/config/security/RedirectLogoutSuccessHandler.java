@@ -16,29 +16,29 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 public class RedirectLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
-  @Setter(onMethod = @__({@Autowired}))
-  private Gson gson;
+    @Setter(onMethod = @__({@Autowired}))
+    private Gson gson;
 
-  @Setter(onMethod = @__({@Autowired}))
-  private ConsumerTokenServices tokenServices;
+    @Setter(onMethod = @__({@Autowired}))
+    private ConsumerTokenServices tokenServices;
 
-  @Override
-  public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-      Authentication authentication) throws IOException, ServletException {
+    @Override
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+        Authentication authentication) throws IOException, ServletException {
 
-    PrintWriter out = response.getWriter();
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    String result;
-    CommonResult<?> commonResult;
-    String token = request.getParameter("token");
-    if (StringUtils.isNotEmpty(token) && tokenServices.revokeToken(token)) {
-      commonResult = CommonResult.success("Logout success!");
-    } else {
-      commonResult = CommonResult.failed("Logout fail");
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String result;
+        CommonResult<?> commonResult;
+        String token = request.getParameter("token");
+        if (StringUtils.isNotEmpty(token) && tokenServices.revokeToken(token)) {
+            commonResult = CommonResult.success("Logout success!");
+        } else {
+            commonResult = CommonResult.failed("Logout fail");
+        }
+        result = gson.toJson(commonResult);
+        out.print(result);
+        out.flush();
     }
-    result = gson.toJson(commonResult);
-    out.print(result);
-    out.flush();
-  }
 }

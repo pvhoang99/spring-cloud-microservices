@@ -17,24 +17,25 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 @RequiredArgsConstructor
 public class LoginCommandHandler {
 
-  private final TokenEndpoint tokenEndpoint;
+    private final TokenEndpoint tokenEndpoint;
 
-  @CommandHandler
-  public CommonResult<?> handle(LoginCommand command) {
-    Map<String, String> parameters = new LinkedHashMap<>() {{
-      put("username", command.getUsername());
-      put("password", command.getPassword());
-      put("grant_type", "password");
-      put("client_id", "hoang");
-      put("client_secret", "1");
-    }};
-    try {
-      ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>()), parameters);
-      OAuth2AccessToken accessToken = response.getBody();
-      assert accessToken != null;
-      return CommonResult.success(accessToken);
-    } catch (HttpRequestMethodNotSupportedException e) {
-      throw new RuntimeException(e);
+    @CommandHandler
+    public CommonResult<?> handle(LoginCommand command) {
+        Map<String, String> parameters = new LinkedHashMap<>() {{
+            put("username", command.getUsername());
+            put("password", command.getPassword());
+            put("grant_type", "password");
+            put("client_id", "hoang");
+            put("client_secret", "1");
+        }};
+        try {
+            ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(
+                new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>()), parameters);
+            OAuth2AccessToken accessToken = response.getBody();
+            assert accessToken != null;
+            return CommonResult.success(accessToken);
+        } catch (HttpRequestMethodNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
-  }
 }

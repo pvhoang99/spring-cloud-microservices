@@ -12,20 +12,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateUserCommandHandler {
 
-  private final Repository<User> userAggregateRepository;
+    private final Repository<User> userAggregateRepository;
 
-  @CommandHandler
-  public String create(CreateUserCommand command, UserService userService) throws Exception {
-    Aggregate<User> userAggregate = userAggregateRepository.newInstance(
-        () -> new User(
-            command.getUsername(),
-            command.getPassword(),
-            command.getFullName(),
-            command.getEmail(),
-            command.getImage(),
-            userService
-        ));
-    return userAggregate.identifierAsString();
-  }
+    @CommandHandler
+    public String create(CreateUserCommand command, UserService userService) throws Exception {
+        Aggregate<User> userAggregate = userAggregateRepository.newInstance(
+            () -> new User(
+                command.getUsername(),
+                command.getPassword(),
+                command.getFullName(),
+                command.getEmail(),
+                command.getImage(),
+                userService
+            ));
+        return userAggregate.identifierAsString();
+    }
 
 }

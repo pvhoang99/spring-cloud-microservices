@@ -6,17 +6,17 @@ import lombok.Getter;
 @Getter
 public class CreateUserCommand {
 
-  @NotNull
-  private String username;
+    @NotNull
+    private String username;
 
-  @NotNull
-  private String password;
+    @NotNull
+    private String password;
 
-  @NotNull
-  private String fullName;
+    @NotNull
+    private String fullName;
 
-  @NotNull
-  private String email;
+    @NotNull
+    private String email;
 
-  private String image;
+    private String image;
 }

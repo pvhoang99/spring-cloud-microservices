@@ -3,10 +3,14 @@ package com.example.common.config;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Configuration
+@EnableAspectJAutoProxy
 public class ConfigurationGlobal {
 
   @Bean

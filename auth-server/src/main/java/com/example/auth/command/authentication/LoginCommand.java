@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 public class LoginCommand {
 
-  @NotEmpty
-  private String username;
+    @NotEmpty
+    private String username;
 
-  @NotEmpty
-  private String password;
+    @NotEmpty
+    private String password;
 }

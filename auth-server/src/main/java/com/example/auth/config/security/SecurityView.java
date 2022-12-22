@@ -17,27 +17,27 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJack
 //@RestControllerAdvice(basePackages = {"com.example.auth.dao"})
 public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
 
-  @Override
-  protected void beforeBodyWriteInternal(@NonNull MappingJacksonValue bodyContainer,
-      @NonNull MediaType contentType, @NonNull MethodParameter returnType, @NonNull ServerHttpRequest request,
-      @NonNull ServerHttpResponse response) {
-    if (SecurityContextHolder.getContext().getAuthentication() != null
-        && SecurityContextHolder.getContext().getAuthentication().getAuthorities() != null) {
+    @Override
+    protected void beforeBodyWriteInternal(@NonNull MappingJacksonValue bodyContainer,
+        @NonNull MediaType contentType, @NonNull MethodParameter returnType, @NonNull ServerHttpRequest request,
+        @NonNull ServerHttpResponse response) {
+        if (SecurityContextHolder.getContext().getAuthentication() != null
+            && SecurityContextHolder.getContext().getAuthentication().getAuthorities() != null) {
 
-      Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext()
-          .getAuthentication()
-          .getAuthorities();
+            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getAuthorities();
 
-      List<Class<?>> jsonViews = authorities.stream()
-          .map(GrantedAuthority::getAuthority).map(Role::valueOf)
-          .map(Views.MAPPING::get)
-          .collect(Collectors.toList());
-      if (jsonViews.size() == 1) {
-        bodyContainer.setSerializationView(jsonViews.get(0));
-      } else {
-        throw new IllegalArgumentException("Ambiguous declaration for roles " + authorities.stream()
-            .map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
-      }
+            List<Class<?>> jsonViews = authorities.stream()
+                .map(GrantedAuthority::getAuthority).map(Role::valueOf)
+                .map(Views.MAPPING::get)
+                .collect(Collectors.toList());
+            if (jsonViews.size() == 1) {
+                bodyContainer.setSerializationView(jsonViews.get(0));
+            } else {
+                throw new IllegalArgumentException("Ambiguous declaration for roles " + authorities.stream()
+                    .map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
+            }
+        }
     }
-  }
 }

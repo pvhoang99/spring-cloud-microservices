@@ -22,60 +22,61 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Override
-  @Bean
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+    @Setter(onMethod = @__({@Autowired}))
+    @Qualifier("customUserDetailsService")
+    private UserDetailsService userDetailsService;
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.authenticationProvider(authenticationProvider());
-  }
+    @Setter(onMethod = @__({@Autowired}))
+    private PasswordEncoder passwordEncoder;
 
-  public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(userDetailsService);
-    authProvider.setPasswordEncoder(passwordEncoder);
-    return authProvider;
-  }
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-  @Setter(onMethod = @__({@Autowired}))
-  @Qualifier("customUserDetailsService")
-  private UserDetailsService userDetailsService;
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
 
-  @Setter(onMethod = @__({@Autowired}))
-  private PasswordEncoder passwordEncoder;
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return authProvider;
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-        .antMatcher("/**")
-        .authorizeRequests()
-        .antMatchers("/login**", "/oauth/token", "/logout**", "/", "/api/v1/**")
-        .permitAll()
-        .and()
-        .authorizeRequests()
-        .anyRequest().authenticated()
-        .and()
-        .formLogin(form -> form
-            .loginPage("/login")
-            .usernameParameter("username")
-            .passwordParameter("password")
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .antMatcher("/**")
+            .authorizeRequests()
+            .antMatchers("/login**", "/oauth/token", "/logout**", "/", "/api/v1/**")
             .permitAll()
-            .successHandler(new SavedRequestAwareAuthenticationSuccessHandler())
-        )
-        .logout()
-        .invalidateHttpSession(true)
-        .clearAuthentication(true)
-        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-        .logoutSuccessHandler(redirectLogoutSuccessHandler())
-        .deleteCookies("auth_code", "JSESSIONID")
-        .permitAll();
-  }
+            .and()
+            .authorizeRequests()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin(form -> form
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll()
+                .successHandler(new SavedRequestAwareAuthenticationSuccessHandler())
+            )
+            .logout()
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessHandler(redirectLogoutSuccessHandler())
+            .deleteCookies("auth_code", "JSESSIONID")
+            .permitAll()
+        ;
+    }
 
-  @Bean
-  public RedirectLogoutSuccessHandler redirectLogoutSuccessHandler() {
-    return new RedirectLogoutSuccessHandler();
-  }
+    @Bean
+    public RedirectLogoutSuccessHandler redirectLogoutSuccessHandler() {
+        return new RedirectLogoutSuccessHandler();
+    }
 }

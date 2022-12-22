@@ -122,12 +122,15 @@ services:
       - "3306:3306"
     networks:
       - default-network
+    volumes:
+      - ./_mysql:/var/lib/mysql
 
   redis:
     image: redis:latest
     networks:
       - default-network
-
+    ports:
+      - "6379:6379"
   neo4j:
     image: neo4j:latest
     networks:
@@ -141,16 +144,6 @@ services:
       - "80:80"
     volumes:
       - ./_nginx:/etc/nginx/conf.d/
-  axon-server:
-    image: axoniq/axonserver
-    hostname: axon-server
-    ports:
-      - '8024:8024'
-      - '8124:8124'
-      - '8224:8224'
-    networks:
-      - default-network
-
 
 networks:
   default-network:

@@ -18,30 +18,30 @@ import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 @RequiredArgsConstructor
 public class AuthServiceImpl extends AuthServiceGrpc.AuthServiceImplBase {
 
-  private final TokenEndpoint tokenEndpoint;
+    private final TokenEndpoint tokenEndpoint;
 
-  @Override
-  public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
-    try {
-      Map<String, String> parameters = new LinkedHashMap<String, String>() {{
-        put("username", request.getUsername());
-        put("password", request.getPassword());
-        put("grant_type", request.getGrantType());
-        put("client_id", request.getClientId());
-        put("client_secret", request.getClientSecret());
-      }};
-      ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(
-          new UsernamePasswordAuthenticationToken(request.getClientId(), null, new ArrayList<>()),
-          parameters);
-      OAuth2AccessToken accessToken = response.getBody();
-      assert accessToken != null;
-      LoginResponse loginResponse = LoginResponse.newBuilder()
-          .setAccessToken(accessToken.getValue())
-          .setRefreshToken(accessToken.getRefreshToken().getValue()).build();
-      responseObserver.onNext(loginResponse);
-      responseObserver.onCompleted();
-    } catch (Exception e) {
-      responseObserver.onError(new RuntimeException("error login"));
+    @Override
+    public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
+        try {
+            Map<String, String> parameters = new LinkedHashMap<String, String>() {{
+                put("username", request.getUsername());
+                put("password", request.getPassword());
+                put("grant_type", request.getGrantType());
+                put("client_id", request.getClientId());
+                put("client_secret", request.getClientSecret());
+            }};
+            ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(
+                new UsernamePasswordAuthenticationToken(request.getClientId(), null, new ArrayList<>()),
+                parameters);
+            OAuth2AccessToken accessToken = response.getBody();
+            assert accessToken != null;
+            LoginResponse loginResponse = LoginResponse.newBuilder()
+                .setAccessToken(accessToken.getValue())
+                .setRefreshToken(accessToken.getRefreshToken().getValue()).build();
+            responseObserver.onNext(loginResponse);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(new RuntimeException("error login"));
+        }
     }
-  }
 }

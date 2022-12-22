@@ -43,102 +43,101 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableResourceServer
-@Import(ConfigurationGlobal.class)
 @RequiredArgsConstructor
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-  private final CorsConfigurationSource corsConfigurationSource;
+    private final CorsConfigurationSource corsConfigurationSource;
 
-  @Override
-  public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-    super.configure(resources);
-    resources.resourceId("auth-server");
-  }
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        super.configure(resources);
+        resources.resourceId("auth-server");
+    }
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable();
-    http.cors().configurationSource(corsConfigurationSource);
-    http.httpBasic().disable();
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.cors().configurationSource(corsConfigurationSource);
+        http.httpBasic().disable();
 
-    http.requestMatchers()
-        .antMatchers("/v1/**")
-        .and()
-        .authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/v1/users", "/v1/auth/*").permitAll()
-        .expressionHandler(webExpressionHandler())
-        .anyRequest().authenticated()
-        .and()
-        .exceptionHandling()
-        .accessDeniedHandler(new OAuth2AccessDeniedHandler())
-        .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint());
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
-  }
+        http.requestMatchers()
+            .antMatchers("/v1/**")
+            .and()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/v1/users", "/v1/auth/*").permitAll()
+            .expressionHandler(webExpressionHandler())
+            .anyRequest().authenticated()
+            .and()
+            .exceptionHandling()
+            .accessDeniedHandler(new OAuth2AccessDeniedHandler())
+            .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint());
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+    }
 
-  @Bean
-  public RoleHierarchy roleHierarchy() {
-    RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-    String hierarchy = "ROLE_ADMIN > ROLE_USER";
-    roleHierarchy.setHierarchy(hierarchy);
-    return roleHierarchy;
-  }
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy = "ROLE_ADMIN > ROLE_USER";
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
+    }
 
-  private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
-    DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
-    defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
-    defaultWebSecurityExpressionHandler.setPermissionEvaluator(new PermissionEvaluatorImpl());
-    return defaultWebSecurityExpressionHandler;
-  }
+    private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
+        DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+        defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
+        defaultWebSecurityExpressionHandler.setPermissionEvaluator(new PermissionEvaluatorImpl());
+        return defaultWebSecurityExpressionHandler;
+    }
 
-  /*
-   * metadataSource --get attribute (antMatchers(....).hasAnyRole(...) --> AccessDecisionManager ---> AccessDecisionVoter ----> RoleHierarchyVoter
-   * */
-  @Bean
-  public RoleHierarchyVoter roleHierarchyVoter() {
-    return new RoleHierarchyVoter(roleHierarchy());
-  }
+    /*
+     * metadataSource --get attribute (antMatchers(....).hasAnyRole(...) --> AccessDecisionManager ---> AccessDecisionVoter ----> RoleHierarchyVoter
+     * */
+    @Bean
+    public RoleHierarchyVoter roleHierarchyVoter() {
+        return new RoleHierarchyVoter(roleHierarchy());
+    }
 
-  @Bean
-  public HttpSessionSecurityContextRepository contextRepository() {
-    return new HttpSessionSecurityContextRepository();
-  }
+    @Bean
+    public HttpSessionSecurityContextRepository contextRepository() {
+        return new HttpSessionSecurityContextRepository();
+    }
 
-  /*
-  * Advanced SpEL expressions
-  * @Query("select u from User u where u.emailAddress = ?#{principal.emailAddress}")
-    List<User> findCurrentUserWithCustomQuery();
-  * */
-  @Bean
-  public EvaluationContextExtension securityExtension() {
-    return new SecurityEvaluationContextExtension();
-  }
+    /*
+    * Advanced SpEL expressions
+    * @Query("select u from User u where u.emailAddress = ?#{principal.emailAddress}")
+      List<User> findCurrentUserWithCustomQuery();
+    * */
+    @Bean
+    public EvaluationContextExtension securityExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
 
-  @Bean("securityService")
-  public SecurityService securityService() {
-    return new SecurityServiceImpl();
-  }
+    @Bean("securityService")
+    public SecurityService securityService() {
+        return new SecurityServiceImpl();
+    }
 
-  @Bean
-  public GrpcAuthenticationReader authenticationReader() {
-    final List<GrpcAuthenticationReader> readers = new ArrayList<>();
-    // The actual token class is dependent on your spring-security library (OAuth2/JWT/...)
-    readers.add(new BearerAuthenticationReader(BearerTokenAuthenticationToken::new));
-    return new CompositeGrpcAuthenticationReader(readers);
-  }
+    @Bean
+    public GrpcAuthenticationReader authenticationReader() {
+        final List<GrpcAuthenticationReader> readers = new ArrayList<>();
+        // The actual token class is dependent on your spring-security library (OAuth2/JWT/...)
+        readers.add(new BearerAuthenticationReader(BearerTokenAuthenticationToken::new));
+        return new CompositeGrpcAuthenticationReader(readers);
+    }
 
-  @Bean
-  public GrpcSecurityMetadataSource grpcSecurityMetadataSource() {
-    final ManualGrpcSecurityMetadataSource source = new ManualGrpcSecurityMetadataSource();
-    source.set(AuthServiceGrpc.getLoginMethod(), AccessPredicate.permitAll());
-    source.setDefault(AccessPredicate.denyAll());
-    return source;
-  }
+    @Bean
+    public GrpcSecurityMetadataSource grpcSecurityMetadataSource() {
+        final ManualGrpcSecurityMetadataSource source = new ManualGrpcSecurityMetadataSource();
+        source.set(AuthServiceGrpc.getLoginMethod(), AccessPredicate.permitAll());
+        source.setDefault(AccessPredicate.denyAll());
+        return source;
+    }
 
-  @Bean
-  public AccessDecisionManager accessDecisionManager() {
-    final List<AccessDecisionVoter<?>> voters = new ArrayList<>();
-    voters.add(new AccessPredicateVoter());
-    return new UnanimousBased(voters);
-  }
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        final List<AccessDecisionVoter<?>> voters = new ArrayList<>();
+        voters.add(new AccessPredicateVoter());
+        return new UnanimousBased(voters);
+    }
 
 }

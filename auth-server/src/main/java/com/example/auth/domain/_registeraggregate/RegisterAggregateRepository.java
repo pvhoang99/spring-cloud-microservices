@@ -12,22 +12,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RegisterAggregateRepository {
 
-  @Bean
-  public Repository<User> userAggregateRepository(EntityManagerProvider entityManagerProvider, EventBus eventBus) {
-    return GenericJpaRepository
-        .builder(User.class)
-        .entityManagerProvider(entityManagerProvider)
-        .eventBus(eventBus)
-        .build();
-  }
+    @Bean
+    public Repository<User> userAggregateRepository(EntityManagerProvider entityManagerProvider, EventBus eventBus) {
+        return GenericJpaRepository
+            .builder(User.class)
+            .entityManagerProvider(entityManagerProvider)
+            .eventBus(eventBus)
+            .build();
+    }
 
-  @Bean
-  public Repository<Role> roleAggregateRepository(EntityManagerProvider entityManagerProvider, EventBus eventBus) {
-    return GenericJpaRepository
-        .builder(Role.class)
-        .entityManagerProvider(entityManagerProvider)
-        .eventBus(eventBus)
-        .build();
-  }
+    @Bean
+    public Repository<Role> roleAggregateRepository(EntityManagerProvider entityManagerProvider, EventBus eventBus) {
+        return GenericJpaRepository
+            .builder(Role.class)
+            .entityManagerProvider(entityManagerProvider)
+            .eventBus(eventBus)
+            .build();
+    }
 
 }

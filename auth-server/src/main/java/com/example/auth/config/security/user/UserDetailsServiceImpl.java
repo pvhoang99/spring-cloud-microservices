@@ -17,19 +17,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Setter(onMethod = @__({@Autowired}))
-  private UserRepository userRepository;
-  @Setter(onMethod = @__({@Autowired}))
-  private RoleRepository roleRepository;
+    @Setter(onMethod = @__({@Autowired}))
+    private UserRepository userRepository;
+    @Setter(onMethod = @__({@Autowired}))
+    private RoleRepository roleRepository;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.getByUsername(username);
-    Role role = null;
-    if (!Objects.isNull(user.getRoleId())) {
-      role = roleRepository.getOne(user.getId());
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.getByUsername(username);
+        Role role = null;
+        if (!Objects.isNull(user.getRoleId())) {
+            role = roleRepository.getOne(user.getId());
+        }
+
+        return new UserDetailsImpl(user, role);
     }
 
-    return new UserDetailsImpl(user, role);
-  }
 }

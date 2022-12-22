@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RoleController {
 
-  private final CommandGateway commandGateway;
+    private final CommandGateway commandGateway;
 
-  @PostMapping
-  public ResponseEntity<?> save(@RequestBody CreateRoleCommand createRoleCommand) {
-    commandGateway.send(createRoleCommand);
-    return ResponseEntity.ok().build();
-  }
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody CreateRoleCommand createRoleCommand) {
+        commandGateway.send(createRoleCommand);
+        return ResponseEntity.ok().build();
+    }
 
 }

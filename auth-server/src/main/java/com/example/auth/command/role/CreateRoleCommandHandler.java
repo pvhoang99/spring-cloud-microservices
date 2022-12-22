@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CreateRoleCommandHandler {
 
-  @CommandHandler
-  public void handle(CreateRoleCommand createRoleCommand) {
-    log.info("handle");
-  }
+    @CommandHandler
+    public void handle(CreateRoleCommand createRoleCommand) {
+        log.info("handle");
+    }
 
 }

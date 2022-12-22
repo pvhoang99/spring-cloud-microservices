@@ -12,25 +12,25 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
-  private final JpaUserRepository jpaUserRepository;
+    private final JpaUserRepository jpaUserRepository;
 
-  @Override
-  public User getOne(String id) {
-    return this.jpaUserRepository.getOne(id);
-  }
+    @Override
+    public User getOne(String id) {
+        return this.jpaUserRepository.getOne(id);
+    }
 
-  @Override
-  public User getByUsername(String username) {
-    return this.jpaUserRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
-  }
+    @Override
+    public User getByUsername(String username) {
+        return this.jpaUserRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+    }
 
-  @Override
-  public Optional<User> findByUsername(String username) {
-    return this.jpaUserRepository.findByUsername(username);
-  }
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return this.jpaUserRepository.findByUsername(username);
+    }
 
-  @Override
-  public boolean checkExisted(String username) {
-    return this.jpaUserRepository.existsByUsername(username);
-  }
+    @Override
+    public boolean checkExisted(String username) {
+        return this.jpaUserRepository.existsByUsername(username);
+    }
 }

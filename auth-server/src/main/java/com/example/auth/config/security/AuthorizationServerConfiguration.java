@@ -30,84 +30,84 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-  @Setter(onMethod = @__({@Autowired}))
-  private ClientDetailsService clientDetailsService;
+    @Setter(onMethod = @__({@Autowired}))
+    private ClientDetailsService clientDetailsService;
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return NoOpPasswordEncoder.getInstance();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 
-  @Setter(onMethod = @__({@Autowired}))
-  private UserDetailsService userDetailsService;
+    @Setter(onMethod = @__({@Autowired}))
+    private UserDetailsService userDetailsService;
 
-  @Setter(onMethod = @__({@Autowired}))
-  @Qualifier("authenticationManagerBean")
-  private AuthenticationManager authenticationManager;
+    @Setter(onMethod = @__({@Autowired}))
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
 
-  @Setter(onMethod = @__({@Autowired}))
-  private RedisConnectionFactory redisConnectionFactory;
+    @Setter(onMethod = @__({@Autowired}))
+    private RedisConnectionFactory redisConnectionFactory;
 
-  @Setter(onMethod = @__({@Autowired}))
-  private KeyUtil keyUtil;
+    @Setter(onMethod = @__({@Autowired}))
+    private KeyUtil keyUtil;
 
-  @Override
-  public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-    security
-        .checkTokenAccess("permitAll()")
-        .tokenKeyAccess("permitAll()")
-        .allowFormAuthenticationForClients()
-        .passwordEncoder(passwordEncoder());
-  }
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security
+            .checkTokenAccess("permitAll()")
+            .tokenKeyAccess("permitAll()")
+            .allowFormAuthenticationForClients()
+            .passwordEncoder(passwordEncoder());
+    }
 
-  @Override
-  public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-    clients
-        .withClientDetails(clientDetailsService);
-  }
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients
+            .withClientDetails(clientDetailsService);
+    }
 
-  @Override
-  public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-    endpoints
-        .authenticationManager(authenticationManager)
-        .tokenStore(redisTokenStore())
-        .tokenEnhancer(tokenEnhancer())
-        .userDetailsService(userDetailsService)
-        .tokenGranter(tokenGranter(endpoints))
-    ;
-  }
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        endpoints
+            .authenticationManager(authenticationManager)
+            .tokenStore(redisTokenStore())
+            .tokenEnhancer(tokenEnhancer())
+            .userDetailsService(userDetailsService)
+            .tokenGranter(tokenGranter(endpoints))
+        ;
+    }
 
-  private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
-    List<TokenGranter> granters = new ArrayList<TokenGranter>(
-        Collections.singletonList(endpoints.getTokenGranter()));
-    return new CompositeTokenGranter(granters);
-  }
+    private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
+        List<TokenGranter> granters = new ArrayList<TokenGranter>(
+            Collections.singletonList(endpoints.getTokenGranter()));
+        return new CompositeTokenGranter(granters);
+    }
 
-  // Lưu token vào redis
-  @Bean
-  public TokenStore redisTokenStore() {
-    return new RedisTokenStore(redisConnectionFactory);
-  }
+    // Lưu token vào redis
+    @Bean
+    public TokenStore redisTokenStore() {
+        return new RedisTokenStore(redisConnectionFactory);
+    }
 
 //  @Bean
 //  public TokenStore tokenStore() {
 //    return new JwtTokenStore(tokenEnhancer());
 //  }
 
-  //Lưu token vào data base để sử dụng api revoke token
+    //Lưu token vào data base để sử dụng api revoke token
 //  @Bean
 //  public TokenStore tokenStore() {
 //    return new JdbcTokenStore(dataSource);
 //  }
 
-  @Bean
-  public JwtAccessTokenConverter tokenEnhancer() {
-    JwtAccessTokenConverter converter = new JwtAccessTokenConverterImpl();
-    converter.setKeyPair(keyPair());
-    return converter;
-  }
+    @Bean
+    public JwtAccessTokenConverter tokenEnhancer() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverterImpl();
+        converter.setKeyPair(keyPair());
+        return converter;
+    }
 
-  public KeyPair keyPair() {
-    return new KeyPair(keyUtil.getPublicKey(), keyUtil.getPrivateKey());
-  }
+    public KeyPair keyPair() {
+        return new KeyPair(keyUtil.getPublicKey(), keyUtil.getPrivateKey());
+    }
 }

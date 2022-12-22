@@ -58,6 +58,11 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.marcosbarbero.cloud</groupId>
+      <artifactId>spring-cloud-zuul-ratelimit</artifactId>
+      <version>1.7.6.RELEASE</version>
+    </dependency>
   </dependencies>
 
   <build>

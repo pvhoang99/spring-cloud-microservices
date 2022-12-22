@@ -5,11 +5,11 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-  User getOne(String id);
+    User getOne(String id);
 
-  User getByUsername(String username);
+    User getByUsername(String username);
 
-  Optional<User> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-  boolean checkExisted(String username);
+    boolean checkExisted(String username);
 }

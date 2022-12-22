@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/auth")
 public class AuthController {
 
-  private final CommandGateway commandGateway;
+    private final CommandGateway commandGateway;
 
-  @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody LoginCommand command) {
-    CommonResult<?> result = commandGateway.sendAndWait(command);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginCommand command) {
+        CommonResult<?> result = commandGateway.sendAndWait(command);
 
-    return ResponseEntity.ok(result);
-  }
+        return ResponseEntity.ok(result);
+    }
 }
