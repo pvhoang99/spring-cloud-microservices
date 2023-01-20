@@ -1,7 +1,7 @@
 package com.example.auth.config.security.user;
 
-import com.example.auth.domain.role.Role;
-import com.example.auth.domain.user.User;
+import com.example.auth.domain.Role;
+import com.example.auth.domain.User;
 import com.example.auth.repository.RoleRepository;
 import com.example.auth.repository.UserRepository;
 import java.util.Objects;
@@ -19,6 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Setter(onMethod = @__({@Autowired}))
     private UserRepository userRepository;
+
     @Setter(onMethod = @__({@Autowired}))
     private RoleRepository roleRepository;
 
@@ -27,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.getByUsername(username);
         Role role = null;
         if (!Objects.isNull(user.getRoleId())) {
-            role = roleRepository.getOne(user.getId());
+            role = roleRepository.getOne(user.getRoleId());
         }
 
         return new UserDetailsImpl(user, role);

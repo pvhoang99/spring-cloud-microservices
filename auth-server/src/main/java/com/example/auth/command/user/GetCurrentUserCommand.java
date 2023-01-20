@@ -1,5 +1,5 @@
-package com.example.auth.command.user;
-
-public class GetCurrentUserCommand {
-
-}
+//package com.example.auth.domain.user.command;
+//
+//public class GetCurrentUserCommand {
+//
+//}

@@ -1,10 +1,10 @@
 package com.example.auth.repository;
 
-import com.example.auth.domain.role.Role;
+import com.example.auth.domain.Role;
 
 public interface RoleRepository {
 
-    Role getOne(String id);
+    Role getOne(Long id);
 
-    Role findOne(String id);
+    Role findOne(Long id);
 }

@@ -16,12 +16,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "oauth_access_token", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"authentication", "authentication_id"})})
+@Table(
+    name = "oauth_access_token",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"authentication", "authentication_id"})
+    }
+)
 public class OauthAccessTokenEntity implements Serializable {
 
     @Id
@@ -49,4 +51,5 @@ public class OauthAccessTokenEntity implements Serializable {
 
     @Column(name = "refresh_token")
     private String refreshToken;
+
 }

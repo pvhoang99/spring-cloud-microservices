@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
@@ -32,11 +33,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Setter(onMethod = @__({@Autowired}))
     private ClientDetailsService clientDetailsService;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
 
     @Setter(onMethod = @__({@Autowired}))
     private UserDetailsService userDetailsService;
@@ -63,24 +59,18 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-            .withClientDetails(clientDetailsService);
+            .withClientDetails(this.clientDetailsService);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-            .authenticationManager(authenticationManager)
+            .authenticationManager(this.authenticationManager)
             .tokenStore(redisTokenStore())
-            .tokenEnhancer(tokenEnhancer())
-            .userDetailsService(userDetailsService)
-            .tokenGranter(tokenGranter(endpoints))
+            .tokenEnhancer(this.tokenEnhancer())
+            .userDetailsService(this.userDetailsService)
+            .tokenGranter(this.tokenGranter(endpoints))
         ;
-    }
-
-    private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
-        List<TokenGranter> granters = new ArrayList<TokenGranter>(
-            Collections.singletonList(endpoints.getTokenGranter()));
-        return new CompositeTokenGranter(granters);
     }
 
     // Lưu token vào redis
@@ -101,13 +91,26 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 //  }
 
     @Bean
-    public JwtAccessTokenConverter tokenEnhancer() {
+    public TokenEnhancer tokenEnhancer() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverterImpl();
-        converter.setKeyPair(keyPair());
+        converter.setKeyPair(this.keyPair());
+
         return converter;
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
 
     public KeyPair keyPair() {
         return new KeyPair(keyUtil.getPublicKey(), keyUtil.getPrivateKey());
     }
+
+    private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
+        List<TokenGranter> granters = new ArrayList<TokenGranter>(Collections.singletonList(endpoints.getTokenGranter()));
+        return new CompositeTokenGranter(granters);
+    }
+
 }

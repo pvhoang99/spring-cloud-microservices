@@ -1,7 +1,7 @@
 package com.example.auth.config.security;
 
-import com.example.auth.domain.role.Role;
-import com.example.auth.domain.user.User;
+import com.example.auth.domain.Role;
+import com.example.auth.domain.User;
 import com.example.auth.repository.RoleRepository;
 import com.example.auth.repository.UserRepository;
 import java.sql.Date;
@@ -20,6 +20,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtAccessTokenConverterImpl extends JwtAccessTokenConverter {
 
+    private static final String USER_ID_KEY = "userId";
+    private static final String USERNAME_KEY = "username";
+    private static final String FULL_NAME_KEY = "fullName";
+    private static final String EMAIL_KEY = "email";
+    private static final String ROLE_KEY = "role";
+    private static final Date EXPIRATION = Date.valueOf(LocalDate.now().plusDays(10));
+
     @Setter(onMethod = @__({@Autowired}))
     private UserRepository userRepository;
 
@@ -28,25 +35,30 @@ public class JwtAccessTokenConverterImpl extends JwtAccessTokenConverter {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        final Map<String, Object> information = new HashMap<>();
+        final Map<String, Object> information = this.buildInformation(authentication);
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(information);
+        ((DefaultOAuth2AccessToken) accessToken).setExpiration(EXPIRATION);
+
+        return super.enhance(accessToken, authentication);
+    }
+
+    private Map<String, Object> buildInformation(OAuth2Authentication authentication) {
+        Map<String, Object> information = new HashMap<>();
         User user = userRepository.getByUsername(authentication.getName());
         Role role = null;
         if (ObjectUtils.isNotEmpty(user.getRoleId())) {
             role = roleRepository.getOne(user.getRoleId());
         }
-
-        information.put("userId", user.getId());
-        information.put("username", user.getUsername());
-        information.put("fullName", user.getFullName());
-        information.put("email", user.getEmail());
+        information.put(USER_ID_KEY, user.getId());
+        information.put(USERNAME_KEY, user.getUsername());
+        information.put(FULL_NAME_KEY, user.getFullName());
+        information.put(EMAIL_KEY, user.getEmail());
         if (ObjectUtils.isNotEmpty(role)) {
-            information.put("role", role.getValue());
+            information.put(ROLE_KEY, role.getCode());
         }
 
-        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(information);
-        ((DefaultOAuth2AccessToken) accessToken).setExpiration(Date.valueOf(LocalDate.now().plusDays(10)));
-
-        return super.enhance(accessToken, authentication);
+        return information;
     }
+
 
 }

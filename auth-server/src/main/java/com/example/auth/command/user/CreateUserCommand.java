@@ -1,22 +1,24 @@
 package com.example.auth.command.user;
 
-import javax.validation.constraints.NotNull;
+import com.example.common.command.Command;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class CreateUserCommand {
+public class CreateUserCommand implements Command<Long> {
 
-    @NotNull
+    @NotBlank
     private String username;
 
-    @NotNull
+    @NotBlank
     private String password;
 
-    @NotNull
+    @NotBlank
     private String fullName;
 
-    @NotNull
+    @NotBlank
     private String email;
 
     private String image;
+
 }

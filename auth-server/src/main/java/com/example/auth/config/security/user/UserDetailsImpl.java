@@ -1,7 +1,7 @@
 package com.example.auth.config.security.user;
 
-import com.example.auth.domain.role.Role;
-import com.example.auth.domain.user.User;
+import com.example.auth.domain.Role;
+import com.example.auth.domain.User;
 import java.util.Collection;
 import java.util.Collections;
 import lombok.AllArgsConstructor;
@@ -19,20 +19,20 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (role != null) {
-            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.getValue()));
+        if (this.role != null) {
+            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.getCode()));
         }
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_AUTHENTICATED"));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return this.user.getUsername();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getIsActive();
+        return this.user.isActive();
     }
 
 }

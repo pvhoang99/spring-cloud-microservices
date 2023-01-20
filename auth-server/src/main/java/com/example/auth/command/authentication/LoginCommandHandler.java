@@ -1,41 +1,52 @@
 package com.example.auth.command.authentication;
 
-import com.example.common.api.CommonResult;
+import com.example.common.command.CommandHandler;
+import com.example.common.exception.BadRequestException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.axonframework.commandhandling.CommandHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 @Service
 @RequiredArgsConstructor
-public class LoginCommandHandler {
+public class LoginCommandHandler implements CommandHandler<LoginCommand, OAuth2AccessToken> {
 
     private final TokenEndpoint tokenEndpoint;
 
-    @CommandHandler
-    public CommonResult<?> handle(LoginCommand command) {
-        Map<String, String> parameters = new LinkedHashMap<>() {{
+    @Override
+    @Transactional
+    public OAuth2AccessToken handle(LoginCommand command) {
+        Map<String, String> parameters = this.buildParameters(command);
+        Principal principal = this.buildDefaultAuthentication();
+        try {
+            ResponseEntity<OAuth2AccessToken> response = this.tokenEndpoint.postAccessToken(principal, parameters);
+
+            return response.getBody();
+        } catch (HttpRequestMethodNotSupportedException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    private Map<String, String> buildParameters(LoginCommand command) {
+        return new LinkedHashMap<>() {{
             put("username", command.getUsername());
             put("password", command.getPassword());
             put("grant_type", "password");
             put("client_id", "hoang");
             put("client_secret", "1");
         }};
-        try {
-            ResponseEntity<OAuth2AccessToken> response = tokenEndpoint.postAccessToken(
-                new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>()), parameters);
-            OAuth2AccessToken accessToken = response.getBody();
-            assert accessToken != null;
-            return CommonResult.success(accessToken);
-        } catch (HttpRequestMethodNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
     }
+
+    private UsernamePasswordAuthenticationToken buildDefaultAuthentication() {
+        return new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>());
+    }
+
 }

@@ -35,4 +35,5 @@ public class OauthApprovalEntity implements Serializable {
     private Date expiresAt;
 
     private Date lastModifiedAt;
+
 }

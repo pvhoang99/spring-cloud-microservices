@@ -1,12 +1,11 @@
 package com.example.auth.api.v1;
 
 import com.example.auth.command.user.CreateUserCommand;
-import com.example.auth.command.user.UpdateUserCommand;
 import com.example.common.api.CommonResult;
+import com.example.common.command.CommandBus;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,22 +22,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final CommandGateway commandGateway;
+    private final CommandBus commandBus;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody final CreateUserCommand command) {
-        String userId = this.commandGateway.sendAndWait(command);
+        Long userId = this.commandBus.execute(command);
 
         return new ResponseEntity<>(CommonResult.success(userId), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody final UpdateUserCommand command) {
-        command.setId(id);
-        this.commandGateway.sendAndWait(command);
-
-        return new ResponseEntity<>(CommonResult.success(), HttpStatus.NO_CONTENT);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody final UpdateUserCommand command) {
+//        command.setId(id);
+//
+//        return new ResponseEntity<>(CommonResult.success(), HttpStatus.NO_CONTENT);
+//    }
 
     @GetMapping("/me")
     public ResponseEntity<?> currentUser(Principal principal) {

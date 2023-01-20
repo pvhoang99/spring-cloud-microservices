@@ -21,8 +21,7 @@ public class SecurityView extends AbstractMappingJacksonResponseBodyAdvice {
     protected void beforeBodyWriteInternal(@NonNull MappingJacksonValue bodyContainer,
         @NonNull MediaType contentType, @NonNull MethodParameter returnType, @NonNull ServerHttpRequest request,
         @NonNull ServerHttpResponse response) {
-        if (SecurityContextHolder.getContext().getAuthentication() != null
-            && SecurityContextHolder.getContext().getAuthentication().getAuthorities() != null) {
+        if (SecurityContextHolder.getContext().getAuthentication() != null && SecurityContextHolder.getContext().getAuthentication().getAuthorities() != null) {
 
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext()
                 .getAuthentication()
