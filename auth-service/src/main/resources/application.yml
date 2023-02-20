@@ -1,0 +1,29 @@
+spring:
+  cache:
+    redis:
+      time-to-live: 5m
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+  zipkin:
+    base-url: http://localhost:9411/
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  servlet:
+    context-path: /api/auth
+  port: 8082
+grpc:
+  server:
+    port: 1900
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true

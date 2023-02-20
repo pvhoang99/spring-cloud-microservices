@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: hoang
+      password: hoang
+      enabled: false
+  application:
+    name: discovery-server
+
+server:
+  port: 8761

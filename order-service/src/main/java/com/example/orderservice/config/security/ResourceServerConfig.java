@@ -1,6 +1,6 @@
 package com.example.orderservice.config.security;
 
-import com.example.common.config.ConfigurationGlobal;
+import com.example.common.config.CorsConfiguration;
 import feign.RequestInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -29,7 +29,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @Configuration
 @EnableResourceServer
 @AllArgsConstructor
-@Import(ConfigurationGlobal.class)
+@Import(CorsConfiguration.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   private final ResourceServerProperties sso;

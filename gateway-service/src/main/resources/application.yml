@@ -1,0 +1,101 @@
+spring:
+  cloud:
+    gateway:
+      globalCors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+      routes:
+        - id: patient
+          uri: lb://patient-service
+          predicates:
+            - Path=/api/patient-service/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: file
+          uri: lb://file-service
+          predicates:
+            - Path=/api/file-service/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: auth
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: inventory
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/inventory/**
+
+        - id: catalog
+          uri: lb://catalog-service
+          predicates:
+            - Path=/catalog/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: shoppingCart
+          uri: lb://shopping-cart-service
+          predicates:
+            - Path=/cart/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: orderModule
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: chatModule1
+          uri: lb://chat-server
+          predicates:
+            - Path=/api/chat-server/**
+        #          filters:
+        #            - name: CircuitBreaker
+        #              args:
+        #                name: myCircuitBreaker
+        #                fallbackUri: forward:/fallback/message
+        - id: chatModule2
+          uri: lb://chat-server
+          predicates:
+            - Path=/api/chat-server/ws/info/**
+        - id: chatModule3
+          uri: lb:ws://chat-server
+          predicates:
+            - Path=/api/chat-server/ws/**
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+
+server:
+  port: 8000

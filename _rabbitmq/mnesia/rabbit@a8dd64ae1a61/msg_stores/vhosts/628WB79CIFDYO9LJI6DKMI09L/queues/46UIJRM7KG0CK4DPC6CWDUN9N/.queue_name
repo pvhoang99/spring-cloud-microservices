@@ -1,0 +1,2 @@
+VHOST: /
+QUEUE: inventory_product_created_topic.catalog

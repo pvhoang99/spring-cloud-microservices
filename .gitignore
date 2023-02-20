@@ -34,3 +34,5 @@ build/
 log/
 upload/
 _mysql
+_rabbitmq
+_nginx

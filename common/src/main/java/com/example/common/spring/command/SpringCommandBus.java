@@ -3,6 +3,7 @@ package com.example.common.spring.command;
 import com.example.common.command.Command;
 import com.example.common.command.CommandBus;
 import com.example.common.command.CommandHandler;
+import com.example.common.exception.BadRequestException;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -28,6 +29,9 @@ public class SpringCommandBus implements CommandBus {
     }
 
     private <C extends Command<?>> void validate(C command) {
+        if (command == null) {
+            throw new BadRequestException("command.is.null");
+        }
         Set<ConstraintViolation<C>> violations = this.validator.validate(command);
 
         if (!violations.isEmpty()) {

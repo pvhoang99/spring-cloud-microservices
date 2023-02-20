@@ -18,6 +18,23 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  cloud:
+    stream:
+      bindings:
+        inventory_product_created:
+          destination: inventory_product_created_topic
+          binder: rabbit
+          group: catalog
+      binders:
+        rabbit:
+          type: rabbit
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: 123456
+    virtual-host: /
+
 server:
   port: 8086
 

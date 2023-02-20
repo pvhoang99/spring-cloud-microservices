@@ -1,6 +1,6 @@
 package com.example.fileservice.config.security;
 
-import com.example.common.config.ConfigurationGlobal;
+import com.example.common.config.CorsConfiguration;
 import com.example.fileservice.config.security.expression.SecurityService;
 import com.example.fileservice.config.security.expression.SecurityServiceImpl;
 import feign.RequestInterceptor;
@@ -42,7 +42,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @Configuration
 @EnableResourceServer
 @AllArgsConstructor
-@Import(ConfigurationGlobal.class)
+@Import(CorsConfiguration.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 

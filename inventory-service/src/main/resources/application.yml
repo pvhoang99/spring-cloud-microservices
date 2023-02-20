@@ -1,0 +1,53 @@
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8082/api/auth/oauth/check_token
+      user-info-uri: http://localhost:8082/api/auth/api/v1/user/me
+      id: inventory-service
+    client:
+      client-id: hoang
+      client-secret: 1
+      access-token-uri: http://localhost:8082/api/auth/oauth/token
+      scope: read
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/inventory?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  cloud:
+    stream:
+      bindings:
+        out-inventory_product_created:
+          destination: inventory_product_created_topic
+          binder: rabbit
+      binders:
+        rabbit:
+          type: rabbit
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: 123456
+    virtual-host: /
+server:
+  port: 8087
+eureka:
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+
+
+
+
+
+

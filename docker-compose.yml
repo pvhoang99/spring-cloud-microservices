@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   config-server:
-    container_name: config-server
+    container_name: config-service
     build:
       dockerfile: Dockerfile
       context: ./
@@ -13,7 +13,7 @@ services:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
-      - DIR=config-server
+      - DIR=config-service
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SERVER_PORT=8888
     working_dir: /microservices
@@ -26,9 +26,8 @@ services:
           cpus: "0.5"
           memory: "512M"
 
-
   discovery-server:
-    container_name: discovery-server
+    container_name: discovery-service
     build:
       dockerfile: Dockerfile
       context: ./
@@ -39,7 +38,7 @@ services:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
-      - DIR=discovery-server
+      - DIR=discovery-service
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - WAIT_SERVICE=config-server:8888
@@ -55,7 +54,7 @@ services:
           memory: "512M"
 
   gateway-server:
-    container_name: gateway-server
+    container_name: gateway-service
     build:
       dockerfile: Dockerfile
       context: ./
@@ -66,7 +65,7 @@ services:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
-      - DIR=gateway-server
+      - DIR=gateway-service
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
@@ -83,7 +82,7 @@ services:
           memory: "512M"
 
   auth-server:
-    container_name: auth-server
+    container_name: auth-service
     build:
       dockerfile: Dockerfile
       context: ./
@@ -94,7 +93,7 @@ services:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
-      - DIR=auth-server
+      - DIR=auth-service
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
@@ -113,6 +112,50 @@ services:
         reservations:
           cpus: "0.5"
           memory: "512M"
+
+  inventory:
+    container_name: inventory-service
+    build:
+      dockerfile: Dockerfile
+      context: ./
+      target: java
+    networks:
+      - default-network
+    volumes:
+      - .:/microservices
+      - m2_data:/root/.m2/repository
+    environment:
+      - DIR=auth-server
+      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - WAIT_SERVICE=config-server:8888 discovery-server:8761 gateway-server:8000
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/inventory?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SECURITY_OAUTH2_RESOURCE_
+      - SPRING_REDIS_HOST=redis
+      - SERVER_PORT=8088
+    working_dir: /microservices
+    deploy:
+      resources:
+        limits:
+          cpus: "3"
+          memory: "4096M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=123456
+    ports:
+      - "5672:5672"
+    volumes:
+      - ./_rabbitmq:/var/lib/rabbitmq/
 
   mysql:
     image: mysql:5.7
