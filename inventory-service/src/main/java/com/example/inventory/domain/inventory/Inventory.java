@@ -23,12 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Inventory extends AggregateRoot {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    private UUID uuid;
+    private String id;
 
     @OneToMany
     private List<InventoryItem> inventoryItems;
@@ -38,6 +33,7 @@ public class Inventory extends AggregateRoot {
 
     public static Inventory of() {
         Inventory inventory = new Inventory();
+        inventory.generateId();
         inventory.setTotalMoney(Money.of(0L));
         inventory.setInventoryItems(Collections.emptyList());
 
@@ -55,6 +51,10 @@ public class Inventory extends AggregateRoot {
         }
 
         this.setTotalMoney(money);
+    }
+
+    private void generateId() {
+        this.setId(UUID.randomUUID().toString());
     }
 
 }
