@@ -154,8 +154,6 @@ services:
       - RABBITMQ_DEFAULT_PASS=123456
     ports:
       - "5672:5672"
-    volumes:
-      - ./_rabbitmq:/var/lib/rabbitmq/
 
   mysql:
     image: mysql:5.7

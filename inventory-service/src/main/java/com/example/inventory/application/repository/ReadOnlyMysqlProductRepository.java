@@ -23,11 +23,9 @@ public class ReadOnlyMysqlProductRepository {
             "SELECT " +
                 "   NEW com.example.inventory.application.vm.ProductVm( " +
                 "       p.code," +
-                "       p.name," +
-                "       c.name " +
+                "       p.name" +
                 "   ) " +
                 " FROM product p " +
-                " INNER JOIN category c ON p.categoryId = c.id " +
                 " WHERE p.code = :code ", ProductVm.class);
         query.setParameter("code", code);
 

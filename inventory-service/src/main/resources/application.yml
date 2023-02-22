@@ -22,9 +22,10 @@ spring:
   cloud:
     stream:
       bindings:
-        out-inventory_product_created:
+        inventory_product_created:
           destination: inventory_product_created_topic
           binder: rabbit
+          group: catalog
       binders:
         rabbit:
           type: rabbit

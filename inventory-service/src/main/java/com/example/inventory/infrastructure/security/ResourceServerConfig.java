@@ -91,7 +91,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
-            .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+            .accessDeniedHandler(new OAuth2AccessDeniedHandler())
+        ;
         http.csrf().disable();
         http.cors().configurationSource(this.corsConfigurationSource);
         http.httpBasic().disable();

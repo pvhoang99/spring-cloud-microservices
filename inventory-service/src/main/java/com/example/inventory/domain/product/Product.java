@@ -1,7 +1,6 @@
 package com.example.inventory.domain.product;
 
 import com.example.common.domain.AggregateRoot;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,22 +23,11 @@ public class Product extends AggregateRoot {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "quantity")
-    private long quantity;
 
-    @Column(name = "category_id")
-    private String categoryId;
-
-    public static Product of(String name, String categoryId) {
+    public static Product of(String code, String name) {
         Product product = new Product();
-        String code = UUID.randomUUID().toString();
         product.setCode(code);
         product.setName(name);
-        product.setQuantity(0);
-        product.setCategoryId(categoryId);
-        product.dispatch(
-            ProductCreatedEvent.of(code)
-        );
 
         return product;
     }

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PostPersist;
 import javax.persistence.Transient;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 
+@MappedSuperclass
 public abstract class AggregateRoot extends AbstractAuditing {
 
     @Transient

@@ -1,4 +1,4 @@
-package com.example.inventory.domain.product;
+package com.example.catalog.domain.product;
 
 import com.example.common.event.DomainEvent;
 import lombok.Getter;

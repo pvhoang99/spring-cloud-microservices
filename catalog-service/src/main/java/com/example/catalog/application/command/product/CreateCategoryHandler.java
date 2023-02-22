@@ -1,10 +1,9 @@
-package com.example.inventory.application.command.product;
+package com.example.catalog.application.command.product;
 
+import com.example.catalog.domain.catalog.Category;
+import com.example.catalog.domain.catalog.CategoryRepository;
 import com.example.common.command.CommandHandler;
-import com.example.inventory.domain.category.Category;
-import com.example.inventory.domain.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

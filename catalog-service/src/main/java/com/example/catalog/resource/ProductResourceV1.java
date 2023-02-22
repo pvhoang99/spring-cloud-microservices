@@ -1,9 +1,9 @@
-package com.example.inventory.resource;
+package com.example.catalog.resource;
 
+import com.example.catalog.application.command.product.CreateProductCommand;
+import com.example.catalog.application.vm.ProductVm;
 import com.example.common.command.CommandBus;
 import com.example.common.query.QueryBus;
-import com.example.inventory.application.query.product.GetProductQuery;
-import com.example.inventory.application.vm.ProductVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/products")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductResourceV1 {
 
     private final CommandBus commandBus;
     private final QueryBus queryBus;
@@ -26,11 +26,11 @@ public class ProductController {
         return ResponseEntity.ok(this.commandBus.execute(command));
     }
 
-    @GetMapping("/{code}")
-    public ResponseEntity<ProductVm> getOne(@PathVariable(value = "code") String code) {
-        GetProductQuery getProductQuery = GetProductQuery.of(code);
-
-        return ResponseEntity.ok(this.queryBus.execute(getProductQuery));
-    }
+//    @GetMapping("/{code}")
+//    public ResponseEntity<ProductVm> getOne(@PathVariable(value = "code") String code) {
+//        GetProductQuery getProductQuery = GetProductQuery.of(code);
+//
+//        return ResponseEntity.ok(this.queryBus.execute(getProductQuery));
+//    }
 
 }

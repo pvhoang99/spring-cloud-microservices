@@ -1,13 +1,13 @@
 package com.example.catalog.infrastructure.broker;
 
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.messaging.SubscribableChannel;
+import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.messaging.MessageChannel;
 
 public interface Processor {
 
-    String PRODUCT_CREATED = "inventory_product_created";
+    String PRODUCT_CREATED = "out-inventory_product_created";
 
-    @Input(value = PRODUCT_CREATED)
-    SubscribableChannel productCreated();
+    @Output(value = PRODUCT_CREATED)
+    MessageChannel productCreated();
 
 }

@@ -1,4 +1,4 @@
-package com.example.inventory.domain.category;
+package com.example.catalog.domain.catalog;
 
 
 public interface CategoryRepository {

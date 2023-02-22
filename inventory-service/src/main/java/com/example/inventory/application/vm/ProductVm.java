@@ -11,6 +11,4 @@ public class ProductVm {
 
     private String name;
 
-    private String category;
-
 }

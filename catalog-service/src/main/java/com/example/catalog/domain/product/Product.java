@@ -2,8 +2,12 @@ package com.example.catalog.domain.product;
 
 import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
+import com.example.common.valueobject.Money;
+import com.example.common.valueobject.MoneyConverter;
 import java.math.BigDecimal;
+import java.util.UUID;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import lombok.AccessLevel;
@@ -31,17 +35,33 @@ public class Product extends AggregateRoot {
     private String image;
 
     @Column(name = "money")
-    private BigDecimal money;
+    @Convert(converter = MoneyConverter.class)
+    private Money money;
 
-    private String category;
+    @Column(name = "catalog_id")
+    private String catalogId;
 
-    public static Product create(String code, String name, String category) {
+    public static Product create(String name, String description, String image, Money money, String catalogId) {
         Product product = new Product();
-        product.setCode(code);
+        product.generateCode();
         product.setName(name);
-        product.setCategory(category);
+        product.setDescription(description);
+        product.setImage(image);
+        product.setMoney(money);
+        product.setCatalogId(catalogId);
+        product.dispatchCreatedEvent();
 
         return product;
+    }
+
+    private void dispatchCreatedEvent() {
+        this.dispatch(
+            ProductCreatedEvent.of(this.code)
+        );
+    }
+
+    private void generateCode() {
+        this.setCode(UUID.randomUUID().toString());
     }
 
     private void setName(String name) {

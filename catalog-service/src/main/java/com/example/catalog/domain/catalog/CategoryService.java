@@ -1,6 +1,6 @@
-package com.example.inventory.domain.category;
+package com.example.catalog.domain.catalog;
 
-import com.example.inventory.infrastructure.repository.jpa.JpaCategoryRepository;
+import com.example.catalog.infrastructure.repository.jpa.JpaCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

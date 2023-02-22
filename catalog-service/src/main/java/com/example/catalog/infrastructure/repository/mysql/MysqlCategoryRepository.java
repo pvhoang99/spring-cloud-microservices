@@ -1,9 +1,8 @@
 package com.example.catalog.infrastructure.repository.mysql;
 
-import com.example.catalog.domain.category.Category;
-import com.example.catalog.domain.category.CategoryRepository;
+import com.example.catalog.domain.catalog.Category;
+import com.example.catalog.domain.catalog.CategoryRepository;
 import com.example.catalog.infrastructure.repository.jpa.JpaCategoryRepository;
-import com.example.common.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +18,8 @@ public class MysqlCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public Category get(Long id) {
-        return this.jpaCategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("category.not.found"));
+    public Category get(String id) {
+        return this.jpaCategoryRepository.getOne(id);
     }
 
 }

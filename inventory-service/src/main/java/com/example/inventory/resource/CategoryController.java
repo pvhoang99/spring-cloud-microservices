@@ -2,7 +2,6 @@ package com.example.inventory.resource;
 
 import com.example.common.command.CommandBus;
 import com.example.inventory.application.command.product.CreateCategoryCommand;
-import com.example.inventory.application.command.product.CreateProductCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

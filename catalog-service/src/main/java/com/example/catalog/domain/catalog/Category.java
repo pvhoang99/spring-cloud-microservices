@@ -1,4 +1,4 @@
-package com.example.inventory.domain.category;
+package com.example.catalog.domain.catalog;
 
 import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
@@ -28,7 +28,7 @@ public class Category extends AggregateRoot {
 
     public static Category of(String name) {
         Category category = new Category();
-        category.setId(UUID.randomUUID().toString());
+        category.generateId();
         category.setName(name);
 
         return category;
@@ -36,6 +36,10 @@ public class Category extends AggregateRoot {
 
     public void update(String name) {
         this.setName(name);
+    }
+
+    private void generateId() {
+        this.setId(UUID.randomUUID().toString());
     }
 
     private void setName(String name) {
