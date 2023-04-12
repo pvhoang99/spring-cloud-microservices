@@ -4,19 +4,20 @@ import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
 import com.example.common.valueobject.Money;
 import com.example.common.valueobject.MoneyConverter;
-import java.math.BigDecimal;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
-@Entity
+@Table(name = "product")
+@Entity(name = "product")
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor

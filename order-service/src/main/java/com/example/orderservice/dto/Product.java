@@ -10,4 +10,5 @@ public class Product {
   private String name, productId, description;
   private Double unitPrice;
   private int quantity;
+
 }

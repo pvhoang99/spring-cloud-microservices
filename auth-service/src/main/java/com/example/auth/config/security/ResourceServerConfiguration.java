@@ -17,7 +17,6 @@ import net.devh.boot.grpc.server.security.check.ManualGrpcSecurityMetadataSource
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.spel.spi.EvaluationContextExtension;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
@@ -59,17 +58,17 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.httpBasic().disable();
 
         http.requestMatchers()
-            .antMatchers("/v1/**")
+            .antMatchers("/**")
             .and()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/v1/users", "/v1/auth/*").permitAll()
+            .antMatchers("/v1/auth/login").permitAll()
             .expressionHandler(webExpressionHandler())
             .anyRequest().authenticated()
             .and()
             .exceptionHandling()
             .accessDeniedHandler(new OAuth2AccessDeniedHandler())
             .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint());
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Bean
@@ -93,11 +92,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Bean
     public RoleHierarchyVoter roleHierarchyVoter() {
         return new RoleHierarchyVoter(roleHierarchy());
-    }
-
-    @Bean
-    public HttpSessionSecurityContextRepository contextRepository() {
-        return new HttpSessionSecurityContextRepository();
     }
 
     /*

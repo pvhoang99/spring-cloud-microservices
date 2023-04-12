@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class CreateCategoryCommand implements Command<Long> {
+public class CreateCategoryCommand implements Command<String> {
 
     @NotBlank
     private String name;

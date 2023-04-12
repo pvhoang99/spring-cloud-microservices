@@ -21,10 +21,10 @@ public class ProductController {
     private final CommandBus commandBus;
     private final QueryBus queryBus;
 
-    @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreateProductCommand command) {
-        return ResponseEntity.ok(this.commandBus.execute(command));
-    }
+//    @PostMapping
+//    public ResponseEntity<String> create(@RequestBody CreateProductCommand command) {
+//        return ResponseEntity.ok(this.commandBus.execute(command));
+//    }
 
     @GetMapping("/{code}")
     public ResponseEntity<ProductVm> getOne(@PathVariable(value = "code") String code) {

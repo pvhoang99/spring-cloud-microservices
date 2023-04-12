@@ -10,6 +10,6 @@ public interface ProductRepository {
 
     void save(Product product);
 
-    ListQueryResult<ProductFilter, ProductVm> getList(GetProductListQuery query);
+    ListQueryResult<ProductVm> getList(GetProductListQuery query);
 
 }

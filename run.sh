@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2162
+echo "mvn clean install ${DIR}"
 
 mvn clean install -pl "${DIR}" -am
-
 IFS=' '
 
 read -a strarr <<< "${WAIT_SERVICE}"

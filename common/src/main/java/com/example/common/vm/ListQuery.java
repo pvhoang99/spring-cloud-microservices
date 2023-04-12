@@ -1,35 +1,32 @@
 package com.example.common.vm;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ListQuery<F> {
 
-    @JsonProperty("pager")
-    protected Pager pager;
-
-    @JsonProperty("filters")
+    @JsonProperty(value = "filters")
     private F filters;
 
-    @JsonProperty("sort")
-    protected Sort sort;
+    @JsonProperty(value = "pager")
+    private Pageable pager;
 
-    public static <F> ListQuery<F> of(Pager pager, F filters, Sort sort) {
+    public static <F> ListQuery<F> of(F filters) {
         ListQuery<F> query = new ListQuery<>();
-        query.pager = pager;
         query.filters = filters;
-        query.sort = sort;
 
         return query;
     }
 
-    public Pager getPager() {
-        return this.pager != null ? this.pager : Pager.fallback();
-    }
-
-    public Sort getSort() {
-        return this.sort != null ? this.sort : Sort.fallback();
+    public Pageable getPager() {
+        return this.pager != null ? this.pager : PageRequest.of(0, 20);
     }
 
 }

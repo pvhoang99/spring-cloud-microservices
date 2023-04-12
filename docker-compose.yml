@@ -1,12 +1,11 @@
-version: '3.4'
+version: '3.9'
 
 services:
   config-server:
-    container_name: config-service
+    container_name: config-server
     build:
       dockerfile: Dockerfile
       context: ./
-      target: java
     networks:
       - default-network
     volumes:
@@ -20,9 +19,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: "1024M"
-        reservations:
           cpus: "0.5"
           memory: "512M"
 
@@ -31,7 +27,6 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./
-      target: java
     networks:
       - default-network
     volumes:
@@ -49,16 +44,12 @@ services:
         limits:
           cpus: "1"
           memory: "1024M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
 
   gateway-server:
     container_name: gateway-service
     build:
       dockerfile: Dockerfile
       context: ./
-      target: java
     networks:
       - default-network
     volumes:
@@ -77,16 +68,12 @@ services:
         limits:
           cpus: "2"
           memory: "2048M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
 
   auth-server:
     container_name: auth-service
     build:
       dockerfile: Dockerfile
       context: ./
-      target: java
     networks:
       - default-network
     volumes:
@@ -109,23 +96,19 @@ services:
         limits:
           cpus: "3"
           memory: "4096M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
 
   inventory:
     container_name: inventory-service
     build:
       dockerfile: Dockerfile
       context: ./
-      target: java
     networks:
       - default-network
     volumes:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
-      - DIR=auth-server
+      - DIR=inventory-service
       - JAVA_OPTS=-Xms1024M -Xmx2024M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
@@ -142,9 +125,6 @@ services:
         limits:
           cpus: "3"
           memory: "4096M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -185,6 +165,42 @@ services:
       - "80:80"
     volumes:
       - ./_nginx:/etc/nginx/conf.d/
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.2.2
+    ports:
+      - "9200:9200"
+    environment:
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9200" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.2.2
+    ports:
+      - "5601:5601"
+    environment:
+      - "xpack.security.enabled=false"
+    restart: on-failure
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.2.2
+    ports:
+      - "25826:25826"
+    volumes:
+      - ./_elk-config:/elk-config
+      - ./log:/log
+    command: logstash -f /elk-config/logstash.config
+    restart: on-failure
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
 
 networks:
   default-network:

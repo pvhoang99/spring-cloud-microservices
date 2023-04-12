@@ -1,6 +1,6 @@
 package com.example.catalog.application.command.product;
 
-import com.example.catalog.domain.catalog.CategoryService;
+import com.example.catalog.domain.category.CategoryService;
 import com.example.catalog.domain.product.Product;
 import com.example.catalog.domain.product.ProductRepository;
 import com.example.common.command.CommandHandler;

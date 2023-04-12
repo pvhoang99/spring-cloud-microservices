@@ -1,7 +1,7 @@
 package com.example.catalog.infrastructure.repository.mysql;
 
-import com.example.catalog.domain.catalog.Category;
-import com.example.catalog.domain.catalog.CategoryRepository;
+import com.example.catalog.domain.category.Category;
+import com.example.catalog.domain.category.CategoryRepository;
 import com.example.catalog.infrastructure.repository.jpa.JpaCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -2,6 +2,7 @@ package com.example.auth;
 
 import com.example.auth.config.security.client.ClientDetailRepository;
 import com.example.auth.domain.authentication.OauthClientDetailEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @ComponentScan(basePackages = "com.example")
 @ConfigurationPropertiesScan(value = {"com.example.auth"})
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "dateTimeProvider")
+@Slf4j
 public class AuthApplication {
 
     public static void main(String[] args) {
@@ -25,8 +27,10 @@ public class AuthApplication {
     }
 
     @Bean
+
     public CommandLineRunner init(ClientDetailRepository oauthClientDetailRepository) {
         return args -> {
+            log.info("test");
             if (!oauthClientDetailRepository.existsByClientId("hoang")) {
                 OauthClientDetailEntity clientDetailEntity = new OauthClientDetailEntity();
                 clientDetailEntity.setClientId("hoang");
