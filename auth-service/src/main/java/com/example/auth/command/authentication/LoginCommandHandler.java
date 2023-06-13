@@ -17,6 +17,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 @Service
 @RequiredArgsConstructor
+@Deprecated
 public class LoginCommandHandler implements CommandHandler<LoginCommand, OAuth2AccessToken> {
 
     private final TokenEndpoint tokenEndpoint;

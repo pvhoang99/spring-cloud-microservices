@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class GetProductListHandler implements
-    QueryHandler<GetProductListQuery, ListQueryResult<ProductVm>> {
+public class GetProductListHandler implements QueryHandler<GetProductListQuery, ListQueryResult<ProductVm>> {
 
     private final ProductRepository productRepository;
 

@@ -1,6 +1,5 @@
 package com.example.catalog.application.vm;
 
-import com.example.common.valueobject.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductVm {
 
-    private String code;
+    private Long id;
 
     private String name;
 
@@ -16,16 +15,14 @@ public class ProductVm {
 
     private String image;
 
-    private Long money;
-
     private String catalogId;
 
-    public ProductVm(String code, String name, String description, String image, Money money, String catalogId) {
-        this.code = code;
+    public ProductVm(Long id, String name, String description, String image, String catalogId) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.image = image;
-        this.money = money.getValue();
         this.catalogId = catalogId;
     }
+
 }

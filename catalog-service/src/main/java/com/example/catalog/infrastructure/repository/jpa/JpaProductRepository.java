@@ -18,12 +18,11 @@ public interface JpaProductRepository extends JpaRepository<Product, Long>, JpaS
     @Query(
         "SELECT " +
             "   NEW com.example.catalog.application.vm.ProductVm( " +
-            "       p.code, " +
+            "       p.id, " +
             "       p.name, " +
             "       p.description, " +
             "       p.image," +
-            "       p.money," +
-            "       p.catalogId " +
+            "       p.categoryId " +
             "   ) " +
             " FROM product p "
     )
