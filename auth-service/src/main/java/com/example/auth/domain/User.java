@@ -55,6 +55,10 @@ public class User extends AggregateRoot {
         return user;
     }
 
+    public void update(String fullName, String email, String image) {
+        // do something here
+    }
+
     public String getUsername() {
         return this.credentials.getUsername().getValue();
     }

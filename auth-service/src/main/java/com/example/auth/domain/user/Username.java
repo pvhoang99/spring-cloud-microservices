@@ -1,6 +1,7 @@
 package com.example.auth.domain.user;
 
 import com.example.common.domain.ValueObject;
+import com.example.common.exception.BadRequestException;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
@@ -17,20 +18,20 @@ public class Username implements ValueObject {
     }
 
     private Username(String username) {
-        this.username = normalize(username);
-        validate(this.username);
+        this.username = this.normalize(username);
+        this.validate(this.username);
     }
 
-    private static void validate(String username) {
+    private void validate(String username) {
         if (username.length() < MIN_LENGTH) {
-            throw new RuntimeException();
+            throw new BadRequestException("length of username must greater than 6 character");
         }
         if (username.length() > MAX_LENGTH) {
-            throw new RuntimeException();
+            throw new RuntimeException("length of username must less than 12 character");
         }
     }
 
-    public static String normalize(String username) {
+    public String normalize(String username) {
         return username.trim().toLowerCase();
     }
 

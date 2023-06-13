@@ -2,11 +2,10 @@ package com.example.catalog.domain.category;
 
 import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
+
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +20,15 @@ import org.apache.commons.lang3.StringUtils;
 public class Category extends AggregateRoot {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    public static Category of(String name) {
+    public static Category create(String name) {
         Category category = new Category();
-        category.generateId();
         category.setName(name);
 
         return category;
@@ -36,10 +36,6 @@ public class Category extends AggregateRoot {
 
     public void update(String name) {
         this.setName(name);
-    }
-
-    private void generateId() {
-        this.setId(UUID.randomUUID().toString());
     }
 
     private void setName(String name) {

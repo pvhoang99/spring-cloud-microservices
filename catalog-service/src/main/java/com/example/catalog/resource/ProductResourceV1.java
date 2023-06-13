@@ -1,22 +1,19 @@
 package com.example.catalog.resource;
 
-import com.example.catalog.application.command.product.CreateCategoryCommand;
 import com.example.catalog.application.command.product.CreateProductCommand;
 import com.example.catalog.application.query.product.GetProductListQuery;
 import com.example.catalog.application.query.product.GetProductListQuery.ProductFilter;
 import com.example.catalog.application.vm.ProductVm;
-import com.example.catalog.domain.category.Category;
 import com.example.catalog.domain.product.Product;
 import com.example.catalog.infrastructure.repository.jpa.JpaProductRepository;
 import com.example.common.command.CommandBus;
 import com.example.common.query.QueryBus;
+import com.example.common.vm.CommandResult;
 import com.example.common.vm.ListQueryResult;
 import com.example.common.vm.query.SearchRequest;
 import com.example.common.vm.query.SearchSpecification;
-import javax.persistence.criteria.Join;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,13 +29,8 @@ public class ProductResourceV1 {
     private final QueryBus queryBus;
     private final JpaProductRepository jpaProductRepository;
 
-    @PostMapping("/categories")
-    public ResponseEntity<String> createCategory(@RequestBody CreateCategoryCommand command) {
-        return ResponseEntity.ok(this.commandBus.execute(command));
-    }
-
     @PostMapping("/products")
-    public ResponseEntity<String> createProduct(@RequestBody CreateProductCommand command) {
+    public ResponseEntity<CommandResult<Long>> createProduct(@RequestBody CreateProductCommand command) {
         return ResponseEntity.ok(this.commandBus.execute(command));
     }
 
@@ -56,7 +48,6 @@ public class ProductResourceV1 {
 
         return this.jpaProductRepository.findAll(specification, pageable);
     }
-
 
 
 //    @GetMapping("/{code}")

@@ -6,31 +6,31 @@ import com.example.catalog.domain.product.ProductRepository;
 import com.example.common.command.CommandHandler;
 import com.example.common.exception.EntityNotFoundException;
 import com.example.common.valueobject.Money;
+import com.example.common.vm.CommandResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CreateProductHandler implements CommandHandler<CreateProductCommand, String> {
+public class CreateProductHandler implements CommandHandler<CreateProductCommand, CommandResult<Long>> {
 
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
 
     @Override
     @Transactional
-    public String handle(CreateProductCommand command) {
+    public CommandResult<Long> handle(CreateProductCommand command) {
         this.validate(command);
         Product product = Product.create(
             command.getName(),
             command.getDescription(),
             command.getImage(),
-            Money.of(command.getMoney()),
             command.getCategoryId()
         );
         this.productRepository.save(product);
 
-        return product.getCode();
+        return CommandResult.of(product.getId());
     }
 
     private void validate(CreateProductCommand command) {

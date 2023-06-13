@@ -16,8 +16,6 @@ public class ProductVm {
 
     private String image;
 
-    private Long money;
-
     private String catalogId;
 
     public ProductVm(String code, String name, String description, String image, Money money, String catalogId) {
@@ -25,7 +23,6 @@ public class ProductVm {
         this.name = name;
         this.description = description;
         this.image = image;
-        this.money = money.getValue();
         this.catalogId = catalogId;
     }
 }

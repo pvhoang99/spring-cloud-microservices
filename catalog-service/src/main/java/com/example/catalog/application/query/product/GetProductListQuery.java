@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 @Getter
-@AllArgsConstructor()
+@AllArgsConstructor
 public class GetProductListQuery extends ListQuery<ProductFilter> implements Query<ListQueryResult<ProductVm>> {
 
     public GetProductListQuery(ProductFilter filter, Pageable pageable) {
