@@ -10,7 +10,7 @@ public class CategoryService {
 
     private final JpaCategoryRepository jpaCategoryRepository;
 
-    public boolean existById(String id) {
+    public boolean existById(Long id) {
         return jpaCategoryRepository.existsById(id);
     }
 

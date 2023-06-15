@@ -1,6 +1,7 @@
 package com.example.catalog.application.command.product;
 
 import com.example.common.command.Command;
+
 import javax.validation.constraints.NotNull;
 
 import com.example.common.vm.CommandResult;
@@ -16,9 +17,7 @@ public class CreateProductCommand implements Command<CommandResult<Long>> {
 
     private String image;
 
-    private Long money;
-
     @NotNull
-    private String categoryId;
+    private Long categoryId;
 
 }
