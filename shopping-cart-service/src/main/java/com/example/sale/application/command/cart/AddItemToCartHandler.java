@@ -6,21 +6,23 @@ import com.example.sale.domain.cart.CartRepository;
 import com.example.sale.domain.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class AddItemToCartHandler implements CommandHandler<AddItemToCartCommand, Void> {
 
-    private final CartService cartService;
-    private final CartRepository cartRepository;
+  private final CartService cartService;
+  private final CartRepository cartRepository;
 
-    @Override
-    public Void handle(AddItemToCartCommand command) {
-        Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
-        cart.addItem(command.getProductId(), command.getQuantity());
-        this.cartRepository.save(cart);
+  @Override
+  @Transactional
+  public Void handle(AddItemToCartCommand command) {
+    Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
+    cart.addItem(command.getProductId(), command.getQuantity());
+    this.cartRepository.save(cart);
 
-        return null;
-    }
+    return null;
+  }
 
 }

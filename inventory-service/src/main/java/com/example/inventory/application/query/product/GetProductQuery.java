@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor(staticName = "of")
 public class GetProductQuery implements Query<ProductVm> {
 
-    @NotBlank
-    private String code;
+  @NotBlank
+  private String code;
 
 }

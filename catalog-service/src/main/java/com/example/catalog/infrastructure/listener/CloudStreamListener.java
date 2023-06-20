@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CloudStreamListener {
 
-    private final CommandBus commandBus;
+  private final CommandBus commandBus;
 //    private final InventoryFeignClient inventoryFeignClient;
 
 

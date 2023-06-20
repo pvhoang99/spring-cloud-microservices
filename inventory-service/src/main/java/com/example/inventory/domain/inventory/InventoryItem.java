@@ -22,46 +22,46 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public class InventoryItem extends AbstractAuditing {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    private UUID id;
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(
+      name = "UUID",
+      strategy = "org.hibernate.id.UUIDGenerator"
+  )
+  private UUID id;
 
-    @Embedded
-    private InventoryProduct inventoryProduct;
+  @Embedded
+  private InventoryProduct inventoryProduct;
 
-    @Convert(converter = MoneyConverter.class)
-    @Column(name = "money")
-    private Money money;
+  @Convert(converter = MoneyConverter.class)
+  @Column(name = "money")
+  private Money money;
 
-    @Column(name = "quantity")
-    private long quantity;
+  @Column(name = "quantity")
+  private long quantity;
 
-    @Column(name = "note")
-    private String note;
+  @Column(name = "note")
+  private String note;
 
-    public static InventoryItem of(InventoryProduct inventoryProduct, long quantity, String note) {
-        InventoryItem inventoryItem = new InventoryItem();
-        inventoryItem.setInventoryProduct(inventoryProduct);
-        inventoryItem.setQuantity(quantity);
-        inventoryItem.setNote(note);
-        inventoryItem.calculateMoney();
+  public static InventoryItem of(InventoryProduct inventoryProduct, long quantity, String note) {
+    InventoryItem inventoryItem = new InventoryItem();
+    inventoryItem.setInventoryProduct(inventoryProduct);
+    inventoryItem.setQuantity(quantity);
+    inventoryItem.setNote(note);
+    inventoryItem.calculateMoney();
 
-        return inventoryItem;
-    }
+    return inventoryItem;
+  }
 
-    public Money getMoney() {
-        this.calculateMoney();
+  public Money getMoney() {
+    this.calculateMoney();
 
-        return this.money;
-    }
+    return this.money;
+  }
 
-    private void calculateMoney() {
-        Money totalMoneyOnItem = this.inventoryProduct.getMoney().mul(this.quantity);
-        this.setMoney(totalMoneyOnItem);
-    }
+  private void calculateMoney() {
+    Money totalMoneyOnItem = this.inventoryProduct.getMoney().mul(this.quantity);
+    this.setMoney(totalMoneyOnItem);
+  }
 
 }

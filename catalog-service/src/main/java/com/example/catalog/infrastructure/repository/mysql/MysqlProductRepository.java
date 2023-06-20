@@ -6,6 +6,7 @@ import com.example.catalog.domain.product.Product;
 import com.example.catalog.domain.product.ProductRepository;
 import com.example.catalog.infrastructure.repository.jpa.JpaProductRepository;
 import com.example.common.vm.ListQueryResult;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
@@ -14,18 +15,23 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MysqlProductRepository implements ProductRepository {
 
-    private final JpaProductRepository jpaProductRepository;
+  private final JpaProductRepository jpaProductRepository;
 
-    @Override
-    public void save(Product product) {
-        this.jpaProductRepository.save(product);
-    }
+  @Override
+  public void save(Product product) {
+    this.jpaProductRepository.save(product);
+  }
 
-    @Override
-    public ListQueryResult<ProductVm> getList(GetProductListQuery query) {
-        Page<ProductVm> data = this.jpaProductRepository.search(query.getFilters(), query.getPager());
+  @Override
+  public Set<ProductVm> getByIds(Set<Long> ids) {
+    return this.jpaProductRepository.getProductsByIds(ids);
+  }
 
-        return ListQueryResult.of(data, query.getPager());
-    }
+  @Override
+  public ListQueryResult<ProductVm> getList(GetProductListQuery query) {
+    Page<ProductVm> data = this.jpaProductRepository.search(query.getFilters(), query.getPager());
+
+    return ListQueryResult.of(data, query.getPager());
+  }
 
 }

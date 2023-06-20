@@ -8,10 +8,10 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 @Getter
 public class LoginCommand implements Command<OAuth2AccessToken> {
 
-    @NotEmpty
-    private String username;
+  @NotEmpty
+  private String username;
 
-    @NotEmpty
-    private String password;
+  @NotEmpty
+  private String password;
 
 }

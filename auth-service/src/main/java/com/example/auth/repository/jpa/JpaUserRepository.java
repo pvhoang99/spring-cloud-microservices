@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JpaUserRepository extends JpaRepository<User, String> {
 
-    Optional<User> findByCredentials_Username(Username username);
+  Optional<User> findByCredentials_Username(Username username);
 
-    @Query(value = "select e from User e")
-    Page<User> search(Pageable pageable);
+  @Query(value = "select e from User e")
+  Page<User> search(Pageable pageable);
 
-    boolean existsByCredentialsUsername(Username username);
+  boolean existsByCredentialsUsername(Username username);
 }

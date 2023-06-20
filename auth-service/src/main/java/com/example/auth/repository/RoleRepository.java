@@ -4,7 +4,7 @@ import com.example.auth.domain.Role;
 
 public interface RoleRepository {
 
-    Role getOne(Long id);
+  Role getOne(Long id);
 
-    Role findOne(Long id);
+  Role findOne(Long id);
 }

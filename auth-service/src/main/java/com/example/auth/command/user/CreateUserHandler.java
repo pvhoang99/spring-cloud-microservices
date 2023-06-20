@@ -12,26 +12,26 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateUserHandler implements CommandHandler<CreateUserCommand, CommandResult<Long>> {
 
-    private final UserRepository userRepository;
-    private final UserService userService;
+  private final UserRepository userRepository;
+  private final UserService userService;
 
-    @Override
-    public CommandResult<Long> handle(CreateUserCommand command) {
-        this.validateUsernameExisted(command.getUsername());
-        User user = User.create(
-                command.getUsername(),
-                command.getPassword(),
-                command.getFullName(),
-                command.getEmail(),
-                command.getImage()
-        );
-        this.userRepository.save(user);
+  @Override
+  public CommandResult<Long> handle(CreateUserCommand command) {
+    this.validateUsernameExisted(command.getUsername());
+    User user = User.create(
+        command.getUsername(),
+        command.getPassword(),
+        command.getFullName(),
+        command.getEmail(),
+        command.getImage()
+    );
+    this.userRepository.save(user);
 
-        return CommandResult.of(user.getId());
-    }
+    return CommandResult.of(user.getId());
+  }
 
-    private void validateUsernameExisted(String username) {
-        this.userService.checkUserExisted(username);
-    }
+  private void validateUsernameExisted(String username) {
+    this.userService.checkUserExisted(username);
+  }
 
 }

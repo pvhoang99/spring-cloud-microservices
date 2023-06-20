@@ -15,44 +15,45 @@ import org.springframework.stereotype.Component;
 @Getter
 public class KeyUtil {
 
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
+  private PrivateKey privateKey;
+  private PublicKey publicKey;
 
-    @PostConstruct
-    private void initKey() {
-        if (privateKey == null || publicKey == null) {
-            try {
+  @PostConstruct
+  private void initKey() {
+    if (privateKey == null || publicKey == null) {
+      try {
 
-                String publicKeyString = FileUtils.getFileContent("publicKey");
-                String privateKeyString = FileUtils.getFileContent("privateKey");
+        String publicKeyString = FileUtils.getFileContent("publicKey");
+        String privateKeyString = FileUtils.getFileContent("privateKey");
 
-                byte[] publicKeyByte = java.util.Base64.getDecoder().decode(publicKeyString.getBytes());
-                byte[] privateKeyByte = java.util.Base64.getDecoder().decode(privateKeyString.getBytes());
+        byte[] publicKeyByte = java.util.Base64.getDecoder().decode(publicKeyString.getBytes());
+        byte[] privateKeyByte = java.util.Base64.getDecoder().decode(privateKeyString.getBytes());
 
-                X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyByte);
-                PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyByte);
-                KeyFactory kf = KeyFactory.getInstance("RSA");
-                publicKey = kf.generatePublic(publicKeySpec);
-                privateKey = kf.generatePrivate(privateKeySpec);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyByte);
+        PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyByte);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        publicKey = kf.generatePublic(publicKeySpec);
+        privateKey = kf.generatePrivate(privateKeySpec);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 
-        }
     }
+  }
 
-    public static class FileUtils {
+  public static class FileUtils {
 
-        public static String getFileContent(String fileName) {
-            String result = "";
-            ClassLoader classLoader = FileUtils.class.getClassLoader();
-            try {
-                result = IOUtils.toString(Objects.requireNonNull(classLoader.getResourceAsStream(fileName)), "UTF-8");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
+    public static String getFileContent(String fileName) {
+      String result = "";
+      ClassLoader classLoader = FileUtils.class.getClassLoader();
+      try {
+        result = IOUtils.toString(Objects.requireNonNull(classLoader.getResourceAsStream(fileName)),
+            "UTF-8");
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return result;
     }
+  }
 
 }

@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FilterRequest {
 
-    private String key;
+  private String key;
 
-    private Operator operator;
+  private Operator operator;
 
-    private FieldType fieldType;
+  private FieldType fieldType;
 
-    private transient Object value;
+  private transient Object value;
 
-    private transient Object valueTo;
+  private transient Object valueTo;
 
-    private transient List<Object> values;
+  private transient List<Object> values;
 
 }

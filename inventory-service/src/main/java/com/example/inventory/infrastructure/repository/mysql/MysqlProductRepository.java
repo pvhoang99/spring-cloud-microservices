@@ -10,16 +10,16 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MysqlProductRepository implements ProductRepository {
 
-    private final JpaProductRepository jpaRepository;
+  private final JpaProductRepository jpaRepository;
 
-    @Override
-    public void save(Product product) {
-        this.jpaRepository.save(product);
-    }
+  @Override
+  public void save(Product product) {
+    this.jpaRepository.save(product);
+  }
 
-    @Override
-    public Product get(String code) {
-        return this.jpaRepository.getOne(code);
-    }
+  @Override
+  public Product get(String code) {
+    return this.jpaRepository.getOne(code);
+  }
 
 }

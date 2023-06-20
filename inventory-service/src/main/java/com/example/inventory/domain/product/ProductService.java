@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final JpaProductRepository jpaProductRepository;
+  private final JpaProductRepository jpaProductRepository;
 
-    public void checkExistAll(Set<String> codes) {
-        if (!this.jpaProductRepository.existsAllById(codes)) {
-            throw new EntityNotFoundException("product.not.exist");
-        }
+  public void checkExistAll(Set<String> codes) {
+    if (!this.jpaProductRepository.existsAllById(codes)) {
+      throw new EntityNotFoundException("product.not.exist");
     }
+  }
 
-    public boolean existByCode(String code) {
-        return this.jpaProductRepository.existsById(code);
-    }
+  public boolean existByCode(String code) {
+    return this.jpaProductRepository.existsById(code);
+  }
 
 
 }

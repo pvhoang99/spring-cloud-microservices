@@ -2,11 +2,12 @@ package com.example.catalog.domain.product;
 
 import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
-import com.example.common.valueobject.Money;
-import com.example.common.valueobject.MoneyConverter;
-import java.util.UUID;
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,42 +21,42 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 public class Product extends AggregateRoot {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @Column(name = "description")
-    private String description;
+  @Column(name = "price")
+  private Long price;
 
-    @Column(name = "image")
-    private String image;
+  @Column(name = "description")
+  private String description;
 
-    @Column(name = "category_id")
-    private String categoryId;
+  @Column(name = "image")
+  private String image;
 
-    public static Product create(String name, String description, String image, String catalogId) {
-        Product product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setImage(image);
-        product.setCategoryId(catalogId);
+  @Column(name = "category_id")
+  private Long categoryId;
 
-        return product;
+  public static Product create(String name, Long price, String description, String image, Long categoryId) {
+    Product product = new Product();
+    product.setName(name);
+    product.setPrice(price);
+    product.setDescription(description);
+    product.setImage(image);
+    product.setCategoryId(categoryId);
+
+    return product;
+  }
+
+  private void setName(String name) {
+    if (StringUtils.isBlank(name)) {
+      throw new BadRequestException("product.name.not.empty");
     }
-
-    private void dispatchCreatedEvent() {
-
-    }
-
-    private void setName(String name) {
-        if (StringUtils.isBlank(name)) {
-            throw new BadRequestException("product.name.not.empty");
-        }
-        this.name = name;
-    }
+    this.name = name;
+  }
 
 }

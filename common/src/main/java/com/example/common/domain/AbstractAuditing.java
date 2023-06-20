@@ -20,26 +20,26 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractAuditing implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, columnDefinition = "DATETIME")
-    @JsonIgnore
-    private LocalDateTime createdAt = LocalDateTime.now();
+  @CreatedDate
+  @Column(name = "created_at", updatable = false, columnDefinition = "DATETIME")
+  @JsonIgnore
+  private LocalDateTime createdAt = LocalDateTime.now();
 
-    @LastModifiedDate
-    @Column(name = "updated_at", columnDefinition = "DATETIME")
-    @JsonIgnore
-    private LocalDateTime updatedAt = LocalDateTime.now();
+  @LastModifiedDate
+  @Column(name = "updated_at", columnDefinition = "DATETIME")
+  @JsonIgnore
+  private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
-    @JsonIgnore
-    private String createdBy;
+  @CreatedBy
+  @Column(name = "created_by", length = 50, updatable = false)
+  @JsonIgnore
+  private String createdBy;
 
-    @LastModifiedBy
-    @Column(name = "updated_by", length = 50)
-    @JsonIgnore
-    private String updatedBy;
+  @LastModifiedBy
+  @Column(name = "updated_by", length = 50)
+  @JsonIgnore
+  private String updatedBy;
 
 }

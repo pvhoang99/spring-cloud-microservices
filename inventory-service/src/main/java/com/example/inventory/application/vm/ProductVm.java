@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ProductVm {
 
-    private String code;
+  private String code;
 
-    private String name;
+  private String name;
 
 }

@@ -15,21 +15,21 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 public class Product extends AggregateRoot {
 
-    private final static int LENGTH_OF_CODE = 6;
+  private final static int LENGTH_OF_CODE = 6;
 
-    @Id
-    private String code;
+  @Id
+  private String code;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
 
-    public static Product of(String code, String name) {
-        Product product = new Product();
-        product.setCode(code);
-        product.setName(name);
+  public static Product of(String code, String name) {
+    Product product = new Product();
+    product.setCode(code);
+    product.setName(name);
 
-        return product;
-    }
+    return product;
+  }
 
 }

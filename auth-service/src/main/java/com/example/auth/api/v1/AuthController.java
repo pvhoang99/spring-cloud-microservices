@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/auth")
 public class AuthController {
 
-    private final CommandBus commandBus;
+  private final CommandBus commandBus;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginCommand command) {
-        OAuth2AccessToken accessToken = this.commandBus.execute(command);
+  @PostMapping("/login")
+  public ResponseEntity<?> login(@RequestBody LoginCommand command) {
+    OAuth2AccessToken accessToken = this.commandBus.execute(command);
 
-        return ResponseEntity.ok(CommonResult.success(accessToken));
-    }
+    return ResponseEntity.ok(CommonResult.success(accessToken));
+  }
 }

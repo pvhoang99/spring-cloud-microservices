@@ -5,18 +5,22 @@ import com.example.sale.domain.cart.Cart;
 import com.example.sale.domain.cart.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class SubtractItemFromCartHandler implements CommandHandler<SubtractItemFromCartCommand, Void> {
 
-    private final CartRepository cartRepository;
+  private final CartRepository cartRepository;
 
-    @Override
-    public Void handle(SubtractItemFromCartCommand command) {
-        Cart cart = this.cartRepository.getById(command.getCartId());
-        cart.subtractItem(command.getProductId(), command.getQuantity());
+  @Override
+  @Transactional
+  public Void handle(SubtractItemFromCartCommand command) {
+    Cart cart = this.cartRepository.getById(command.getCartId());
+    cart.subtractItem(command.getProductId(), command.getQuantity());
+    this.cartRepository.save(cart);
 
-        return null;
-    }
+    return null;
+  }
+
 }

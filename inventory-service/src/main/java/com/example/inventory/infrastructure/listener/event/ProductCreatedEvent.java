@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class ProductCreatedEvent {
 
-    private String code;
+  private String code;
 
 }

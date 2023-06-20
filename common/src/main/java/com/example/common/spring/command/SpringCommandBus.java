@@ -17,26 +17,27 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings({"unchecked"})
 public class SpringCommandBus implements CommandBus {
 
-    private final CommandRegistry registry;
-    private final Validator validator;
+  private final CommandRegistry registry;
+  private final Validator validator;
 
-    @Override
-    public <C extends Command<R>, R> R execute(C command) {
-        CommandHandler<C, R> commandHandler = (CommandHandler<C, R>) this.registry.get(command.getClass());
-        this.validate(command);
+  @Override
+  public <C extends Command<R>, R> R execute(C command) {
+    CommandHandler<C, R> commandHandler = (CommandHandler<C, R>) this.registry.get(
+        command.getClass());
+    this.validate(command);
 
-        return commandHandler.handle(command);
+    return commandHandler.handle(command);
+  }
+
+  private <C extends Command<?>> void validate(C command) {
+    if (command == null) {
+      throw new BadRequestException("command.is.null");
     }
+    Set<ConstraintViolation<C>> violations = this.validator.validate(command);
 
-    private <C extends Command<?>> void validate(C command) {
-        if (command == null) {
-            throw new BadRequestException("command.is.null");
-        }
-        Set<ConstraintViolation<C>> violations = this.validator.validate(command);
-
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
+    if (!violations.isEmpty()) {
+      throw new ConstraintViolationException(violations);
     }
+  }
 
 }

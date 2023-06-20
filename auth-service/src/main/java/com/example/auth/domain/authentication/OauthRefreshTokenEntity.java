@@ -23,17 +23,17 @@ import lombok.Setter;
 @Table(name = "oauth_refresh_token")
 public class OauthRefreshTokenEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "token_id", unique = true)
-    @NotNull
-    private String tokenId;
+  @Column(name = "token_id", unique = true)
+  @NotNull
+  private String tokenId;
 
-    @Lob
-    private byte[] token;
+  @Lob
+  private byte[] token;
 
-    @Lob
-    private byte[] authentication;
+  @Lob
+  private byte[] authentication;
 }

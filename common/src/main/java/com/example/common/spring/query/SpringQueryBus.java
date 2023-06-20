@@ -10,17 +10,17 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings({"unchecked"})
 public class SpringQueryBus implements QueryBus {
 
-    private final QueryRegistry registry;
+  private final QueryRegistry registry;
 
-    @Autowired
-    public SpringQueryBus(QueryRegistry registry) {
-        this.registry = registry;
-    }
+  @Autowired
+  public SpringQueryBus(QueryRegistry registry) {
+    this.registry = registry;
+  }
 
-    @Override
-    public <Q extends Query<R>, R> R execute(Q query) {
-        QueryHandler<Q, R> queryHandler = (QueryHandler<Q, R>) registry.get(query.getClass());
-        return queryHandler.handle(query);
-    }
+  @Override
+  public <Q extends Query<R>, R> R execute(Q query) {
+    QueryHandler<Q, R> queryHandler = (QueryHandler<Q, R>) registry.get(query.getClass());
+    return queryHandler.handle(query);
+  }
 
 }

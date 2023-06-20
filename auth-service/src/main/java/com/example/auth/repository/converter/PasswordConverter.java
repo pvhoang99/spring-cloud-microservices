@@ -7,13 +7,13 @@ import javax.persistence.Converter;
 @Converter
 public class PasswordConverter implements AttributeConverter<Password, String> {
 
-    @Override
-    public String convertToDatabaseColumn(Password password) {
-        return password.getValue();
-    }
+  @Override
+  public String convertToDatabaseColumn(Password password) {
+    return password.getValue();
+  }
 
-    @Override
-    public Password convertToEntityAttribute(String password) {
-        return Password.create(password);
-    }
+  @Override
+  public Password convertToEntityAttribute(String password) {
+    return Password.create(password);
+  }
 }

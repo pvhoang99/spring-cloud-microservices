@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class SyncProductCommand implements Command<Void> {
 
-    private String code;
+  private String code;
 
-    private String name;
+  private String name;
 
 }

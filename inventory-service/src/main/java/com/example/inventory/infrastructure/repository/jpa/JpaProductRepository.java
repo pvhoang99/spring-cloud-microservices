@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JpaProductRepository extends JpaRepository<Product, String> {
 
-    Integer countAllByCodeIn(Set<String> ids);
+  Integer countAllByCodeIn(Set<String> ids);
 
-    default boolean existsAllById(Set<String> ids) {
-        return countAllByCodeIn(ids).equals(ids.size());
-    }
+  default boolean existsAllById(Set<String> ids) {
+    return countAllByCodeIn(ids).equals(ids.size());
+  }
 
 }

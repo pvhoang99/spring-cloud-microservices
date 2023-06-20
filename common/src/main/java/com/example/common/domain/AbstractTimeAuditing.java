@@ -14,34 +14,34 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractTimeAuditing implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, columnDefinition = "DATETIME")
-    @JsonIgnore
-    private LocalDateTime createdAt = LocalDateTime.now();
+  @CreatedDate
+  @Column(name = "created_at", updatable = false, columnDefinition = "DATETIME")
+  @JsonIgnore
+  private LocalDateTime createdAt = LocalDateTime.now();
 
-    @LastModifiedDate
-    @Column(name = "updated_at", columnDefinition = "DATETIME")
-    @JsonIgnore
-    private LocalDateTime updatedAt = LocalDateTime.now();
+  @LastModifiedDate
+  @Column(name = "updated_at", columnDefinition = "DATETIME")
+  @JsonIgnore
+  private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
 
-    public AbstractTimeAuditing setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
+  public AbstractTimeAuditing setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
 
-    public AbstractTimeAuditing setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
+  public AbstractTimeAuditing setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+    return this;
+  }
 
 }

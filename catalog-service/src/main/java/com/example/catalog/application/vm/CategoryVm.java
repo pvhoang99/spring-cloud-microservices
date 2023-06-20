@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class CategoryVm {
 
-    private String id;
+  private String id;
 
-    private String name;
+  private String name;
 
 }

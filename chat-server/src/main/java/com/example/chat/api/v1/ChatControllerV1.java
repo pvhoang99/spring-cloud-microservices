@@ -48,7 +48,8 @@ public class ChatControllerV1 {
 
   @SubscribeMapping("/old.message/{userId}")
   public ResponseEntity<?> oldMessage(@DestinationVariable("userId") Long id) {
-    log.info("====ChatControllerV1 oldMessage subscribeMapping old message with userId ---> {}", id);
+    log.info("====ChatControllerV1 oldMessage subscribeMapping old message with userId ---> {}",
+        id);
     return ResponseEntity.ok(chatServiceV1.getOldMessage(id));
   }
 }

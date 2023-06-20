@@ -14,44 +14,44 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 public class Money {
 
-    private Long money;
+  private Long money;
 
-    public static Money of(Long money) {
-        if (money <= 0) {
-            throw new BadRequestException("money.not.less.than.zero");
-        }
-
-        return new Money(money);
-    }
-    
-    public void add(Money money) {
-       this.money += money.getMoney();
+  public static Money of(Long money) {
+    if (money <= 0) {
+      throw new BadRequestException("money.not.less.than.zero");
     }
 
-    public Money mul(Long factor) {
-        this.money *= factor;
+    return new Money(money);
+  }
 
-        return this;
-    }
+  public void add(Money money) {
+    this.money += money.getMoney();
+  }
 
-    public Long getValue() {
-        return this.money;
-    }
+  public Money mul(Long factor) {
+    this.money *= factor;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Money money1 = (Money) o;
-        return Objects.equals(money, money1.money);
-    }
+    return this;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(money);
+  public Long getValue() {
+    return this.money;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Money money1 = (Money) o;
+    return Objects.equals(money, money1.money);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(money);
+  }
 }

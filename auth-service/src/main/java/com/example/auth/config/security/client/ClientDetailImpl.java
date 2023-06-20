@@ -15,103 +15,103 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 @AllArgsConstructor
 public class ClientDetailImpl implements ClientDetails {
 
-    private final static String REGEX = ",";
-    private OauthClientDetailEntity client;
+  private final static String REGEX = ",";
+  private OauthClientDetailEntity client;
 
-    @Override
-    public String getClientId() {
-        return client.getClientId();
+  @Override
+  public String getClientId() {
+    return client.getClientId();
+  }
+
+  @Override
+  public Set<String> getResourceIds() {
+
+    String resourceList = client.getResourceIds();
+
+    if (resourceList != null) {
+
+      String[] resourceIds = resourceList.split(REGEX);
+
+      return Sets.newHashSet(resourceIds);
     }
+    return null;
+  }
 
-    @Override
-    public Set<String> getResourceIds() {
+  @Override
+  public boolean isSecretRequired() {
+    return true;
+  }
 
-        String resourceList = client.getResourceIds();
+  @Override
+  public String getClientSecret() {
+    return client.getClientSecret();
+  }
 
-        if (resourceList != null) {
+  @Override
+  public boolean isScoped() {
+    return true;
+  }
 
-            String[] resourceIds = resourceList.split(REGEX);
+  @Override
+  public Set<String> getScope() {
 
-            return Sets.newHashSet(resourceIds);
-        }
-        return null;
+    String scopes = client.getScope();
+
+    if (scopes != null) {
+
+      String[] arrayScope = scopes.split(REGEX);
+
+      return Sets.newHashSet(arrayScope);
     }
+    return null;
+  }
 
-    @Override
-    public boolean isSecretRequired() {
-        return true;
+  @Override
+  public Set<String> getAuthorizedGrantTypes() {
+
+    String grants = client.getAuthorizedGrantTypes();
+
+    if (grants != null) {
+
+      String[] arrayGrant = grants.split(REGEX);
+
+      return Sets.newHashSet(arrayGrant);
     }
+    return null;
+  }
 
-    @Override
-    public String getClientSecret() {
-        return client.getClientSecret();
+  @Override
+  public Set<String> getRegisteredRedirectUri() {
+    String listRegisters = client.getWebServerRedirectUri();
+    if (listRegisters != null) {
+      String[] registers = listRegisters.split(REGEX);
+      return Sets.newHashSet(registers);
     }
+    return null;
+  }
 
-    @Override
-    public boolean isScoped() {
-        return true;
-    }
+  @Override
+  public Collection<GrantedAuthority> getAuthorities() {
+    return Collections.emptyList();
+  }
 
-    @Override
-    public Set<String> getScope() {
+  @Override
+  public Integer getAccessTokenValiditySeconds() {
+    return -1;
+  }
 
-        String scopes = client.getScope();
+  @Override
+  public Integer getRefreshTokenValiditySeconds() {
+    return -1;
+  }
 
-        if (scopes != null) {
+  @Override
+  public boolean isAutoApprove(String scope) {
+    return client.isAutoApprove();
+  }
 
-            String[] arrayScope = scopes.split(REGEX);
-
-            return Sets.newHashSet(arrayScope);
-        }
-        return null;
-    }
-
-    @Override
-    public Set<String> getAuthorizedGrantTypes() {
-
-        String grants = client.getAuthorizedGrantTypes();
-
-        if (grants != null) {
-
-            String[] arrayGrant = grants.split(REGEX);
-
-            return Sets.newHashSet(arrayGrant);
-        }
-        return null;
-    }
-
-    @Override
-    public Set<String> getRegisteredRedirectUri() {
-        String listRegisters = client.getWebServerRedirectUri();
-        if (listRegisters != null) {
-            String[] registers = listRegisters.split(REGEX);
-            return Sets.newHashSet(registers);
-        }
-        return null;
-    }
-
-    @Override
-    public Collection<GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Integer getAccessTokenValiditySeconds() {
-        return -1;
-    }
-
-    @Override
-    public Integer getRefreshTokenValiditySeconds() {
-        return -1;
-    }
-
-    @Override
-    public boolean isAutoApprove(String scope) {
-        return client.isAutoApprove();
-    }
-
-    @Override
-    public Map<String, Object> getAdditionalInformation() {
-        return null;
-    }
+  @Override
+  public Map<String, Object> getAdditionalInformation() {
+    return null;
+  }
 }

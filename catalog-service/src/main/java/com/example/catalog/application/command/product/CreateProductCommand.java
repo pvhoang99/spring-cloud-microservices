@@ -1,23 +1,22 @@
 package com.example.catalog.application.command.product;
 
 import com.example.common.command.Command;
-
-import javax.validation.constraints.NotNull;
-
 import com.example.common.vm.CommandResult;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
 public class CreateProductCommand implements Command<CommandResult<Long>> {
 
-    @NotNull
-    private String name;
+  @NotNull
+  private String name;
 
-    private String description;
+  private Long price;
 
-    private String image;
+  private String description;
 
-    @NotNull
-    private Long categoryId;
+  private String image;
+
+  private Long categoryId;
 
 }

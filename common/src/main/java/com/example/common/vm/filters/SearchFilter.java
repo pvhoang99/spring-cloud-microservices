@@ -15,23 +15,23 @@ import org.jooq.Condition;
 @NoArgsConstructor
 public abstract class SearchFilter {
 
-    @JsonProperty("filters")
-    private Map<String, Map<Op, Object>> filters;
+  @JsonProperty("filters")
+  private Map<String, Map<Op, Object>> filters;
 
-    public abstract String prefix();
+  public abstract String prefix();
 
-    @JsonIgnore
-    public Set<Condition> buildConditions() {
-        Set<Condition> conditions = new HashSet<>();
-        for (String field : this.filters.keySet()) {
-            Map<Op, Object> con = this.filters.get(field);
-            for (Op op : con.keySet()) {
-                Condition condition = op.build(field, con.get(op));
-                conditions.add(condition);
-            }
-        }
-
-        return conditions;
+  @JsonIgnore
+  public Set<Condition> buildConditions() {
+    Set<Condition> conditions = new HashSet<>();
+    for (String field : this.filters.keySet()) {
+      Map<Op, Object> con = this.filters.get(field);
+      for (Op op : con.keySet()) {
+        Condition condition = op.build(field, con.get(op));
+        conditions.add(condition);
+      }
     }
+
+    return conditions;
+  }
 
 }

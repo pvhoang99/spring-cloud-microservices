@@ -14,25 +14,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult<?> globalExceptionHandling(RuntimeException exception) {
-        return CommonResult.failed(exception.getMessage());
-    }
+  @ExceptionHandler(RuntimeException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public CommonResult<?> globalExceptionHandling(RuntimeException exception) {
+    return CommonResult.failed(exception.getMessage());
+  }
 
-    @ExceptionHandler(EntityExistsException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public CommonResult<?> entityExistExceptionHandling(EntityExistsException exception) {
-        return CommonResult.failed(exception.getMessage());
-    }
+  @ExceptionHandler(EntityExistsException.class)
+  @ResponseStatus(HttpStatus.CONFLICT)
+  public CommonResult<?> entityExistExceptionHandling(EntityExistsException exception) {
+    return CommonResult.failed(exception.getMessage());
+  }
 
-    @ExceptionHandler(value = ApiException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult<?> handle(ApiException e) {
-        if (e.getErrorCode() != null) {
-            return CommonResult.failed(e.getErrorCode());
-        }
-        return CommonResult.failed(e.getMessage());
+  @ExceptionHandler(value = ApiException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public CommonResult<?> handle(ApiException e) {
+    if (e.getErrorCode() != null) {
+      return CommonResult.failed(e.getErrorCode());
     }
+    return CommonResult.failed(e.getMessage());
+  }
 
 }

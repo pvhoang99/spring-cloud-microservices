@@ -30,7 +30,8 @@ public class CommonResult<T> {
   }
 
   public static <T> CommonResult<T> success(T data) {
-    return new CommonResult<T>(ResponseMsg.SUCCESS.getCode(), ResponseMsg.SUCCESS.getMessage(), data);
+    return new CommonResult<T>(ResponseMsg.SUCCESS.getCode(), ResponseMsg.SUCCESS.getMessage(),
+        data);
   }
 
   public static <T> CommonResult<T> success(T data, String message) {
@@ -62,11 +63,13 @@ public class CommonResult<T> {
   }
 
   public static <T> CommonResult<T> unauthorized(T data) {
-    return new CommonResult<T>(ResponseMsg.UNAUTHORIZED.getCode(), ResponseMsg.UNAUTHORIZED.getMessage(), data);
+    return new CommonResult<T>(ResponseMsg.UNAUTHORIZED.getCode(),
+        ResponseMsg.UNAUTHORIZED.getMessage(), data);
   }
 
   public static <T> CommonResult<T> forbidden(T data) {
-    return new CommonResult<T>(ResponseMsg.FORBIDDEN.getCode(), ResponseMsg.FORBIDDEN.getMessage(), data);
+    return new CommonResult<T>(ResponseMsg.FORBIDDEN.getCode(), ResponseMsg.FORBIDDEN.getMessage(),
+        data);
   }
 
 }

@@ -12,21 +12,21 @@ import org.springframework.data.domain.DomainEvents;
 @MappedSuperclass
 public abstract class AggregateRoot extends AbstractAuditing {
 
-    @Transient
-    protected List<DomainEvent> events = new ArrayList<>();
+  @Transient
+  protected List<DomainEvent> events = new ArrayList<>();
 
-    protected void dispatch(DomainEvent event) {
-        this.events.add(event);
-    }
+  protected void dispatch(DomainEvent event) {
+    this.events.add(event);
+  }
 
-    @DomainEvents
-    public List<DomainEvent> getEvents() {
-        return Collections.unmodifiableList(events);
-    }
+  @DomainEvents
+  public List<DomainEvent> getEvents() {
+    return Collections.unmodifiableList(events);
+  }
 
-    @AfterDomainEventPublication
-    public void clearEvents() {
-        this.events.clear();
-    }
+  @AfterDomainEventPublication
+  public void clearEvents() {
+    this.events.clear();
+  }
 
 }

@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BrokerChannelFactory {
 
-    private final Processor processor;
+  private final Processor processor;
 
-    public MessageChannel of(DomainEvent event) {
+  public MessageChannel of(DomainEvent event) {
 
-        return null;
-    }
+    return null;
+  }
 
 }

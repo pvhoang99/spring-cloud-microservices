@@ -12,21 +12,21 @@ import org.springframework.data.domain.Pageable;
 @NoArgsConstructor
 public class ListQuery<F> {
 
-    @JsonProperty(value = "filters")
-    private F filters;
+  @JsonProperty(value = "filters")
+  private F filters;
 
-    @JsonProperty(value = "pager")
-    private Pageable pager;
+  @JsonProperty(value = "pager")
+  private Pageable pager;
 
-    public static <F> ListQuery<F> of(F filters) {
-        ListQuery<F> query = new ListQuery<>();
-        query.filters = filters;
+  public static <F> ListQuery<F> of(F filters) {
+    ListQuery<F> query = new ListQuery<>();
+    query.filters = filters;
 
-        return query;
-    }
+    return query;
+  }
 
-    public Pageable getPager() {
-        return this.pager != null ? this.pager : PageRequest.of(0, 20);
-    }
+  public Pageable getPager() {
+    return this.pager != null ? this.pager : PageRequest.of(0, 20);
+  }
 
 }

@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class CreateInventoryCommand implements Command<Void> {
 
-    @NotEmpty
-    private List<@Valid InventoryItemDTO> inventoryItems;
+  @NotEmpty
+  private List<@Valid InventoryItemDTO> inventoryItems;
 
 }

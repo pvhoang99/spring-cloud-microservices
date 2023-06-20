@@ -5,10 +5,10 @@ import lombok.Getter;
 @Getter
 public class ProductDTO {
 
-    private String code;
+  private String code;
 
-    private String name;
+  private String name;
 
-    private String catalog;
+  private String catalog;
 
 }

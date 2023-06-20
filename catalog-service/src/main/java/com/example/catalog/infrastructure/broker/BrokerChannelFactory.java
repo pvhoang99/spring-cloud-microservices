@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BrokerChannelFactory {
 
-    private final Processor processor;
+  private final Processor processor;
 
-    public MessageChannel of(DomainEvent event) {
-        if (event instanceof ProductCreatedEvent) {
-            return this.processor.productCreated();
-        }
-
-        return null;
+  public MessageChannel of(DomainEvent event) {
+    if (event instanceof ProductCreatedEvent) {
+      return this.processor.productCreated();
     }
+
+    return null;
+  }
 
 }

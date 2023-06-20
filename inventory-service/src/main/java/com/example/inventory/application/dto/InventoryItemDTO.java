@@ -7,12 +7,12 @@ import lombok.Getter;
 @Getter
 public class InventoryItemDTO {
 
-    @NotNull
-    private InventoryProductDTO inventoryProduct;
+  @NotNull
+  private InventoryProductDTO inventoryProduct;
 
-    @Positive
-    private long quantity;
+  @Positive
+  private long quantity;
 
-    private String note;
+  private String note;
 
 }

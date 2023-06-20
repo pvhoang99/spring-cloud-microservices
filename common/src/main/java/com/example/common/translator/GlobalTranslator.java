@@ -7,26 +7,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class GlobalTranslator {
 
-    private static Translator globalTranslator;
+  private static Translator globalTranslator;
 
-    private final Translator translator;
+  private final Translator translator;
 
-    public GlobalTranslator(Translator translator) {
-        this.translator = translator;
-    }
+  public GlobalTranslator(Translator translator) {
+    this.translator = translator;
+  }
 
-    @PostConstruct
-    public void init() {
-        GlobalTranslator.globalTranslator = this.translator;
-    }
+  public static String translate(String message, Object... args) {
+    return globalTranslator.translate(message, args);
+  }
 
-    @PreDestroy
-    public void preDestroy() {
-        GlobalTranslator.globalTranslator = null;
-    }
+  @PostConstruct
+  public void init() {
+    GlobalTranslator.globalTranslator = this.translator;
+  }
 
-    public static String translate(String message, Object... args) {
-        return globalTranslator.translate(message, args);
-    }
+  @PreDestroy
+  public void preDestroy() {
+    GlobalTranslator.globalTranslator = null;
+  }
 
 }

@@ -6,13 +6,13 @@ import javax.persistence.Converter;
 @Converter
 public class MoneyConverter implements AttributeConverter<Money, Long> {
 
-    @Override
-    public Long convertToDatabaseColumn(Money money) {
-        return money.getValue();
-    }
+  @Override
+  public Long convertToDatabaseColumn(Money money) {
+    return money.getValue();
+  }
 
-    @Override
-    public Money convertToEntityAttribute(Long dbData) {
-        return Money.of(dbData);
-    }
+  @Override
+  public Money convertToEntityAttribute(Long dbData) {
+    return Money.of(dbData);
+  }
 }

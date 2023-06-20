@@ -17,47 +17,49 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class QueryRegistry {
 
-    private static final Logger logger = LoggerFactory.getLogger(QueryRegistry.class);
-    private final ApplicationContext applicationContext;
-    private final Map<Class<? extends Query>, QueryHandlerProvider> queryHandlers = new HashMap<>();
+  private static final Logger logger = LoggerFactory.getLogger(QueryRegistry.class);
+  private final ApplicationContext applicationContext;
+  private final Map<Class<? extends Query>, QueryHandlerProvider> queryHandlers = new HashMap<>();
 
 
-    public <Q extends Query<R>, R> QueryHandler<Q, R> get(Class<Q> queryClass) {
-        try {
-            QueryHandlerProvider<QueryHandler<Q, R>> handlerProvider = this.queryHandlers.get(queryClass);
-            if (handlerProvider == null) {
-                throw new InternalServerException("NotFound.QueryHandler", queryClass.getSimpleName());
-            }
+  @Autowired
+  public QueryRegistry(ApplicationContext applicationContext) {
+    this.applicationContext = applicationContext;
+    this.registerHandlers();
+  }
 
-            return handlerProvider.get();
-        } catch (BeansException e) {
-            throw new InternalServerException("NotFound.QueryHandler", queryClass.getSimpleName());
-        }
+  public <Q extends Query<R>, R> QueryHandler<Q, R> get(Class<Q> queryClass) {
+    try {
+      QueryHandlerProvider<QueryHandler<Q, R>> handlerProvider = this.queryHandlers.get(queryClass);
+      if (handlerProvider == null) {
+        throw new InternalServerException("NotFound.QueryHandler", queryClass.getSimpleName());
+      }
+
+      return handlerProvider.get();
+    } catch (BeansException e) {
+      throw new InternalServerException("NotFound.QueryHandler", queryClass.getSimpleName());
     }
+  }
 
-    @Autowired
-    public QueryRegistry(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-        this.registerHandlers();
+  private void registerHandlers() {
+    String[] names = this.applicationContext.getBeanNamesForType(QueryHandler.class);
+    for (String name : names) {
+      this.register(this.applicationContext, name);
     }
+  }
 
-    private void registerHandlers() {
-        String[] names = this.applicationContext.getBeanNamesForType(QueryHandler.class);
-        for (String name : names) {
-            this.register(this.applicationContext, name);
-        }
+  @SuppressWarnings("unchecked")
+  private void register(ApplicationContext applicationContext, String name) {
+    Class<QueryHandler<?, ?>> handlerClass = (Class<QueryHandler<?, ?>>) applicationContext.getType(
+        name);
+    Class<?>[] generics = GenericTypeResolver.resolveTypeArguments(handlerClass,
+        QueryHandler.class);
+    if (generics == null || generics.length == 0) {
+      logger.warn(String.format("QueryBus: Unable to get generic type of class %s", name));
+      return;
     }
-
-    @SuppressWarnings("unchecked")
-    private void register(ApplicationContext applicationContext, String name) {
-        Class<QueryHandler<?, ?>> handlerClass = (Class<QueryHandler<?, ?>>) applicationContext.getType(name);
-        Class<?>[] generics = GenericTypeResolver.resolveTypeArguments(handlerClass, QueryHandler.class);
-        if (generics == null || generics.length == 0) {
-            logger.warn(String.format("QueryBus: Unable to get generic type of class %s", name));
-            return;
-        }
-        Class<? extends Query> queryType = (Class<? extends Query>) generics[0];
-        this.queryHandlers.put(queryType, new QueryHandlerProvider(applicationContext, handlerClass));
-    }
+    Class<? extends Query> queryType = (Class<? extends Query>) generics[0];
+    this.queryHandlers.put(queryType, new QueryHandlerProvider(applicationContext, handlerClass));
+  }
 
 }

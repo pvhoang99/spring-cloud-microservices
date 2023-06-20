@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Entity
@@ -26,30 +25,30 @@ import lombok.Setter;
 )
 public class OauthAccessTokenEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "token_id")
-    private String tokenId;
+  @Column(name = "token_id")
+  private String tokenId;
 
-    @Lob
-    private byte[] token;
+  @Lob
+  private byte[] token;
 
-    @Column(name = "authentication_id")
-    private String authenticationId;
+  @Column(name = "authentication_id")
+  private String authenticationId;
 
-    @Column(name = "user_name", unique = true)
-    @NotNull
-    private String userName;
+  @Column(name = "user_name", unique = true)
+  @NotNull
+  private String userName;
 
-    @Column(name = "client_id")
-    private String clientId;
+  @Column(name = "client_id")
+  private String clientId;
 
-    @Lob
-    private byte[] authentication;
+  @Lob
+  private byte[] authentication;
 
-    @Column(name = "refresh_token")
-    private String refreshToken;
+  @Column(name = "refresh_token")
+  private String refreshToken;
 
 }

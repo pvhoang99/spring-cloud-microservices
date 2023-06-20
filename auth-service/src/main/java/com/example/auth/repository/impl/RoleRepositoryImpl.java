@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class RoleRepositoryImpl implements RoleRepository {
 
-    private final JpaRoleRepository roleRepository;
+  private final JpaRoleRepository roleRepository;
 
-    @Override
-    public Role getOne(Long id) {
-        return roleRepository.getOne(id);
-    }
+  @Override
+  public Role getOne(Long id) {
+    return roleRepository.getOne(id);
+  }
 
-    @Override
-    public Role findOne(Long id) {
-        return roleRepository.findById(id).orElse(null);
-    }
+  @Override
+  public Role findOne(Long id) {
+    return roleRepository.findById(id).orElse(null);
+  }
 }

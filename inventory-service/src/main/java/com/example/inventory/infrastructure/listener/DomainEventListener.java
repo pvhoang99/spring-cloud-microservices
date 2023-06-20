@@ -19,24 +19,24 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @RequiredArgsConstructor
 public class DomainEventListener {
 
-    private final BrokerChannelFactory brokerChannelFactory;
+  private final BrokerChannelFactory brokerChannelFactory;
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handle(DomainEvent event) {
-        log.info("DomainEventListener preparing to send: {} ", event);
-        Message<DomainEvent> message = this.message(event);
-        MessageChannel messageChannel = this.brokerChannelFactory.of(event);
-        if (messageChannel != null) {
-            boolean success = messageChannel.send(message);
-            log.info("DomainEventListener sent: {}, success: {}", event, success);
+  @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+  public void handle(DomainEvent event) {
+    log.info("DomainEventListener preparing to send: {} ", event);
+    Message<DomainEvent> message = this.message(event);
+    MessageChannel messageChannel = this.brokerChannelFactory.of(event);
+    if (messageChannel != null) {
+      boolean success = messageChannel.send(message);
+      log.info("DomainEventListener sent: {}, success: {}", event, success);
 
-            return;
-        }
-        log.warn("DomainEventListener messageChannel is null");
+      return;
     }
+    log.warn("DomainEventListener messageChannel is null");
+  }
 
-    private <T> Message<T> message(T val) {
-        return MessageBuilder.withPayload(val).build();
-    }
+  private <T> Message<T> message(T val) {
+    return MessageBuilder.withPayload(val).build();
+  }
 
 }

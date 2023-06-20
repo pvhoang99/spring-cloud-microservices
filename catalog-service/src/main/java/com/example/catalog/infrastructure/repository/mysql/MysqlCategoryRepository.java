@@ -10,16 +10,16 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MysqlCategoryRepository implements CategoryRepository {
 
-    private final JpaCategoryRepository jpaCategoryRepository;
+  private final JpaCategoryRepository jpaCategoryRepository;
 
-    @Override
-    public void save(Category category) {
-        this.jpaCategoryRepository.save(category);
-    }
+  @Override
+  public void save(Category category) {
+    this.jpaCategoryRepository.save(category);
+  }
 
-    @Override
-    public Category get(String id) {
-        return this.jpaCategoryRepository.getOne(id);
-    }
+  @Override
+  public Category get(Long id) {
+    return this.jpaCategoryRepository.getOne(id);
+  }
 
 }

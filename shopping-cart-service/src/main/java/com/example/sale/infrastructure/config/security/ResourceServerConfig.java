@@ -34,77 +34,78 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @Import(CorsConfiguration.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private final ResourceServerProperties sso;
+  private final ResourceServerProperties sso;
 
-    private final OAuth2ClientContext oAuth2ClientContext;
+  private final OAuth2ClientContext oAuth2ClientContext;
 
-    private final CorsConfigurationSource corsConfigurationSource;
+  private final CorsConfigurationSource corsConfigurationSource;
 
-    @Bean
-    @ConfigurationProperties(prefix = "security.oauth2.client")
-    public ClientCredentialsResourceDetails clientCredentialsResourceDetails() {
-        return new ClientCredentialsResourceDetails();
-    }
+  @Bean
+  @ConfigurationProperties(prefix = "security.oauth2.client")
+  public ClientCredentialsResourceDetails clientCredentialsResourceDetails() {
+    return new ClientCredentialsResourceDetails();
+  }
 
-    @Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public RequestInterceptor oauth2FeignRequestInterceptor() {
-        CustomOAuth2FeignRequestInterceptor customOAuth2FeignRequestInterceptor = new CustomOAuth2FeignRequestInterceptor(
-            this.oAuth2ClientContext, this.clientCredentialsResourceDetails()
-        );
-        customOAuth2FeignRequestInterceptor.setAccessTokenProvider(this.accessTokenProvider());
+  @Bean
+  @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+  public RequestInterceptor oauth2FeignRequestInterceptor() {
+    CustomOAuth2FeignRequestInterceptor customOAuth2FeignRequestInterceptor = new CustomOAuth2FeignRequestInterceptor(
+        this.oAuth2ClientContext, this.clientCredentialsResourceDetails()
+    );
+    customOAuth2FeignRequestInterceptor.setAccessTokenProvider(this.accessTokenProvider());
 
-        return customOAuth2FeignRequestInterceptor;
-    }
+    return customOAuth2FeignRequestInterceptor;
+  }
 
-    @Bean
-    public AccessTokenProvider accessTokenProvider() {
-        return new ClientCredentialsAccessTokenProvider();
-    }
+  @Bean
+  public AccessTokenProvider accessTokenProvider() {
+    return new ClientCredentialsAccessTokenProvider();
+  }
 
-    @Bean
-    @LoadBalanced
-    public OAuth2RestOperations restTemplate() {
-        return new OAuth2RestTemplate(clientCredentialsResourceDetails(), oAuth2ClientContext);
-    }
+  @Bean
+  @LoadBalanced
+  public OAuth2RestOperations restTemplate() {
+    return new OAuth2RestTemplate(clientCredentialsResourceDetails(), oAuth2ClientContext);
+  }
 
-    @LoadBalanced
-    @Bean("loadBalancedRestTemplate")
-    public RestTemplate loadBalancedRestTemplate() {
-        return new RestTemplate();
-    }
+  @LoadBalanced
+  @Bean("loadBalancedRestTemplate")
+  public RestTemplate loadBalancedRestTemplate() {
+    return new RestTemplate();
+  }
 
-    @Bean
-    @Primary
-    public RemoteTokenServices remoteTokenServices() {
-        RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
-        remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientId());
-        remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientSecret());
-        remoteTokenServices.setCheckTokenEndpointUrl(clientCredentialsResourceDetails().getAccessTokenUri());
-        remoteTokenServices.setRestTemplate(loadBalancedRestTemplate());
+  @Bean
+  @Primary
+  public RemoteTokenServices remoteTokenServices() {
+    RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
+    remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientId());
+    remoteTokenServices.setClientSecret(clientCredentialsResourceDetails().getClientSecret());
+    remoteTokenServices.setCheckTokenEndpointUrl(
+        clientCredentialsResourceDetails().getAccessTokenUri());
+    remoteTokenServices.setRestTemplate(loadBalancedRestTemplate());
 
-        return remoteTokenServices;
-    }
+    return remoteTokenServices;
+  }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
-            .accessDeniedHandler(new OAuth2AccessDeniedHandler());
-        http.csrf().disable();
-        http.cors().configurationSource(this.corsConfigurationSource);
-        http.httpBasic().disable();
-    }
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    http
+        .authorizeRequests()
+        .anyRequest().authenticated()
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(new OAuth2AuthenticationEntryPoint())
+        .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+    http.csrf().disable();
+    http.cors().configurationSource(this.corsConfigurationSource);
+    http.httpBasic().disable();
+  }
 
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.tokenServices(this.remoteTokenServices());
-        resources.resourceId(this.sso.getResourceId());
-        resources.stateless(true);
-    }
+  @Override
+  public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+    resources.tokenServices(this.remoteTokenServices());
+    resources.resourceId(this.sso.getResourceId());
+    resources.stateless(true);
+  }
 
 }

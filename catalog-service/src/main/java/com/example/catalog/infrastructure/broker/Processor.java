@@ -5,9 +5,9 @@ import org.springframework.messaging.MessageChannel;
 
 public interface Processor {
 
-    String PRODUCT_CREATED = "out-inventory_product_created";
+  String PRODUCT_CREATED = "out-inventory_product_created";
 
-    @Output(value = PRODUCT_CREATED)
-    MessageChannel productCreated();
+  @Output(value = PRODUCT_CREATED)
+  MessageChannel productCreated();
 
 }

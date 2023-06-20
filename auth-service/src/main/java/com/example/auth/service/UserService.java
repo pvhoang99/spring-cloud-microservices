@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    public void checkUserExisted(String username) {
-        boolean isUserExisted = userRepository.checkExisted(Username.create(username));
-        if (isUserExisted) {
-            throw new UserAlreadyExistedException(username);
-        }
+  public void checkUserExisted(String username) {
+    boolean isUserExisted = userRepository.checkExisted(Username.create(username));
+    if (isUserExisted) {
+      throw new UserAlreadyExistedException(username);
     }
+  }
 
 }

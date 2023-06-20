@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RoleController {
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody CreateRoleCommand createRoleCommand) {
-        return ResponseEntity.ok().build();
-    }
+  @PostMapping
+  public ResponseEntity<?> save(@RequestBody CreateRoleCommand createRoleCommand) {
+    return ResponseEntity.ok().build();
+  }
 
 }

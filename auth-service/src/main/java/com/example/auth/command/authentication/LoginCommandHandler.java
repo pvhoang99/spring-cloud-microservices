@@ -20,34 +20,35 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 @Deprecated
 public class LoginCommandHandler implements CommandHandler<LoginCommand, OAuth2AccessToken> {
 
-    private final TokenEndpoint tokenEndpoint;
+  private final TokenEndpoint tokenEndpoint;
 
-    @Override
-    @Transactional
-    public OAuth2AccessToken handle(LoginCommand command) {
-        Map<String, String> parameters = this.buildParameters(command);
-        Principal principal = this.buildDefaultAuthentication();
-        try {
-            ResponseEntity<OAuth2AccessToken> response = this.tokenEndpoint.postAccessToken(principal, parameters);
+  @Override
+  @Transactional
+  public OAuth2AccessToken handle(LoginCommand command) {
+    Map<String, String> parameters = this.buildParameters(command);
+    Principal principal = this.buildDefaultAuthentication();
+    try {
+      ResponseEntity<OAuth2AccessToken> response = this.tokenEndpoint.postAccessToken(principal,
+          parameters);
 
-            return response.getBody();
-        } catch (HttpRequestMethodNotSupportedException e) {
-            throw new BadRequestException(e.getMessage());
-        }
+      return response.getBody();
+    } catch (HttpRequestMethodNotSupportedException e) {
+      throw new BadRequestException(e.getMessage());
     }
+  }
 
-    private Map<String, String> buildParameters(LoginCommand command) {
-        return new LinkedHashMap<>() {{
-            put("username", command.getUsername());
-            put("password", command.getPassword());
-            put("grant_type", "password");
-            put("client_id", "hoang");
-            put("client_secret", "1");
-        }};
-    }
+  private Map<String, String> buildParameters(LoginCommand command) {
+    return new LinkedHashMap<>() {{
+      put("username", command.getUsername());
+      put("password", command.getPassword());
+      put("grant_type", "password");
+      put("client_id", "hoang");
+      put("client_secret", "1");
+    }};
+  }
 
-    private UsernamePasswordAuthenticationToken buildDefaultAuthentication() {
-        return new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>());
-    }
+  private UsernamePasswordAuthenticationToken buildDefaultAuthentication() {
+    return new UsernamePasswordAuthenticationToken("hoang", null, new ArrayList<>());
+  }
 
 }

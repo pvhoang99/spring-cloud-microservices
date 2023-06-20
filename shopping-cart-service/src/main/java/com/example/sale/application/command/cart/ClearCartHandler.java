@@ -1,30 +1,26 @@
 package com.example.sale.application.command.cart;
 
 import com.example.common.command.CommandHandler;
-import com.example.sale.application.vm.CartVm;
 import com.example.sale.domain.cart.Cart;
 import com.example.sale.domain.cart.CartRepository;
-import com.example.sale.domain.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class GetCartHandler implements CommandHandler<GetCartCommand, CartVm> {
+public class ClearCartHandler implements CommandHandler<ClearCartCommand, Void> {
 
   private final CartRepository cartRepository;
-  private final CartService cartService;
 
   @Override
   @Transactional
-  public CartVm handle(GetCartCommand command) {
-    Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
-    cart.reloadCart(this.cartService);
-
+  public Void handle(ClearCartCommand command) {
+    Cart cart = this.cartRepository.getById(command.getId());
+    cart.clear();
     this.cartRepository.save(cart);
 
-    return CartVm.of(cart);
+    return null;
   }
 
 }

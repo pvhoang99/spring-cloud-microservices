@@ -10,13 +10,13 @@ import lombok.ToString;
 @Setter
 public class ProductCreatedEvent implements DomainEvent {
 
-    private String code;
+  private String code;
 
-    public static ProductCreatedEvent of(String code) {
-        ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent();
-        productCreatedEvent.setCode(code);
+  public static ProductCreatedEvent of(String code) {
+    ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent();
+    productCreatedEvent.setCode(code);
 
-        return productCreatedEvent;
-    }
+    return productCreatedEvent;
+  }
 
 }

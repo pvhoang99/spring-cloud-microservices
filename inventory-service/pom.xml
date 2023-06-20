@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.example</groupId>
-    <artifactId>microservices</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
   <artifactId>inventory-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>inventory-service</name>
   <dependencies>
     <dependency>
-      <groupId>com.example</groupId>
       <artifactId>common</artifactId>
+      <groupId>com.example</groupId>
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
       <artifactId>commons-pool2</artifactId>
+      <groupId>org.apache.commons</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-rest</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-oauth2</artifactId>
+      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-config-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
+      <artifactId>spring-cloud-config-client</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+    </dependency>
+    <dependency>
       <artifactId>mysql-connector-java</artifactId>
+      <groupId>mysql</groupId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
       <version>1.7.36</version>
     </dependency>
 
 
   </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+  <name>inventory-service</name>
+  <parent>
+    <artifactId>microservices</artifactId>
+    <groupId>com.example</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <version>0.0.1-SNAPSHOT</version>
 </project>

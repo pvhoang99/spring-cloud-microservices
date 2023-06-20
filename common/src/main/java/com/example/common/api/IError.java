@@ -2,10 +2,6 @@ package com.example.common.api;
 
 public interface IError {
 
-  long getCode();
-
-  String getMessage();
-
   static IError of(long code, String message) {
 
     return new IError() {
@@ -20,5 +16,9 @@ public interface IError {
       }
     };
   }
+
+  long getCode();
+
+  String getMessage();
 
 }

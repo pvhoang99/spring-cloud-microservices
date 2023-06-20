@@ -18,31 +18,32 @@ import org.springframework.data.jpa.domain.Specification;
 @AllArgsConstructor
 public class SearchSpecification<T> implements Specification<T> {
 
-    private static final long serialVersionUID = -9153865343320750644L;
+  private static final long serialVersionUID = -9153865343320750644L;
 
-    private final transient SearchRequest request;
+  private final transient SearchRequest request;
 
-    @Override
-    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-        Predicate predicate = cb.equal(cb.literal(Boolean.TRUE), Boolean.TRUE);
+  public static Pageable getPageable(Integer page, Integer size) {
+    return PageRequest.of(Objects.requireNonNullElse(page, 0),
+        Objects.requireNonNullElse(size, 100));
+  }
 
-        for (FilterRequest filter : this.request.getFilters()) {
-            log.info("Filter: {} {} {}", filter.getKey(), filter.getOperator().toString(), filter.getValue());
-            predicate = filter.getOperator().build(root, cb, filter, predicate);
-        }
+  @Override
+  public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    Predicate predicate = cb.equal(cb.literal(Boolean.TRUE), Boolean.TRUE);
 
-        List<Order> orders = new ArrayList<>();
-        for (SortRequest sort : this.request.getSorts()) {
-            orders.add(sort.getDirection().build(root, cb, sort));
-        }
-
-        query.orderBy(orders);
-        return predicate;
+    for (FilterRequest filter : this.request.getFilters()) {
+      log.info("Filter: {} {} {}", filter.getKey(), filter.getOperator().toString(),
+          filter.getValue());
+      predicate = filter.getOperator().build(root, cb, filter, predicate);
     }
 
-
-    public static Pageable getPageable(Integer page, Integer size) {
-        return PageRequest.of(Objects.requireNonNullElse(page, 0), Objects.requireNonNullElse(size, 100));
+    List<Order> orders = new ArrayList<>();
+    for (SortRequest sort : this.request.getSorts()) {
+      orders.add(sort.getDirection().build(root, cb, sort));
     }
+
+    query.orderBy(orders);
+    return predicate;
+  }
 
 }

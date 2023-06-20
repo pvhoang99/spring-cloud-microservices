@@ -20,20 +20,20 @@ import lombok.Setter;
 @Table(name = "oauth_approvals")
 public class OauthApprovalEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String userId;
+  private String userId;
 
-    private String clientId;
+  private String clientId;
 
-    private String scope;
+  private String scope;
 
-    private String status;
+  private String status;
 
-    private Date expiresAt;
+  private Date expiresAt;
 
-    private Date lastModifiedAt;
+  private Date lastModifiedAt;
 
 }

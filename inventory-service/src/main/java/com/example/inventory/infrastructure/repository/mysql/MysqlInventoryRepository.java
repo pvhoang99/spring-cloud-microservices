@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MysqlInventoryRepository implements InventoryRepository {
 
-    private final JpaInventoryRepository jpaInventoryRepository;
+  private final JpaInventoryRepository jpaInventoryRepository;
 
-    @Override
-    public void save(Inventory inventory) {
-        this.jpaInventoryRepository.save(inventory);
-    }
+  @Override
+  public void save(Inventory inventory) {
+    this.jpaInventoryRepository.save(inventory);
+  }
 
 }

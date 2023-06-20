@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.example</groupId>
-    <artifactId>microservices</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
   <artifactId>chat-server</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>chat-server</name>
-  <description>Demo project for Spring Boot</description>
-  <properties>
-    <neo4j.version>3.5.0</neo4j.version>
-  </properties>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
+      <groupId>org.springframework.boot</groupId>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>net.devh</groupId>
       <artifactId>grpc-client-spring-boot-starter</artifactId>
+      <groupId>net.devh</groupId>
       <version>2.13.1.RELEASE</version>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
-      <version>1.10.19</version>
+      <groupId>org.mockito</groupId>
       <scope>test</scope>
+      <version>1.10.19</version>
     </dependency>
     <dependency>
-      <groupId>com.example</groupId>
       <artifactId>common</artifactId>
+      <groupId>com.example</groupId>
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-oauth2-client</artifactId>
+      <groupId>org.springframework.security</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
       <artifactId>spring-websocket</artifactId>
-      <version>5.2.2.RELEASE</version>
-    </dependency>
-    <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-messaging</artifactId>
       <version>5.2.2.RELEASE</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-messaging</artifactId>
+      <groupId>org.springframework</groupId>
+      <version>5.2.2.RELEASE</version>
+    </dependency>
+    <dependency>
       <artifactId>spring-cloud-config-client</artifactId>
+      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-oauth2</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.cloud</groupId>
+    </dependency>
+    <dependency>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
+      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-rest</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
       <artifactId>spring-boot-starter-data-neo4j</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
     </dependency>
     <dependency>
-      <groupId>com.netflix.hystrix</groupId>
       <artifactId>hystrix-javanica</artifactId>
+      <groupId>com.netflix.hystrix</groupId>
     </dependency>
     <dependency>
-      <groupId>net.minidev</groupId>
       <artifactId>asm</artifactId>
+      <groupId>net.minidev</groupId>
       <version>1.0.2</version>
     </dependency>
 
     <dependency>
-      <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
+      <groupId>net.minidev</groupId>
       <version>2.2.1</version>
-     </dependency>
+    </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-messaging</artifactId>
+      <groupId>org.springframework.security</groupId>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
+      <groupId>org.hibernate</groupId>
     </dependency>
   </dependencies>
+  <description>Demo project for Spring Boot</description>
+  <modelVersion>4.0.0</modelVersion>
+  <name>chat-server</name>
+  <parent>
+    <artifactId>microservices</artifactId>
+    <groupId>com.example</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <properties>
+    <neo4j.version>3.5.0</neo4j.version>
+  </properties>
+  <version>0.0.1-SNAPSHOT</version>
 
 </project>

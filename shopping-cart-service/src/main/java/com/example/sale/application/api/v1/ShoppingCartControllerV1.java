@@ -2,6 +2,7 @@ package com.example.sale.application.api.v1;
 
 import com.example.common.command.CommandBus;
 import com.example.sale.application.command.cart.AddItemToCartCommand;
+import com.example.sale.application.command.cart.ClearCartCommand;
 import com.example.sale.application.command.cart.GetCartCommand;
 import com.example.sale.application.command.cart.SubtractItemFromCartCommand;
 import com.example.sale.application.vm.CartVm;
@@ -19,28 +20,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ShoppingCartControllerV1 {
 
-    private final CommandBus commandBus;
+  private final CommandBus commandBus;
 
-    @GetMapping("/carts")
-    public ResponseEntity<CartVm> getCart() {
-        GetCartCommand command = GetCartCommand.of();
+  @GetMapping("/carts")
+  public ResponseEntity<CartVm> getCart() {
+    GetCartCommand command = GetCartCommand.of();
 
-        return ResponseEntity.ok(this.commandBus.execute(command));
-    }
+    return ResponseEntity.ok(this.commandBus.execute(command));
+  }
 
-    @PutMapping("/carts/add-items")
-    public ResponseEntity<Void> addItemToCart(@RequestBody AddItemToCartCommand command) {
-        this.commandBus.execute(command);
+  @GetMapping("/carts/{id}/clear")
+  public ResponseEntity<Void> clearCart(@PathVariable Long id) {
+    ClearCartCommand command = ClearCartCommand.of(id);
+    this.commandBus.execute(command);
 
-        return ResponseEntity.ok().build();
-    }
+    return ResponseEntity.ok().build();
+  }
 
-    @PutMapping("/carts/{cartId}/subtract-items")
-    public ResponseEntity<Void> subtractItem(@PathVariable Long cartId, SubtractItemFromCartCommand command) {
-        command.setCartId(cartId);
-        this.commandBus.execute(command);
+  @PutMapping("/carts/add-items")
+  public ResponseEntity<Void> addItemToCart(@RequestBody AddItemToCartCommand command) {
+    this.commandBus.execute(command);
 
-        return ResponseEntity.ok().build();
-    }
+    return ResponseEntity.ok().build();
+  }
+
+  @PutMapping("/carts/{cartId}/subtract-items")
+  public ResponseEntity<Void> subtractItem(@PathVariable Long cartId,
+      SubtractItemFromCartCommand command) {
+    command.setCartId(cartId);
+    this.commandBus.execute(command);
+
+    return ResponseEntity.ok().build();
+  }
 
 }

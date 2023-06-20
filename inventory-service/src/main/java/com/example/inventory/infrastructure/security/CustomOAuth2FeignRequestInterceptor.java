@@ -13,36 +13,36 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 public class CustomOAuth2FeignRequestInterceptor extends OAuth2FeignRequestInterceptor {
 
-    @Setter(onMethod = @__({@Autowired}))
-    private HttpServletRequest httpServletRequest;
+  @Setter(onMethod = @__({@Autowired}))
+  private HttpServletRequest httpServletRequest;
 
-    public CustomOAuth2FeignRequestInterceptor(
-        OAuth2ClientContext oAuth2ClientContext,
-        OAuth2ProtectedResourceDetails resource) {
-        super(oAuth2ClientContext, resource);
-    }
+  public CustomOAuth2FeignRequestInterceptor(
+      OAuth2ClientContext oAuth2ClientContext,
+      OAuth2ProtectedResourceDetails resource) {
+    super(oAuth2ClientContext, resource);
+  }
 
-    public CustomOAuth2FeignRequestInterceptor(
-        OAuth2ClientContext oAuth2ClientContext,
-        OAuth2ProtectedResourceDetails resource, String tokenType, String header) {
-        super(oAuth2ClientContext, resource, tokenType, header);
-    }
+  public CustomOAuth2FeignRequestInterceptor(
+      OAuth2ClientContext oAuth2ClientContext,
+      OAuth2ProtectedResourceDetails resource, String tokenType, String header) {
+    super(oAuth2ClientContext, resource, tokenType, header);
+  }
 
-    @Override
-    protected String extract(String tokenType) {
-        if (Objects.nonNull(this.httpServletRequest)) {
-            String token = this.httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-            if (StringUtils.isNotEmpty(token)) {
-                return token;
-            } else {
-                return super.extract(tokenType);
-            }
-        }
+  @Override
+  protected String extract(String tokenType) {
+    if (Objects.nonNull(this.httpServletRequest)) {
+      String token = this.httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+      if (StringUtils.isNotEmpty(token)) {
+        return token;
+      } else {
         return super.extract(tokenType);
+      }
     }
+    return super.extract(tokenType);
+  }
 
-    @Override
-    public OAuth2AccessToken getToken() {
-        return super.acquireAccessToken();
-    }
+  @Override
+  public OAuth2AccessToken getToken() {
+    return super.acquireAccessToken();
+  }
 }

@@ -18,38 +18,38 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateInventoryHandler implements CommandHandler<CreateInventoryCommand, Void> {
 
-    private final InventoryRepository inventoryRepository;
-    private final ProductService productService;
+  private final InventoryRepository inventoryRepository;
+  private final ProductService productService;
 
-    @Override
-    @Transactional
-    public Void handle(CreateInventoryCommand command) {
-        this.validate(command);
-        Inventory inventory = Inventory.of();
-        for (InventoryItemDTO item : command.getInventoryItems()) {
-            InventoryProduct inventoryProduct = InventoryProduct.of(
-                item.getInventoryProduct().getCode(),
-                item.getInventoryProduct().getMoney()
-                );
-            InventoryItem inventoryItem = InventoryItem.of(
-                inventoryProduct,
-                item.getQuantity(),
-                item.getNote()
-            );
-            inventory.add(inventoryItem);
-        }
-        inventory.calculateMoney();
-        this.inventoryRepository.save(inventory);
-
-        return null;
+  @Override
+  @Transactional
+  public Void handle(CreateInventoryCommand command) {
+    this.validate(command);
+    Inventory inventory = Inventory.of();
+    for (InventoryItemDTO item : command.getInventoryItems()) {
+      InventoryProduct inventoryProduct = InventoryProduct.of(
+          item.getInventoryProduct().getCode(),
+          item.getInventoryProduct().getMoney()
+      );
+      InventoryItem inventoryItem = InventoryItem.of(
+          inventoryProduct,
+          item.getQuantity(),
+          item.getNote()
+      );
+      inventory.add(inventoryItem);
     }
+    inventory.calculateMoney();
+    this.inventoryRepository.save(inventory);
 
-    private void validate(CreateInventoryCommand command) {
-        Set<String> codes = command.getInventoryItems().stream()
-            .map(InventoryItemDTO::getInventoryProduct)
-            .map(InventoryProductDTO::getCode)
-            .collect(Collectors.toSet());
-        this.productService.checkExistAll(codes);
-    }
+    return null;
+  }
+
+  private void validate(CreateInventoryCommand command) {
+    Set<String> codes = command.getInventoryItems().stream()
+        .map(InventoryItemDTO::getInventoryProduct)
+        .map(InventoryProductDTO::getCode)
+        .collect(Collectors.toSet());
+    this.productService.checkExistAll(codes);
+  }
 
 }

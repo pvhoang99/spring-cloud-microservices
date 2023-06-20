@@ -11,17 +11,17 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Slf4j
 public class AsyncConfig {
 
-    @Bean(name = "threadPoolTaskExecutor")
-    public Executor threadPoolTaskExecutor() {
-        return new ThreadPoolTaskExecutor();
-    }
+  @Bean(name = "threadPoolTaskExecutor")
+  public Executor threadPoolTaskExecutor() {
+    return new ThreadPoolTaskExecutor();
+  }
 
-    @Bean
-    public AsyncUncaughtExceptionHandler asyncUncaughtExceptionHandler() {
-        return (throwable, method, objects) -> {
-            log.error("Exception message - " + throwable.getMessage());
-            log.error("Method name - " + method.getName());
-        };
-    }
+  @Bean
+  public AsyncUncaughtExceptionHandler asyncUncaughtExceptionHandler() {
+    return (throwable, method, objects) -> {
+      log.error("Exception message - " + throwable.getMessage());
+      log.error("Method name - " + method.getName());
+    };
+  }
 
 }

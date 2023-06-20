@@ -3,14 +3,14 @@ package com.example.auth.config.security.expression;
 public class SecurityServiceImpl implements SecurityService {
 
 
-    public boolean hasUser(Long id) {
+  public boolean hasUser(Long id) {
 
-        //do something
-        return true;
-    }
+    //do something
+    return true;
+  }
 
-    @Override
-    public boolean isOwn(String createdBy) {
-        return false;
-    }
+  @Override
+  public boolean isOwn(String createdBy) {
+    return false;
+  }
 }

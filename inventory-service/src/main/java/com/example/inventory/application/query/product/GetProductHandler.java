@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GetProductHandler implements QueryHandler<GetProductQuery, ProductVm> {
 
-    private final ReadOnlyMysqlProductRepository productRepository;
+  private final ReadOnlyMysqlProductRepository productRepository;
 
-    @Override
-    @Transactional(readOnly = true)
-    public ProductVm handle(GetProductQuery query) {
-        return this.productRepository.find(query.getCode());
-    }
+  @Override
+  @Transactional(readOnly = true)
+  public ProductVm handle(GetProductQuery query) {
+    return this.productRepository.find(query.getCode());
+  }
 
 }

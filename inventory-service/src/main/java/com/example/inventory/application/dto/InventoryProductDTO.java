@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class InventoryProductDTO {
 
-    @NotNull
-    private String code;
+  @NotNull
+  private String code;
 
-    @Positive
-    private long money;
+  @Positive
+  private long money;
 
 }

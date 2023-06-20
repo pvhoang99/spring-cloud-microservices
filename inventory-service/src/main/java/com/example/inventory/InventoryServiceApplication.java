@@ -15,8 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableBinding(value = Processor.class)
 public class InventoryServiceApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(InventoryServiceApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(InventoryServiceApplication.class, args);
+  }
 
 }

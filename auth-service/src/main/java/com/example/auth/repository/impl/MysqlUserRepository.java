@@ -12,31 +12,33 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MysqlUserRepository implements UserRepository {
 
-    private final JpaUserRepository jpaUserRepository;
+  private final JpaUserRepository jpaUserRepository;
 
-    @Override
-    public User save(User user) {
-        return this.jpaUserRepository.save(user);
-    }
+  @Override
+  public User save(User user) {
+    return this.jpaUserRepository.save(user);
+  }
 
-    @Override
-    public User getOne(String id) {
-        return this.jpaUserRepository.getOne(id);
-    }
+  @Override
+  public User getOne(String id) {
+    return this.jpaUserRepository.getOne(id);
+  }
 
-    @Override
-    public User getByUsername(String username) {
-        return this.jpaUserRepository.findByCredentials_Username(Username.create(username)).orElseThrow(EntityNotFoundException::new);
-    }
+  @Override
+  public User getByUsername(String username) {
+    return this.jpaUserRepository.findByCredentials_Username(Username.create(username))
+        .orElseThrow(EntityNotFoundException::new);
+  }
 
-    @Override
-    public User findByUsername(String username) {
-        return this.jpaUserRepository.findByCredentials_Username(Username.create(username)).orElse(null);
-    }
+  @Override
+  public User findByUsername(String username) {
+    return this.jpaUserRepository.findByCredentials_Username(Username.create(username))
+        .orElse(null);
+  }
 
-    @Override
-    public boolean checkExisted(Username username) {
-        return this.jpaUserRepository.existsByCredentialsUsername(username);
-    }
+  @Override
+  public boolean checkExisted(Username username) {
+    return this.jpaUserRepository.existsByCredentialsUsername(username);
+  }
 
 }

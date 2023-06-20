@@ -12,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateCategoryHandler implements CommandHandler<CreateCategoryCommand, CommandResult<Long>> {
 
-    private final CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
 
-    @Override
-    @Transactional
-    public CommandResult<Long> handle(CreateCategoryCommand command) {
-        Category category = Category.create(command.getName());
-        this.categoryRepository.save(category);
+  @Override
+  @Transactional
+  public CommandResult<Long> handle(CreateCategoryCommand command) {
+    Category category = Category.create(command.getName());
+    this.categoryRepository.save(category);
 
-        return CommandResult.of(category.getId());
-    }
+    return CommandResult.of(category.getId());
+  }
 
 }

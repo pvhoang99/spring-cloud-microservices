@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private final JpaCategoryRepository jpaCategoryRepository;
+  private final JpaCategoryRepository jpaCategoryRepository;
 
-    public boolean existById(Long id) {
-        return jpaCategoryRepository.existsById(id);
-    }
+  public boolean existById(Long id) {
+    return jpaCategoryRepository.existsById(id);
+  }
 
 }

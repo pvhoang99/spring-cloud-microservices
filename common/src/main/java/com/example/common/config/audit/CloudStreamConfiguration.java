@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 
 public class CloudStreamConfiguration {
 
-    @Bean
-    public MessageConverter providesTextPlainMessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
+  @Bean
+  public MessageConverter providesTextPlainMessageConverter() {
+    return new Jackson2JsonMessageConverter();
+  }
 
 }

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class SpringTranslator implements Translator {
 
-    private final MessageSource messageSource;
+  private final MessageSource messageSource;
 
-    public String translate(String message, Object... args) {
-        return this.messageSource.getMessage(message, args, message, LocaleContextHolder.getLocale());
-    }
+  public String translate(String message, Object... args) {
+    return this.messageSource.getMessage(message, args, message, LocaleContextHolder.getLocale());
+  }
 
 }

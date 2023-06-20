@@ -17,30 +17,30 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchRequest implements Serializable {
 
-    private static final long serialVersionUID = 8514625832019794838L;
+  private static final long serialVersionUID = 8514625832019794838L;
 
-    private List<FilterRequest> filters;
+  private List<FilterRequest> filters;
 
-    private List<SortRequest> sorts;
+  private List<SortRequest> sorts;
 
-    private Integer page;
+  private Integer page;
 
-    private Integer size;
+  private Integer size;
 
-    public List<FilterRequest> getFilters() {
-        if (Objects.isNull(this.filters)) {
-            return new ArrayList<>();
-        }
-
-        return this.filters;
+  public List<FilterRequest> getFilters() {
+    if (Objects.isNull(this.filters)) {
+      return new ArrayList<>();
     }
 
-    public List<SortRequest> getSorts() {
-        if (Objects.isNull(this.sorts)) {
-            return new ArrayList<>();
-        }
+    return this.filters;
+  }
 
-        return this.sorts;
+  public List<SortRequest> getSorts() {
+    if (Objects.isNull(this.sorts)) {
+      return new ArrayList<>();
     }
+
+    return this.sorts;
+  }
 
 }

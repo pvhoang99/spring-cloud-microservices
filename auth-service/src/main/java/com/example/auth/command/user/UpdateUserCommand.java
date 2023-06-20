@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 public class UpdateUserCommand implements Command<CommandResult<Long>> {
 
-    @Setter
-    private Long id;
+  @Setter
+  private Long id;
 
 }

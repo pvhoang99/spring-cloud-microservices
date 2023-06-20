@@ -17,20 +17,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Role extends AggregateRoot {
 
-    @Id
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @Column(name = "id")
+  private Long id;
 
-    private String code;
+  private String code;
 
-    private String name;
+  private String name;
 
-    public static Role create(String name, String code) {
-        Role role = new Role();
-        role.setName(name);
-        role.setCode(code);
+  public static Role create(String name, String code) {
+    Role role = new Role();
+    role.setName(name);
+    role.setCode(code);
 
-        return role;
-    }
+    return role;
+  }
 
 }

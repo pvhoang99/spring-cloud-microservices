@@ -5,9 +5,9 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface Processor {
 
-    String PRODUCT_CREATED = "inventory_product_created";
+  String PRODUCT_CREATED = "inventory_product_created";
 
-    @Input(value = PRODUCT_CREATED)
-    SubscribableChannel productCreated();
+  @Input(value = PRODUCT_CREATED)
+  SubscribableChannel productCreated();
 
 }

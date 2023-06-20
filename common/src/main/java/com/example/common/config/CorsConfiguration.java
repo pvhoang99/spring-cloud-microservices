@@ -12,26 +12,26 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableAspectJAutoProxy
 public class CorsConfiguration {
 
-    @Bean
-    public Gson gson() {
-        return new Gson();
-    }
+  @Bean
+  public Gson gson() {
+    return new Gson();
+  }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        final org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    final org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
 
-        configuration
-            .setAllowedOrigins(ImmutableList.of("*"));
-        configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowCredentials(true);
-        configuration
-            .setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+    configuration
+        .setAllowedOrigins(ImmutableList.of("*"));
+    configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
+    configuration.setAllowCredentials(true);
+    configuration
+        .setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
 
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
 
-        return source;
-    }
+    return source;
+  }
 
 }
