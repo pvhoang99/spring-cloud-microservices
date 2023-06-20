@@ -8,7 +8,4 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(staticName = "of")
 public class GetCartCommand implements Command<CartVm> {
-
-    private Long userId;
-
 }

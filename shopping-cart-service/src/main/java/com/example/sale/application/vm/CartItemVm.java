@@ -1,14 +1,27 @@
 package com.example.sale.application.vm;
 
+import com.example.sale.domain.cart.CartItem;
 import lombok.Getter;
-
-import java.util.Set;
+import org.springframework.beans.BeanUtils;
 
 @Getter
 public class CartItemVm {
 
+    private Long productId;
+
     private Long price;
 
-    private Set<CartVm> items;
+    private Long quantity;
+
+    private String name;
+
+    private String image;
+
+    public static CartItemVm of(CartItem item) {
+        CartItemVm cartItem = new CartItemVm();
+        BeanUtils.copyProperties(item, cartItem);
+
+        return cartItem;
+    }
 
 }

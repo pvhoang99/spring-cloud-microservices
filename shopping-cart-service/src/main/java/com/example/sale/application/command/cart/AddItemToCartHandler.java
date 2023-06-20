@@ -1,7 +1,6 @@
 package com.example.sale.application.command.cart;
 
 import com.example.common.command.CommandHandler;
-import com.example.sale.application.vm.CartVm;
 import com.example.sale.domain.cart.Cart;
 import com.example.sale.domain.cart.CartRepository;
 import com.example.sale.domain.cart.CartService;
@@ -10,19 +9,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GetCartHandler implements CommandHandler<GetCartCommand, CartVm> {
+public class AddItemToCartHandler implements CommandHandler<AddItemToCartCommand, Void> {
 
-    private final CartRepository cartRepository;
     private final CartService cartService;
+    private final CartRepository cartRepository;
 
     @Override
-    public CartVm handle(GetCartCommand command) {
+    public Void handle(AddItemToCartCommand command) {
         Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
-        cart.reloadCart(this.cartService);
-
+        cart.addItem(command.getProductId(), command.getQuantity());
         this.cartRepository.save(cart);
 
-        return CartVm.of(cart);
+        return null;
     }
 
 }

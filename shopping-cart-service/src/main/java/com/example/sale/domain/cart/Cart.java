@@ -1,7 +1,7 @@
 package com.example.sale.domain.cart;
 
 import com.example.common.domain.AggregateRoot;
-import com.example.common.exception.BadRequestException;
+import com.example.sale.infrastructure.client.dto.response.ProductDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +17,10 @@ import javax.persistence.Id;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
+import javax.persistence.Transient;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "cart")
@@ -41,39 +41,43 @@ public class Cart extends AggregateRoot {
     private Status status;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<CartItem> items;
+    @MapKey(name = "productId")
+    private Map<Long, CartItem> items;
 
-    private Long total;
+    @Transient
+    private Long totalPrice;
 
     public static Cart createEmpty() {
         Cart cart = new Cart();
-        cart.setItems(new HashSet<>());
+        cart.setItems(new HashMap<>());
         cart.setUserId(1L);
         cart.setStatus(Status.ACTIVE);
 
         return cart;
     }
 
-    public void reloadCart() {
-
-    }
-
-    public void calculatePrice(CartService cartService) {
-        Set<Long> productIds = this.items.stream().map(CartItem::getProductId).collect(Collectors.toSet());
-        Map<Long, Long> productPrice = cartService.collectPriceProduct(productIds);
-    }
-
-    public void addItem(CartItem item) {
-        this.items.add(item);
-    }
-
-    public void deleteItem(CartItem item) {
-        if (item == null || item.getId() == null) {
-            throw new BadRequestException("Cart deleteItem exception");
+    public void reloadCart(CartService cartService) {
+        Set<Long> productIds = this.items.keySet();
+        Map<Long, ProductDTO> productPrice = cartService.collectProduct(productIds);
+        this.totalPrice = 0L;
+        for (CartItem item : this.items.values()) {
+            //TODO: chưa xử lý case không tồn tại productId
+            ProductDTO productDTO = productPrice.get(item.getProductId());
+            this.totalPrice += productDTO.getPrice() * item.getQuantity();
+            item.addInfo(productDTO.getPrice(), productDTO.getImage(), productDTO.getName());
         }
-        this.items.remove(item);
     }
 
+    public void addItem(Long productId, Long quantity) {
+        CartItem cartItem = this.items.getOrDefault(productId, CartItem.createNewItem(productId));
+        cartItem.addQuantity(quantity);
+        this.items.put(productId, cartItem);
+    }
 
+    public void subtractItem(Long productId, Long quantity) {
+        CartItem cartItem = this.items.get(productId);
+        cartItem.subtractQuantity(quantity);
+        this.items.put(productId, cartItem);
+    }
 
 }
