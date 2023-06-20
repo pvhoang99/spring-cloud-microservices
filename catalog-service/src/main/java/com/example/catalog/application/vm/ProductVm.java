@@ -7,18 +7,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductVm {
 
+    private Long id;
+
     private String name;
 
     private String description;
 
     private String image;
 
-    private Long catalogId;
+    private String catalogId;
 
-    public ProductVm(String name, String description, String image, Long catalogId) {
+    public ProductVm(Long id, String name, String description, String image, String catalogId) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.image = image;
         this.catalogId = catalogId;
     }
+
 }

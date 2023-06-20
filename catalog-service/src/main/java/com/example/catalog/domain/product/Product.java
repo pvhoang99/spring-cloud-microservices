@@ -35,9 +35,9 @@ public class Product extends AggregateRoot {
     private String image;
 
     @Column(name = "category_id")
-    private Long categoryId;
+    private String categoryId;
 
-    public static Product create(String name, String description, String image, Long catalogId) {
+    public static Product create(String name, String description, String image, String catalogId) {
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);

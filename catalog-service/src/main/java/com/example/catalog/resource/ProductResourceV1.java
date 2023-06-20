@@ -4,14 +4,10 @@ import com.example.catalog.application.command.product.CreateProductCommand;
 import com.example.catalog.application.query.product.GetProductListQuery;
 import com.example.catalog.application.query.product.GetProductListQuery.ProductFilter;
 import com.example.catalog.application.vm.ProductVm;
-import com.example.catalog.domain.product.Product;
-import com.example.catalog.infrastructure.repository.jpa.JpaProductRepository;
 import com.example.common.command.CommandBus;
 import com.example.common.query.QueryBus;
 import com.example.common.vm.CommandResult;
 import com.example.common.vm.ListQueryResult;
-import com.example.common.vm.query.SearchRequest;
-import com.example.common.vm.query.SearchSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +23,6 @@ public class ProductResourceV1 {
 
     private final CommandBus commandBus;
     private final QueryBus queryBus;
-    private final JpaProductRepository jpaProductRepository;
 
     @PostMapping("/products")
     public ResponseEntity<CommandResult<Long>> createProduct(@RequestBody CreateProductCommand command) {
@@ -40,21 +35,5 @@ public class ProductResourceV1 {
 
         return ResponseEntity.ok(this.queryBus.execute(query));
     }
-
-    @PostMapping("/list")
-    public Object list(@RequestBody SearchRequest query) {
-        SearchSpecification<Product> specification = new SearchSpecification<>(query);
-        Pageable pageable = SearchSpecification.getPageable(query.getPage(), query.getSize());
-
-        return this.jpaProductRepository.findAll(specification, pageable);
-    }
-
-
-//    @GetMapping("/{code}")
-//    public ResponseEntity<ProductVm> getOne(@PathVariable(value = "code") String code) {
-//        GetProductQuery getProductQuery = GetProductQuery.of(code);
-//
-//        return ResponseEntity.ok(this.queryBus.execute(getProductQuery));
-//    }
 
 }
