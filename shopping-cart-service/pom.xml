@@ -76,11 +76,6 @@
       <scope>compile</scope>
       <version>0.10.2</version>
     </dependency>
-    <dependency>
-      <artifactId>spring-data-mongodb</artifactId>
-      <groupId>org.springframework.data</groupId>
-    </dependency>
-
   </dependencies>
   <modelVersion>4.0.0</modelVersion>
   <name>shopping-cart-service</name>

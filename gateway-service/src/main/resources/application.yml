@@ -43,15 +43,15 @@ spring:
           uri: lb://catalog-service
           predicates:
             - Path=/catalog/**
-        #          filters:
-        #            - name: CircuitBreaker
-        #              args:
-        #                name: myCircuitBreaker
-        #                fallbackUri: forward:/fallback/message
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: shoppingCart
-          uri: lb://shopping-cart-service
+          uri: lb://cart
           predicates:
-            - Path=/cart/**
+            - Path=/api/cart/**
         #          filters:
         #            - name: CircuitBreaker
         #              args:
