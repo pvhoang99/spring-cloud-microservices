@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Deprecated
@@ -25,6 +27,8 @@ public class LoginCommandHandler implements CommandHandler<LoginCommand, OAuth2A
   @Override
   @Transactional
   public OAuth2AccessToken handle(LoginCommand command) {
+    log.info("LoginCommandHandler with username: {}", command.getUsername());
+
     Map<String, String> parameters = this.buildParameters(command);
     Principal principal = this.buildDefaultAuthentication();
     try {

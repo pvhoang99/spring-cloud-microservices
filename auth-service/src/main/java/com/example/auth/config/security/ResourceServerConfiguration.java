@@ -60,7 +60,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         .antMatchers("/**")
         .and()
         .authorizeRequests()
-        .antMatchers("/v1/auth/login").permitAll()
+        .antMatchers("/v1/auth/login", "/v1/users").permitAll()
         .expressionHandler(webExpressionHandler())
         .anyRequest().authenticated()
         .and()

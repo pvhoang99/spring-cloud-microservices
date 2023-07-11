@@ -7,20 +7,20 @@ services:
       dockerfile: Dockerfile
       context: ./
     networks:
-      - default-network
+      - spring-cloud-network
     volumes:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
       - DIR=config-service
-      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - JAVA_OPTS=-Xms128M -Xmx256M
       - SERVER_PORT=8888
     working_dir: /microservices
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: "512M"
+          memory: "256M"
 
   discovery-server:
     container_name: discovery-service
@@ -28,63 +28,67 @@ services:
       dockerfile: Dockerfile
       context: ./
     networks:
-      - default-network
+      - spring-cloud-network
     volumes:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
       - DIR=discovery-service
-      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - JAVA_OPTS=-Xms128M -Xmx512M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - WAIT_SERVICE=config-server:8888
       - SERVER_PORT=8761
     working_dir: /microservices
+    ports:
+      - "8761:8761"
     deploy:
       resources:
         limits:
           cpus: "1"
-          memory: "1024M"
+          memory: "512M"
 
-  gateway-server:
+  gateway:
     container_name: gateway-service
     build:
       dockerfile: Dockerfile
       context: ./
     networks:
-      - default-network
+      - spring-cloud-network
     volumes:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
       - DIR=gateway-service
-      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - JAVA_OPTS=-Xms128M -Xmx512M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - WAIT_SERVICE=config-server:8888 discovery-server:8761
       - SERVER_PORT=8000
     working_dir: /microservices
+    ports:
+      - "8000:8000"
     deploy:
       resources:
         limits:
           cpus: "2"
-          memory: "2048M"
+          memory: "512M"
 
-  auth-server:
+  auth:
     container_name: auth-service
     build:
       dockerfile: Dockerfile
       context: ./
     networks:
-      - default-network
+      - spring-cloud-network
     volumes:
       - .:/microservices
       - m2_data:/root/.m2/repository
     environment:
       - DIR=auth-service
-      - JAVA_OPTS=-Xms1024M -Xmx2024M
+      - JAVA_OPTS=-Xms128M -Xmx1024M
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-      - WAIT_SERVICE=config-server:8888 discovery-server:8761 gateway-server:8000
+      - WAIT_SERVICE=config-server:8888 discovery-server:8761 gateway:8000
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/auth_server?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456
@@ -94,8 +98,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "3"
-          memory: "4096M"
+          cpus: "1"
+          memory: "1024M"
 
   inventory:
     container_name: inventory-service
@@ -103,7 +107,7 @@ services:
       dockerfile: Dockerfile
       context: ./
     networks:
-      - default-network
+      - spring-cloud-network
     volumes:
       - .:/microservices
       - m2_data:/root/.m2/repository
@@ -134,6 +138,8 @@ services:
       - RABBITMQ_DEFAULT_PASS=123456
     ports:
       - "5672:5672"
+    networks:
+      - spring-cloud-network
 
   mysql:
     image: mysql:5.7
@@ -142,25 +148,25 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - default-network
+      - spring-cloud-network
     volumes:
       - ./_mysql:/var/lib/mysql
 
   redis:
     image: redis:latest
     networks:
-      - default-network
+      - spring-cloud-network
     ports:
       - "6379:6379"
   neo4j:
     image: neo4j:latest
     networks:
-      - default-network
+      - spring-cloud-network
   nginx:
     container_name: nginx
     image: nginx:1.17.10
     networks:
-      - default-network
+      - spring-cloud-network
     ports:
       - "80:80"
     volumes:
@@ -203,7 +209,7 @@ services:
         condition: service_healthy
 
 networks:
-  default-network:
+  spring-cloud-network:
     driver: bridge
 
 volumes:

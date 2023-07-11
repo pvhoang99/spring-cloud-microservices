@@ -5,6 +5,8 @@ import com.example.auth.domain.authentication.OauthClientDetailEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
@@ -20,6 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @ConfigurationPropertiesScan(value = {"com.example.auth"})
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "dateTimeProvider")
 @Slf4j
+@EnableAutoConfiguration(exclude = RabbitAutoConfiguration.class)
 public class AuthApplication {
 
   public static void main(String[] args) {
@@ -27,7 +30,6 @@ public class AuthApplication {
   }
 
   @Bean
-
   public CommandLineRunner init(ClientDetailRepository oauthClientDetailRepository) {
     return args -> {
       log.info("test");

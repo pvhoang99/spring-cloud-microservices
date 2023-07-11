@@ -29,11 +29,11 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
-        #          filters:
-        #            - name: CircuitBreaker
-        #              args:
-        #                name: myCircuitBreaker
-        #                fallbackUri: forward:/fallback/message
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: inventory
           uri: lb://inventory-service
           predicates:

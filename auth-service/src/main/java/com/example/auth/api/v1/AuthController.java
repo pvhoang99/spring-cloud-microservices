@@ -24,4 +24,5 @@ public class AuthController {
 
     return ResponseEntity.ok(CommonResult.success(accessToken));
   }
+
 }

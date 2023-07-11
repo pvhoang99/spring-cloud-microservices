@@ -9,6 +9,8 @@ read -a strarr <<< "${WAIT_SERVICE}"
 
 for val in "${strarr[@]}";
 do
+  echo "waiting for ${val}"
+
   ./wait-for-it.sh -t 0 -s "${val}" -- echo "${val} is up"
 done
 

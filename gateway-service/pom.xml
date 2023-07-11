@@ -51,11 +51,6 @@
       <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-    <dependency>
-      <artifactId>spring-cloud-zuul-ratelimit</artifactId>
-      <groupId>com.marcosbarbero.cloud</groupId>
-      <version>1.7.6.RELEASE</version>
-    </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <modelVersion>4.0.0</modelVersion>
