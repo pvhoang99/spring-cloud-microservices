@@ -5,9 +5,9 @@ import com.example.common.command.CommandBus;
 import com.example.common.command.CommandHandler;
 import com.example.common.exception.BadRequestException;
 import java.util.Set;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

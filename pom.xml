@@ -17,11 +17,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <artifactId>spring-cloud-dependencies</artifactId>
         <groupId>org.springframework.cloud</groupId>
-        <scope>import</scope>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>2022.0.3</version>
         <type>pom</type>
-        <version>${spring-cloud.version}</version>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -49,12 +49,12 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>2.3.6.RELEASE</version> <!-- lookup parent from repository -->
+    <version>3.1.0</version> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <java.version>11</java.version>
-    <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+    <java.version>17</java.version>
+    <spring-cloud.version>2022.0.3</spring-cloud.version>
   </properties>
 
   <version>0.0.1-SNAPSHOT</version>

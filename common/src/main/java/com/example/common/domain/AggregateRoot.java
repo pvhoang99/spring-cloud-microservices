@@ -4,8 +4,8 @@ import com.example.common.event.DomainEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 

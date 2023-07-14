@@ -3,6 +3,7 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>auth-service</artifactId>
+
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
@@ -12,16 +13,13 @@
       </plugin>
     </plugins>
   </build>
+
   <dependencies>
-    <dependency>
-      <artifactId>spring-security-oauth2-resource-server</artifactId>
-      <groupId>org.springframework.security</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>grpc-server-spring-boot-starter</artifactId>
-      <groupId>net.devh</groupId>
-      <version>2.13.1.RELEASE</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>grpc-server-spring-boot-starter</artifactId>-->
+<!--      <groupId>net.devh</groupId>-->
+<!--      <version>2.13.1.RELEASE</version>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>common</artifactId>
       <groupId>com.example</groupId>
@@ -44,19 +42,7 @@
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-oauth2</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
@@ -68,9 +54,9 @@
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <artifactId>mysql-connector-java</artifactId>
       <groupId>mysql</groupId>
-      <scope>runtime</scope>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
     </dependency>
     <dependency>
       <artifactId>lombok</artifactId>
@@ -84,27 +70,22 @@
       <version>1.7.29</version>
     </dependency>
     <dependency>
-      <artifactId>json-smart</artifactId>
-      <groupId>net.minidev</groupId>
-      <version>2.3</version>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-authorization-server</artifactId>
+      <version>1.1.1</version>
     </dependency>
     <dependency>
-      <artifactId>spring-boot-configuration-processor</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <optional>true</optional>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
-      <artifactId>jaxb-impl</artifactId>
-      <groupId>com.sun.xml.bind</groupId>
-      <version>2.3.1</version>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.8.0</version>
+      <scope>compile</scope>
     </dependency>
-    <dependency>
-      <artifactId>saaj-impl</artifactId>
-      <groupId>com.sun.xml.messaging.saaj</groupId>
-      <version>1.5.1</version>
-    </dependency>
-
   </dependencies>
+
   <description>Auth Server</description>
   <modelVersion>4.0.0</modelVersion>
   <name>auth-server</name>

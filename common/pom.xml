@@ -4,41 +4,42 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>common</artifactId>
   <build>
-    <extensions>
-      <extension>
-        <artifactId>os-maven-plugin</artifactId>
-        <groupId>kr.motd.maven</groupId>
-        <version>1.7.0</version>
-      </extension>
-    </extensions>
-    <plugins>
-      <plugin>
-        <artifactId>protobuf-maven-plugin</artifactId>
-        <configuration>
-          <pluginArtifact>
-            io.grpc:protoc-gen-grpc-java:1.22.1:exe:${os.detected.classifier}
-          </pluginArtifact>
-          <pluginId>grpc-java</pluginId>
-          <protoSourceRoot>
-            ${basedir}/src/main/proto/
-          </protoSourceRoot>
-          <protocArtifact>
-            com.google.protobuf:protoc:3.6.1:exe:${os.detected.classifier}
-          </protocArtifact>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>compile-custom</goal>
-            </goals>
-          </execution>
-        </executions>
-        <groupId>org.xolstice.maven.plugins</groupId>
-        <version>0.6.1</version>
-      </plugin>
-    </plugins>
+<!--    <extensions>-->
+<!--      <extension>-->
+<!--        <artifactId>os-maven-plugin</artifactId>-->
+<!--        <groupId>kr.motd.maven</groupId>-->
+<!--        <version>1.7.0</version>-->
+<!--      </extension>-->
+<!--    </extensions>-->
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <artifactId>protobuf-maven-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <pluginArtifact>-->
+<!--            io.grpc:protoc-gen-grpc-java:1.22.1:exe:${os.detected.classifier}-->
+<!--          </pluginArtifact>-->
+<!--          <pluginId>grpc-java</pluginId>-->
+<!--          <protoSourceRoot>-->
+<!--            ${basedir}/src/main/proto/-->
+<!--          </protoSourceRoot>-->
+<!--          <protocArtifact>-->
+<!--            com.google.protobuf:protoc:3.6.1:exe:${os.detected.classifier}-->
+<!--          </protocArtifact>-->
+<!--        </configuration>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <goals>-->
+<!--              <goal>compile</goal>-->
+<!--              <goal>compile-custom</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--        <groupId>org.xolstice.maven.plugins</groupId>-->
+<!--        <version>0.6.1</version>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
   </build>
+
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
     <dependency>
@@ -53,21 +54,21 @@
       <groupId>org.modelmapper</groupId>
       <version>3.1.0</version>
     </dependency>
-    <dependency>
-      <artifactId>grpc-netty-shaded</artifactId>
-      <groupId>io.grpc</groupId>
-      <version>1.37.0</version>
-    </dependency>
-    <dependency>
-      <artifactId>grpc-protobuf</artifactId>
-      <groupId>io.grpc</groupId>
-      <version>1.37.0</version>
-    </dependency>
-    <dependency>
-      <artifactId>grpc-stub</artifactId>
-      <groupId>io.grpc</groupId>
-      <version>1.37.0</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>grpc-netty-shaded</artifactId>-->
+<!--      <groupId>io.grpc</groupId>-->
+<!--      <version>1.37.0</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <artifactId>grpc-protobuf</artifactId>-->
+<!--      <groupId>io.grpc</groupId>-->
+<!--      <version>1.37.0</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <artifactId>grpc-stub</artifactId>-->
+<!--      <groupId>io.grpc</groupId>-->
+<!--      <version>1.37.0</version>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>gson</artifactId>
       <groupId>com.google.code.gson</groupId>
@@ -96,8 +97,8 @@
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
       <artifactId>spring-data-commons</artifactId>
@@ -127,18 +128,18 @@
       <artifactId>spring-boot-starter-validation</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-sleuth</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <artifactId>spring-cloud-starter-sleuth</artifactId>-->
+    <!--      <groupId>org.springframework.cloud</groupId>-->
+    <!--    </dependency>-->
     <!--    <dependency>-->
     <!--      <groupId>org.springframework.cloud</groupId>-->
     <!--      <artifactId>spring-cloud-starter-zipkin</artifactId>-->
     <!--    </dependency>-->
-    <dependency>
-      <artifactId>guava</artifactId>
-      <groupId>com.google.guava</groupId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <artifactId>guava</artifactId>-->
+    <!--      <groupId>com.google.guava</groupId>-->
+    <!--    </dependency>-->
     <dependency>
       <artifactId>spring-boot-devtools</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -148,10 +149,10 @@
       <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+    <!--      <groupId>org.springframework.cloud</groupId>-->
+    <!--    </dependency>-->
     <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
@@ -168,18 +169,10 @@
       <scope>provided</scope>
       <version>6.0.53</version>
     </dependency>
-
     <dependency>
       <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jooq -->
-    <dependency>
-      <artifactId>spring-boot-starter-jooq</artifactId>
-      <groupId>org.springframework.boot</groupId>
-      <version>2.7.3</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.vladmihalcea/hibernate-types-52 -->
     <dependency>
       <artifactId>hibernate-types-52</artifactId>
       <groupId>com.vladmihalcea</groupId>
@@ -197,6 +190,5 @@
   </parent>
 
   <version>1.0.0</version>
-
 
 </project>

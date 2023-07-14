@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+
+  <property name="LOG_FILE" value="${BUILD_FOLDER:-log}/log"/>
+
+  <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+  <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%15.15t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+  <springProperty name="springAppName" scope="context" source="spring.application.name"/>
+
   <appender class="ch.qos.logback.core.ConsoleAppender" name="console">
     <encoder>
       <charset>utf8</charset>
@@ -88,20 +97,10 @@
     <appender-ref ref="flatfile"/>
   </logger>
 
-  <property name="LOG_FILE" value="${BUILD_FOLDER:-log}/log"/>
-
-  <property name="CONSOLE_LOG_PATTERN"
-    value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
-
-  <property name="FILE_LOG_PATTERN"
-    value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%15.15t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
-
   <root level="INFO">
     <appender-ref ref="console"/>
     <appender-ref ref="logstash"/>
     <appender-ref ref="flatfile"/>
   </root>
-
-  <springProperty name="springAppName" scope="context" source="spring.application.name"/>
 
 </configuration>

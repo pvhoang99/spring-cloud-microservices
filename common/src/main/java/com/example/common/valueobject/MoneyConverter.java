@@ -1,7 +1,7 @@
 package com.example.common.valueobject;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 @Converter
 public class MoneyConverter implements AttributeConverter<Money, Long> {

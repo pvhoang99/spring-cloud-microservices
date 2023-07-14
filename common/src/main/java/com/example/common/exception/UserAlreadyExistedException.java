@@ -1,6 +1,6 @@
 package com.example.common.exception;
 
-import javax.persistence.EntityExistsException;
+import jakarta.persistence.EntityExistsException;
 
 public class UserAlreadyExistedException extends EntityExistsException {
 

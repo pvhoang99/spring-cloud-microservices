@@ -1,7 +1,6 @@
 package com.example.common.exception;
 
 import com.example.common.api.CommonResult;
-import javax.persistence.EntityExistsException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
