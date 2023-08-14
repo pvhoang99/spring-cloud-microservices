@@ -1,18 +1,56 @@
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
 spring:
-  cloud:
-    config:
-      username: hoang
-      password: hoang
-      uri: http://localhost:8888
-      enabled: false
+  cache:
+    redis:
+      time-to-live: 5m
+    type: redis
+  zipkin:
+    base-url: http://localhost:9411/
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: mysql
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
   application:
     name: auth-service
   datasource:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/auth_server?createDatabaseIfNotExist=true
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 300000
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-test-query: select 1
+  cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+    import-check:
+      enabled: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+server:
+  servlet:
+    context-path: /api/auth
+  port: 8082
+grpc:
+  server:
+    port: 1900
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

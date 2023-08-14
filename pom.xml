@@ -31,15 +31,15 @@
   <modelVersion>4.0.0</modelVersion>
   <modules>
     <module>auth-service</module>
-    <module>catalog-service</module>
-    <module>chat-server</module>
+<!--    <module>catalog-service</module>-->
+<!--    <module>chat-server</module>-->
     <module>common</module>
     <module>config-service</module>
     <module>discovery-service</module>
     <module>gateway-service</module>
-    <module>order-service</module>
-    <module>inventory-service</module>
-    <module>shopping-cart-service</module>
+<!--    <module>order-service</module>-->
+<!--    <module>inventory-service</module>-->
+<!--    <module>shopping-cart-service</module>-->
   </modules>
   <name>microservices</name>
 
@@ -49,7 +49,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>3.1.0</version> <!-- lookup parent from repository -->
+    <version>3.1.2</version> <!-- lookup parent from repository -->
   </parent>
 
   <properties>

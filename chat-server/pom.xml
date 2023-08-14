@@ -79,10 +79,10 @@
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
     </dependency>
-    <dependency>
-      <artifactId>hystrix-javanica</artifactId>
-      <groupId>com.netflix.hystrix</groupId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>hystrix-javanica</artifactId>-->
+<!--      <groupId>com.netflix.hystrix</groupId>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>asm</artifactId>
       <groupId>net.minidev</groupId>

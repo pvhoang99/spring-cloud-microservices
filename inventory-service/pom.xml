@@ -26,17 +26,13 @@
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-cloud-starter-oauth2</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+<!--      <groupId>org.springframework.cloud</groupId>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <groupId>org.springframework.cloud</groupId>
@@ -48,6 +44,7 @@
     <dependency>
       <artifactId>mysql-connector-java</artifactId>
       <groupId>mysql</groupId>
+      <version>8.0.33</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -59,8 +56,13 @@
       <artifactId>slf4j-api</artifactId>
       <groupId>org.slf4j</groupId>
       <version>1.7.36</version>
-    </dependency>
 
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.6</version>
+    </dependency>
 
   </dependencies>
   <modelVersion>4.0.0</modelVersion>

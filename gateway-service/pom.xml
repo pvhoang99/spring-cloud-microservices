@@ -34,10 +34,10 @@
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+<!--      <groupId>org.springframework.cloud</groupId>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>spring-boot-devtools</artifactId>
       <groupId>org.springframework.boot</groupId>

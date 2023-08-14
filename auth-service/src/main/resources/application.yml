@@ -3,9 +3,6 @@ spring:
     redis:
       time-to-live: 5m
     type: redis
-  redis:
-    host: localhost
-    port: 6379
   zipkin:
     base-url: http://localhost:9411/
   main:
@@ -15,28 +12,34 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  security:
-    oauth2:
-      authorizationserver:
-        client:
-          oidc-client:
-            registration:
-              client-id: "oidc-client"
-              client-secret: "{noop}secret"
-              client-authentication-methods:
-                - "client_secret_basic"
-              authorization-grant-types:
-                - "authorization_code"
-                - "refresh_token"
-              redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/oidc-client"
-              post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/"
-              scopes:
-                - "openid"
-                - "profile"
-            require-authorization-consent: true
-
+    database: mysql
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
+  application:
+    name: auth-service
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/auth_server?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 300000
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-test-query: select 1
+  cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+    import-check:
+      enabled: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
 server:
   servlet:
     context-path: /api/auth
@@ -49,3 +52,5 @@ eureka:
     prefer-ip-address: true
   client:
     fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

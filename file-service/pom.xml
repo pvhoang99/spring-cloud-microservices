@@ -53,10 +53,6 @@
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-cloud-starter-oauth2</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
@@ -67,16 +63,17 @@
     <dependency>
       <artifactId>mysql-connector-java</artifactId>
       <groupId>mysql</groupId>
+      <version>8.0.33</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
     </dependency>
-    <dependency>
-      <artifactId>hystrix-javanica</artifactId>
-      <groupId>com.netflix.hystrix</groupId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>hystrix-javanica</artifactId>-->
+<!--      <groupId>com.netflix.hystrix</groupId>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>asm</artifactId>
       <groupId>net.minidev</groupId>
@@ -94,10 +91,6 @@
     <dependency>
       <artifactId>spring-security-messaging</artifactId>
       <groupId>org.springframework.security</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>hibernate-core</artifactId>
-      <groupId>org.hibernate</groupId>
     </dependency>
     <dependency>
       <artifactId>spring-boot-configuration-processor</artifactId>

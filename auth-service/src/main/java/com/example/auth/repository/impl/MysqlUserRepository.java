@@ -4,7 +4,7 @@ import com.example.auth.domain.User;
 import com.example.auth.domain.user.Username;
 import com.example.auth.repository.UserRepository;
 import com.example.auth.repository.jpa.JpaUserRepository;
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

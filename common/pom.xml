@@ -4,40 +4,20 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>common</artifactId>
   <build>
-<!--    <extensions>-->
-<!--      <extension>-->
-<!--        <artifactId>os-maven-plugin</artifactId>-->
-<!--        <groupId>kr.motd.maven</groupId>-->
-<!--        <version>1.7.0</version>-->
-<!--      </extension>-->
-<!--    </extensions>-->
-<!--    <plugins>-->
-<!--      <plugin>-->
-<!--        <artifactId>protobuf-maven-plugin</artifactId>-->
-<!--        <configuration>-->
-<!--          <pluginArtifact>-->
-<!--            io.grpc:protoc-gen-grpc-java:1.22.1:exe:${os.detected.classifier}-->
-<!--          </pluginArtifact>-->
-<!--          <pluginId>grpc-java</pluginId>-->
-<!--          <protoSourceRoot>-->
-<!--            ${basedir}/src/main/proto/-->
-<!--          </protoSourceRoot>-->
-<!--          <protocArtifact>-->
-<!--            com.google.protobuf:protoc:3.6.1:exe:${os.detected.classifier}-->
-<!--          </protocArtifact>-->
-<!--        </configuration>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <goals>-->
-<!--              <goal>compile</goal>-->
-<!--              <goal>compile-custom</goal>-->
-<!--            </goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--        <groupId>org.xolstice.maven.plugins</groupId>-->
-<!--        <version>0.6.1</version>-->
-<!--      </plugin>-->
-<!--    </plugins>-->
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <dependencies>
@@ -100,30 +80,36 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <scope>runtime</scope>
+    </dependency>
     <dependency>
       <artifactId>spring-data-commons</artifactId>
       <groupId>org.springframework.data</groupId>
     </dependency>
-    <dependency>
-      <artifactId>logstash-logback-encoder</artifactId>
-      <groupId>net.logstash.logback</groupId>
-      <version>6.6</version>
-    </dependency>
-    <dependency>
-      <artifactId>logback-core</artifactId>
-      <groupId>ch.qos.logback</groupId>
-      <version>1.4.6</version>
-    </dependency>
-    <dependency>
-      <artifactId>logback-classic</artifactId>
-      <groupId>ch.qos.logback</groupId>
-      <version>1.4.6</version>
-    </dependency>
-    <dependency>
-      <artifactId>slf4j-api</artifactId>
-      <groupId>org.slf4j</groupId>
-      <version>2.0.5</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>logstash-logback-encoder</artifactId>-->
+<!--      <groupId>net.logstash.logback</groupId>-->
+<!--      <version>6.6</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <artifactId>logback-core</artifactId>-->
+<!--      <groupId>ch.qos.logback</groupId>-->
+<!--      <version>1.4.6</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <artifactId>logback-classic</artifactId>-->
+<!--      <groupId>ch.qos.logback</groupId>-->
+<!--      <version>1.4.6</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <artifactId>slf4j-api</artifactId>-->
+<!--      <groupId>org.slf4j</groupId>-->
+<!--      <version>2.0.5</version>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>spring-boot-starter-validation</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -173,11 +159,31 @@
       <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
+<!--git -->
     <dependency>
-      <artifactId>hibernate-types-52</artifactId>
-      <groupId>com.vladmihalcea</groupId>
-      <version>2.20.0</version>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>31.1-jre</version>
+      <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>5.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.11.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.28</version>
+    </dependency>
+
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <modelVersion>4.0.0</modelVersion>

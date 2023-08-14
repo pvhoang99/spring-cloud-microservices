@@ -33,10 +33,10 @@
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+<!--      <groupId>org.springframework.cloud</groupId>-->
+<!--    </dependency>-->
     <dependency>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <groupId>org.springframework.cloud</groupId>
