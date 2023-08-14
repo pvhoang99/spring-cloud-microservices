@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -18,20 +19,19 @@ public class CorsConfiguration {
   }
 
   @Bean
+  @Primary
   public CorsConfigurationSource corsConfigurationSource() {
     final org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
 
-    configuration
-        .setAllowedOrigins(ImmutableList.of("*"));
-    configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
-    configuration.setAllowCredentials(true);
-    configuration
-        .setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+    configuration.setAllowedMethods(ImmutableList.of("*"));
+    configuration.setAllowCredentials(false);
+    configuration.setAllowedHeaders(ImmutableList.of("*"));
+    configuration.setAllowedOriginPatterns(ImmutableList.of("*"));
 
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
     source.registerCorsConfiguration("/**", configuration);
 
     return source;
   }
-
 }
