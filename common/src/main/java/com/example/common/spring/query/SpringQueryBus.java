@@ -19,7 +19,7 @@ public class SpringQueryBus implements QueryBus {
 
   @Override
   public <Q extends Query<R>, R> R execute(Q query) {
-    QueryHandler<Q, R> queryHandler = (QueryHandler<Q, R>) registry.get(query.getClass());
+    QueryHandler<Q, R> queryHandler = (QueryHandler<Q, R>) this.registry.get(query.getClass());
     return queryHandler.handle(query);
   }
 

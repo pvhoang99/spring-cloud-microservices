@@ -14,7 +14,7 @@ public class CommandHandlerProvider<H extends CommandHandler<?, ?>> {
   }
 
   public H get() {
-    return applicationContext.getBean(type);
+    return this.applicationContext.getBean(type);
   }
 
 }

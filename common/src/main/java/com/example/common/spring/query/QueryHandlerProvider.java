@@ -14,7 +14,7 @@ public class QueryHandlerProvider<H extends QueryHandler<?, ?>> {
   }
 
   public H get() {
-    return applicationContext.getBean(type);
+    return this.applicationContext.getBean(type);
   }
 
 }

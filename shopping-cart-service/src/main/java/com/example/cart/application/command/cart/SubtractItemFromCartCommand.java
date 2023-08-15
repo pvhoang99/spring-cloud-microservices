@@ -2,7 +2,7 @@ package com.example.cart.application.command.cart;
 
 import com.example.common.command.Command;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -17,7 +17,7 @@ spring:
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
     database-platform: org.hibernate.dialect.MySQLDialect
   application:
-    name: auth-service
+    name: auth-server
   datasource:
     username: root
     password: 123456

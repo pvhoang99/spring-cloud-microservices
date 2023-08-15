@@ -10,10 +10,6 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <artifactId>commons-pool2</artifactId>
-      <groupId>org.apache.commons</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
@@ -26,17 +22,9 @@
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-cloud-starter-oauth2</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-<!--    <dependency>-->
-<!--      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
-<!--      <groupId>org.springframework.cloud</groupId>-->
-<!--    </dependency>-->
     <dependency>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <groupId>org.springframework.cloud</groupId>
@@ -46,36 +34,16 @@
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <artifactId>mysql-connector-java</artifactId>
-      <groupId>mysql</groupId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <artifactId>slf4j-api</artifactId>
-      <groupId>org.slf4j</groupId>
-      <version>1.7.36</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-core -->
-    <dependency>
-      <artifactId>reactor-core</artifactId>
-      <groupId>io.projectreactor</groupId>
-      <version>3.4.17</version>
-    </dependency>
-    <dependency>
-      <artifactId>javax.persistence-api</artifactId>
-      <groupId>javax.persistence</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>vavr</artifactId>
-      <groupId>io.vavr</groupId>
-      <scope>compile</scope>
-      <version>0.10.2</version>
-    </dependency>
+
+
   </dependencies>
   <modelVersion>4.0.0</modelVersion>
   <name>shopping-cart-service</name>

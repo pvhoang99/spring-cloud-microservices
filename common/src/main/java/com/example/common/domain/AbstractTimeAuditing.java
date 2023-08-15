@@ -1,6 +1,8 @@
 package com.example.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;
@@ -14,6 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractTimeAuditing implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   @CreatedDate

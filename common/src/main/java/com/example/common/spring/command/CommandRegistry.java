@@ -41,9 +41,9 @@ public class CommandRegistry {
   }
 
   private void registerHandlers() {
-    String[] names = applicationContext.getBeanNamesForType(CommandHandler.class);
+    String[] names = this.applicationContext.getBeanNamesForType(CommandHandler.class);
     for (String name : names) {
-      register(applicationContext, name);
+      register(this.applicationContext, name);
     }
   }
 
@@ -57,7 +57,7 @@ public class CommandRegistry {
       return;
     }
     Class<? extends Command> commandType = (Class<? extends Command>) generics[0];
-    providerMap.put(commandType, new CommandHandlerProvider(applicationContext, handlerClass));
+    this.providerMap.put(commandType, new CommandHandlerProvider(applicationContext, handlerClass));
   }
 
 }

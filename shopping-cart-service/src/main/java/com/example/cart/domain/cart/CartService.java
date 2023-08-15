@@ -5,6 +5,8 @@ import static java.util.Objects.isNull;
 import com.example.cart.infrastructure.client.CatalogFeignClient;
 import com.example.cart.infrastructure.client.dto.request.GetProductsByIdsRequest;
 import com.example.cart.infrastructure.client.dto.response.ProductDTO;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,10 +27,11 @@ public class CartService {
     if (CollectionUtils.isEmpty(productIds)) {
       return Map.of();
     }
-    List<ProductDTO> productDTOs = this.catalogClient.getProductsByIds(
-        GetProductsByIdsRequest.of(productIds));
+//    List<ProductDTO> productDTOs = this.catalogClient.getProductsByIds(GetProductsByIdsRequest.of(productIds));
 
-    return productDTOs.stream().collect(Collectors.toMap(ProductDTO::getId, Function.identity()));
+//    return productDTOs.stream().collect(Collectors.toMap(ProductDTO::getId, Function.identity()));
+
+    return new HashMap<>();
   }
 
   public Cart getCurrentCartOrCreateEmpty() {

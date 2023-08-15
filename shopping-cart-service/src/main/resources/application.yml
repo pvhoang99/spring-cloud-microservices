@@ -1,15 +1,6 @@
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://localhost:8082/auth-server/oauth/check_token
-      user-info-uri: http://localhost:8082/auth-server/api/v1/user/me
-      id: shopping-cart-service
-    client:
-      client-id: hoang
-      client-secret: 1
-      access-token-uri: http://localhost:8082/auth-server/oauth/token
-      scope: read
 spring:
+  application:
+    name: cart
   datasource:
     url: jdbc:mysql://localhost:3306/cart?createDatabaseIfNotExist=true
     username: root
@@ -19,6 +10,20 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+    import-check:
+      enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI:http://localhost:8082/api/auth}
+  main.allow-bean-definition-overriding: true
 server:
   port: 8087
   servlet:

@@ -39,7 +39,7 @@
     <module>gateway-service</module>
 <!--    <module>order-service</module>-->
 <!--    <module>inventory-service</module>-->
-<!--    <module>shopping-cart-service</module>-->
+    <module>shopping-cart-service</module>
   </modules>
   <name>microservices</name>
 
