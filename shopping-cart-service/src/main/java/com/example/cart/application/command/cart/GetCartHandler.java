@@ -13,18 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GetCartHandler implements CommandHandler<GetCartCommand, CartVm> {
 
-  private final CartRepository cartRepository;
-  private final CartService cartService;
+    private final CartRepository cartRepository;
+    private final CartService cartService;
 
-  @Override
-  @Transactional
-  public CartVm handle(GetCartCommand command) {
-    Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
-    cart.reloadCart(this.cartService);
+    @Override
+    @Transactional
+    public CartVm handle(GetCartCommand command) {
+        Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
+        cart.reloadCart(this.cartService);
 
-    this.cartRepository.save(cart);
+        this.cartRepository.save(cart);
 
-    return CartVm.of(cart);
-  }
+        return CartVm.of(cart);
+    }
 
 }

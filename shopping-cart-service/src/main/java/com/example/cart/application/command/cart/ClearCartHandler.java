@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ClearCartHandler implements CommandHandler<ClearCartCommand, Void> {
 
-  private final CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
-  @Override
-  @Transactional
-  public Void handle(ClearCartCommand command) {
-    Cart cart = this.cartRepository.getById(command.getId());
-    cart.clear();
-    this.cartRepository.save(cart);
+    @Override
+    @Transactional
+    public Void handle(ClearCartCommand command) {
+        Cart cart = this.cartRepository.getById(command.getId());
+        cart.clear();
+        this.cartRepository.save(cart);
 
-    return null;
-  }
+        return null;
+    }
 
 }

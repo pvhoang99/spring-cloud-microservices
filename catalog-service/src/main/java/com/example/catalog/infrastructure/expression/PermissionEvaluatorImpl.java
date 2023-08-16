@@ -11,35 +11,35 @@ import org.springframework.security.core.GrantedAuthority;
 //@PostAuthorize("hasPermission(returnObject, 'read')")
 public class PermissionEvaluatorImpl implements PermissionEvaluator {
 
-  @Override
-  public boolean hasPermission(Authentication authentication, Object targetDomainObject,
-      Object permission) {
-    if (Objects.isNull(authentication) || (Objects.isNull(targetDomainObject)
-        || !(permission instanceof String))) {
-      return false;
+    @Override
+    public boolean hasPermission(Authentication authentication, Object targetDomainObject,
+        Object permission) {
+        if (Objects.isNull(authentication) || (Objects.isNull(targetDomainObject)
+            || !(permission instanceof String))) {
+            return false;
+        }
+        String targetType = targetDomainObject.getClass().getSimpleName().toUpperCase(Locale.ROOT);
+        return hasPrivilege(authentication, targetType, permission.toString().toUpperCase(Locale.ROOT));
     }
-    String targetType = targetDomainObject.getClass().getSimpleName().toUpperCase(Locale.ROOT);
-    return hasPrivilege(authentication, targetType, permission.toString().toUpperCase(Locale.ROOT));
-  }
 
-  @Override
-  public boolean hasPermission(Authentication authentication, Serializable targetId,
-      String targetType, Object permission) {
-    if (Objects.isNull(authentication) || !(permission instanceof String)) {
-      return false;
+    @Override
+    public boolean hasPermission(Authentication authentication, Serializable targetId,
+        String targetType, Object permission) {
+        if (Objects.isNull(authentication) || !(permission instanceof String)) {
+            return false;
+        }
+        return hasPrivilege(authentication, targetType.toUpperCase(Locale.ROOT),
+            permission.toString().toUpperCase(
+                Locale.ROOT));
     }
-    return hasPrivilege(authentication, targetType.toUpperCase(Locale.ROOT),
-        permission.toString().toUpperCase(
-            Locale.ROOT));
-  }
 
-  private boolean hasPrivilege(Authentication authentication, String targetType,
-      String permission) {
-    for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-      return grantedAuthority.getAuthority().startsWith(targetType)
-          && grantedAuthority.getAuthority()
-          .contains(permission);
+    private boolean hasPrivilege(Authentication authentication, String targetType,
+        String permission) {
+        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
+            return grantedAuthority.getAuthority().startsWith(targetType)
+                && grantedAuthority.getAuthority()
+                .contains(permission);
+        }
+        return false;
     }
-    return false;
-  }
 }

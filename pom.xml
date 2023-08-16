@@ -31,7 +31,7 @@
   <modelVersion>4.0.0</modelVersion>
   <modules>
     <module>auth-service</module>
-<!--    <module>catalog-service</module>-->
+    <module>catalog-service</module>
 <!--    <module>chat-server</module>-->
     <module>common</module>
     <module>config-service</module>

@@ -39,7 +39,7 @@ public class Cart extends AggregateRoot {
     private Long id;
 
     @Column(name = "user_id")
-    private Long userId;
+    private String username;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -47,8 +47,8 @@ public class Cart extends AggregateRoot {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinTable(name = "cart_item_mapping",
-            joinColumns = {@JoinColumn(name = "cart_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
+        joinColumns = {@JoinColumn(name = "cart_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
     @MapKey(name = "id")
     private Map<Long, CartItem> items;
 

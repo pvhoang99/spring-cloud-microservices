@@ -1,15 +1,5 @@
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://localhost:8082/api/auth/oauth/check_token
-      user-info-uri: http://localhost:8082/api/auth/api/v1/user/me
-      id: catalog-service
-    client:
-      client-id: hoang
-      client-secret: 1
-      access-token-uri: http://localhost:8082/api/auth/oauth/token
-      scope: read
 spring:
+  application.name: catalog
   datasource:
     url: jdbc:mysql://localhost:3306/catalog?createDatabaseIfNotExist=true
     username: root
@@ -27,13 +17,23 @@ spring:
       binders:
         rabbit:
           type: rabbit
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+      import-check:
+        enabled: false
+  security.oauth2.resourceserver:
+    jwt:
+      issuer-uri: ${ISSUER_URI:http://localhost:8082/api/auth}
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: root
     password: 123456
     virtual-host: /
-
+  main.allow-bean-definition-overriding: true
 server:
   port: 8086
 
@@ -51,3 +51,5 @@ graphql:
 grpc:
   server:
     port: 2000
+
+server.servlet.context-path: /api/catalog

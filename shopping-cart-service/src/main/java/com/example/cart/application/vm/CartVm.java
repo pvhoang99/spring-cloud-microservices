@@ -11,18 +11,18 @@ import lombok.Setter;
 @Setter
 public class CartVm {
 
-  private Status status;
+    private Status status;
 
-  private Long totalPrice;
+    private Long totalPrice;
 
-  private Set<CartItemVm> items;
+    private Set<CartItemVm> items;
 
-  public static CartVm of(Cart cart) {
-    CartVm cartVm = new CartVm();
-    cartVm.status = cart.getStatus();
-    cartVm.totalPrice = cart.getTotalPrice();
-    cartVm.setItems(cart.getItems().values().stream().map(CartItemVm::of).collect(Collectors.toSet()));
+    public static CartVm of(Cart cart) {
+        CartVm cartVm = new CartVm();
+        cartVm.status = cart.getStatus();
+        cartVm.totalPrice = cart.getTotalPrice();
+        cartVm.setItems(cart.getItems().values().stream().map(CartItemVm::of).collect(Collectors.toSet()));
 
-    return cartVm;
-  }
+        return cartVm;
+    }
 }

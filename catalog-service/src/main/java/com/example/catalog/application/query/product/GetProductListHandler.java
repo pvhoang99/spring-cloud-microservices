@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GetProductListHandler implements QueryHandler<GetProductListQuery, ListQueryResult<ProductVm>> {
 
-  private final ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-  @Override
-  @Transactional(readOnly = true)
-  public ListQueryResult<ProductVm> handle(GetProductListQuery query) {
-    return this.productRepository.getList(query);
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public ListQueryResult<ProductVm> handle(GetProductListQuery query) {
+        return this.productRepository.getList(query);
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.example.cart.infrastructure.config.security;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
@@ -14,24 +13,22 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 @EnableWebSecurity
 public class ResourceServerConfig {
 
-    @Bean
     @Order(0)
-    public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .securityMatcher("/**")
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
-                )
-                .exceptionHandling(
-                        handler -> handler
-                                .accessDeniedHandler(new AccessDeniedHandlerImpl())
-                                .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
-                )
-                .oauth2ResourceServer((resourceServer) -> resourceServer
-                        .jwt(Customizer.withDefaults())
-                );
+            .securityMatcher("/**")
+            .authorizeHttpRequests((authorize) -> authorize
+                .anyRequest().authenticated()
+            )
+            .exceptionHandling(
+                handler -> handler
+                    .accessDeniedHandler(new AccessDeniedHandlerImpl())
+                    .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
+            )
+            .oauth2ResourceServer((resourceServer) -> resourceServer
+                .jwt(Customizer.withDefaults())
+            );
 
         return http.build();
     }

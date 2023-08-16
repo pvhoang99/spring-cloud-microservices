@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SubtractItemFromCartHandler implements CommandHandler<SubtractItemFromCartCommand, Void> {
 
-  private final CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
-  @Override
-  @Transactional
-  public Void handle(SubtractItemFromCartCommand command) {
-    Cart cart = this.cartRepository.getById(command.getCartId());
-    cart.subtractItem(command.getProductId(), command.getQuantity());
-    this.cartRepository.save(cart);
+    @Override
+    @Transactional
+    public Void handle(SubtractItemFromCartCommand command) {
+        Cart cart = this.cartRepository.getById(command.getCartId());
+        cart.subtractItem(command.getProductId(), command.getQuantity());
+        this.cartRepository.save(cart);
 
-    return null;
-  }
+        return null;
+    }
 
 }

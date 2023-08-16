@@ -24,24 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductResourceV1 {
 
-  private final CommandBus commandBus;
-  private final QueryBus queryBus;
+    private final CommandBus commandBus;
+    private final QueryBus queryBus;
 
-  @PostMapping("/products")
-  public ResponseEntity<CommandResult<Long>> createProduct(@RequestBody CreateProductCommand command) {
-    return ResponseEntity.ok(this.commandBus.execute(command));
-  }
+    @PostMapping("/products")
+    public ResponseEntity<CommandResult<Long>> createProduct(@RequestBody CreateProductCommand command) {
+        return ResponseEntity.ok(this.commandBus.execute(command));
+    }
 
-  @PostMapping("/products/list")
-  public ResponseEntity<ListQueryResult<ProductVm>> productList(ProductFilter filter, Pageable pageable) {
-    GetProductListQuery query = GetProductListQuery.of(filter, pageable);
+    @PostMapping("/products/list")
+    public ResponseEntity<ListQueryResult<ProductVm>> productList(ProductFilter filter, Pageable pageable) {
+        GetProductListQuery query = GetProductListQuery.of(filter, pageable);
 
-    return ResponseEntity.ok(this.queryBus.execute(query));
-  }
+        return ResponseEntity.ok(this.queryBus.execute(query));
+    }
 
-  @GetMapping("/products/get-by-ids")
-  public ResponseEntity<Set<ProductVm>> getByIds(@RequestBody GetProductsByIdsQuery query) {
-    return ResponseEntity.ok(this.queryBus.execute(query));
-  }
-
+    @GetMapping("/products/get-by-ids")
+    public ResponseEntity<Set<ProductVm>> getByIds(@RequestBody GetProductsByIdsQuery query) {
+        return ResponseEntity.ok(this.queryBus.execute(query));
+    }
 }

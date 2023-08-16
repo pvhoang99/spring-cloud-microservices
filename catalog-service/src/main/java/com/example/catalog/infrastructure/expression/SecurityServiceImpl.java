@@ -3,15 +3,15 @@ package com.example.catalog.infrastructure.expression;
 public class SecurityServiceImpl implements SecurityService {
 
 
-  public boolean hasUser(Long id) {
+    public boolean hasUser(Long id) {
 
-    //do something
-    return true;
-  }
+        //do something
+        return true;
+    }
 
-  @Override
-  public boolean isOwn(String createdBy) {
+    @Override
+    public boolean isOwn(String createdBy) {
 
-    return false;
-  }
+        return false;
+    }
 }

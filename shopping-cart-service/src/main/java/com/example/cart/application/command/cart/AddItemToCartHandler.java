@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AddItemToCartHandler implements CommandHandler<AddItemToCartCommand, Void> {
 
-  private final CartService cartService;
-  private final CartRepository cartRepository;
+    private final CartService cartService;
+    private final CartRepository cartRepository;
 
-  @Override
-  @Transactional
-  public Void handle(AddItemToCartCommand command) {
-    Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
-    cart.addItem(command.getProductId(), command.getQuantity());
-    this.cartRepository.save(cart);
+    @Override
+    @Transactional
+    public Void handle(AddItemToCartCommand command) {
+        Cart cart = this.cartService.getCurrentCartOrCreateEmpty();
+        cart.addItem(command.getProductId(), command.getQuantity());
+        this.cartRepository.save(cart);
 
-    return null;
-  }
+        return null;
+    }
 
 }

@@ -2,7 +2,7 @@ package com.example.catalog.application.command.product;
 
 import com.example.common.command.Command;
 import com.example.common.vm.CommandResult;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter

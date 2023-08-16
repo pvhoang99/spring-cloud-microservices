@@ -1,4 +1,4 @@
-package com.example.catalog.application.client.dto;
+package com.example.catalog.infrastructure.client.dto;
 
 import lombok.Getter;
 

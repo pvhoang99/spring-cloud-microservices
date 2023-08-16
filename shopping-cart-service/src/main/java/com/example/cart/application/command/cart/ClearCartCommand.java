@@ -8,6 +8,6 @@ import lombok.Getter;
 @AllArgsConstructor(staticName = "of")
 public class ClearCartCommand implements Command<Void> {
 
-  private Long id;
+    private Long id;
 
 }

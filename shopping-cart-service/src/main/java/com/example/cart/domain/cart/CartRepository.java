@@ -2,9 +2,9 @@ package com.example.cart.domain.cart;
 
 public interface CartRepository {
 
-  void save(Cart cart);
+    void save(Cart cart);
 
-  Cart findActiveCart(Long userId);
+    Cart findActiveCart(String username);
 
-  Cart getById(Long id);
+    Cart getById(Long id);
 }

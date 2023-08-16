@@ -9,13 +9,13 @@ import lombok.Setter;
 @Getter
 public class SubtractItemFromCartCommand implements Command<Void> {
 
-  @NotNull
-  @JsonIgnore
-  @Setter
-  private Long cartId;
+    @NotNull
+    @JsonIgnore
+    @Setter
+    private Long cartId;
 
-  private Long productId;
+    private Long productId;
 
-  private Long quantity;
+    private Long quantity;
 
 }

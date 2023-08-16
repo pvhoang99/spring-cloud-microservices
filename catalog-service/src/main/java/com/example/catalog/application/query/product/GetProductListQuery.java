@@ -14,20 +14,20 @@ import org.springframework.data.domain.Pageable;
 @AllArgsConstructor
 public class GetProductListQuery extends ListQuery<ProductFilter> implements Query<ListQueryResult<ProductVm>> {
 
-  public GetProductListQuery(ProductFilter filter, Pageable pageable) {
-    super(filter, pageable);
-  }
+    public GetProductListQuery(ProductFilter filter, Pageable pageable) {
+        super(filter, pageable);
+    }
 
-  public static GetProductListQuery of(ProductFilter filter, Pageable pageable) {
-    return new GetProductListQuery(filter, pageable);
-  }
+    public static GetProductListQuery of(ProductFilter filter, Pageable pageable) {
+        return new GetProductListQuery(filter, pageable);
+    }
 
-  @Getter
-  @Setter
-  public static class ProductFilter {
+    @Getter
+    @Setter
+    public static class ProductFilter {
 
-    public String code;
+        public String code;
 
-  }
+    }
 
 }

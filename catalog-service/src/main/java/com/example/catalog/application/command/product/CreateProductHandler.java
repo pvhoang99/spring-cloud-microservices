@@ -14,24 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateProductHandler implements CommandHandler<CreateProductCommand, CommandResult<Long>> {
 
-  private final ProductRepository productRepository;
-  private final CategoryService categoryService;
+    private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
-  @Override
-  @Transactional
-  public CommandResult<Long> handle(CreateProductCommand command) {
-    this.validate(command);
-    Product product = Product.create(command.getName(), command.getPrice(), command.getImage(),
-        command.getDescription(), command.getCategoryId());
-    this.productRepository.save(product);
+    @Override
+    @Transactional
+    public CommandResult<Long> handle(CreateProductCommand command) {
+        this.validate(command);
+        Product product = Product.create(command.getName(), command.getPrice(), command.getImage(),
+            command.getDescription(), command.getCategoryId());
+        this.productRepository.save(product);
 
-    return CommandResult.of(product.getId());
-  }
-
-  private void validate(CreateProductCommand command) {
-    if (!this.categoryService.existById(command.getCategoryId())) {
-      throw new EntityNotFoundException("category.not.found");
+        return CommandResult.of(product.getId());
     }
-  }
+
+    private void validate(CreateProductCommand command) {
+        if (!this.categoryService.existById(command.getCategoryId())) {
+            throw new EntityNotFoundException("category.not.found");
+        }
+    }
 
 }

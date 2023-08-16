@@ -1,4 +1,4 @@
-package com.example.catalog.application.client;
+package com.example.catalog.infrastructure.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

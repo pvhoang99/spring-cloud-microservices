@@ -15,10 +15,7 @@
       <groupId>com.example</groupId>
       <version>1.0.0</version>
     </dependency>
-    <dependency>
-      <artifactId>spring-security-oauth2-client</artifactId>
-      <groupId>org.springframework.security</groupId>
-    </dependency>
+
     <dependency>
       <artifactId>spring-boot-starter-actuator</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -40,62 +37,12 @@
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-cloud-starter-oauth2</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>mysql-connector-java</artifactId>
-      <groupId>mysql</groupId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
-    </dependency>
-<!--    <dependency>-->
-<!--      <artifactId>hystrix-javanica</artifactId>-->
-<!--      <groupId>com.netflix.hystrix</groupId>-->
-<!--    </dependency>-->
-    <dependency>
-      <artifactId>asm</artifactId>
-      <groupId>net.minidev</groupId>
-      <version>1.0.2</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>json-smart</artifactId>
-      <groupId>net.minidev</groupId>
-      <version>2.2.1</version>
-    </dependency>
-    <dependency>
-      <artifactId>hibernate-core</artifactId>
-      <groupId>org.hibernate</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <groupId>org.springframework.boot</groupId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <artifactId>commons-pool2</artifactId>
-      <groupId>org.apache.commons</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>grpc-server-spring-boot-starter</artifactId>
-      <groupId>net.devh</groupId>
-      <version>2.13.1.RELEASE</version>
-    </dependency>
-    <dependency>
-      <artifactId>spring-security-oauth2-resource-server</artifactId>
-      <groupId>org.springframework.security</groupId>
     </dependency>
   </dependencies>
   <description>catalog-service</description>

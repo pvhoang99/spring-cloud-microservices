@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public class ProductDTO {
 
-  private Long id;
+    private Long id;
 
-  private Long price;
+    private Long price;
 
-  private String image;
+    private String image;
 
-  private String name;
+    private String name;
 }

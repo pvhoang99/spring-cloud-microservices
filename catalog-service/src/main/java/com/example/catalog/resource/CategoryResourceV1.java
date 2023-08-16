@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/categories")
 public class CategoryResourceV1 {
 
-  private final CommandBus commandBus;
-  private final QueryBus queryBus;
+    private final CommandBus commandBus;
+    private final QueryBus queryBus;
 
-  @PostMapping
-  public ResponseEntity<?> create(@RequestBody CreateCategoryCommand command) {
-    return ResponseEntity.ok(this.commandBus.execute(command));
-  }
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody CreateCategoryCommand command) {
+        return ResponseEntity.ok(this.commandBus.execute(command));
+    }
 
-  @PostMapping("/search")
-  public ResponseEntity<?> search(@RequestBody SearchCategoryQuery query) {
+    @PostMapping("/search")
+    public ResponseEntity<?> search(@RequestBody SearchCategoryQuery query) {
 
-    return ResponseEntity.ok().build();
-  }
+        return ResponseEntity.ok().build();
+    }
 
 
 }

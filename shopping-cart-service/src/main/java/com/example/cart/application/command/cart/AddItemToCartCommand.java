@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class AddItemToCartCommand implements Command<Void> {
 
-  private Long productId;
+    private Long productId;
 
-  private Long quantity;
+    private Long quantity;
 
 }

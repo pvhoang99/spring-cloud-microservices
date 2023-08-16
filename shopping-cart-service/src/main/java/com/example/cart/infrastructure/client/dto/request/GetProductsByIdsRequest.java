@@ -8,6 +8,6 @@ import lombok.Getter;
 @AllArgsConstructor(staticName = "of")
 public class GetProductsByIdsRequest {
 
-  private Set<Long> ids;
+    private Set<Long> ids;
 
 }

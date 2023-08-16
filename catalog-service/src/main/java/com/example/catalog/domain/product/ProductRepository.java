@@ -7,10 +7,10 @@ import java.util.Set;
 
 public interface ProductRepository {
 
-  void save(Product product);
+    void save(Product product);
 
-  Set<ProductVm> getByIds(Set<Long> ids);
+    Set<ProductVm> getByIds(Set<Long> ids);
 
-  ListQueryResult<ProductVm> getList(GetProductListQuery query);
+    ListQueryResult<ProductVm> getList(GetProductListQuery query);
 
 }

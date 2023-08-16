@@ -18,8 +18,8 @@ public class CartMysqlRepository implements CartRepository {
   }
 
   @Override
-  public Cart findActiveCart(Long userId) {
-    return this.cartJpaRepository.findByUserIdAndStatus(userId, Status.ACTIVE).orElse(null);
+  public Cart findActiveCart(String username) {
+    return this.cartJpaRepository.findByUsernameAndStatus(username, Status.ACTIVE).orElse(null);
   }
 
   @Override

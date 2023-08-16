@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GetProductsByIdsHandler implements QueryHandler<GetProductsByIdsQuery, Set<ProductVm>> {
 
-  private final ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-  @Override
-  @Transactional(readOnly = true)
-  public Set<ProductVm> handle(GetProductsByIdsQuery query) {
-    return this.productRepository.getByIds(query.getIds());
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public Set<ProductVm> handle(GetProductsByIdsQuery query) {
+        return this.productRepository.getByIds(query.getIds());
+    }
 
 }
