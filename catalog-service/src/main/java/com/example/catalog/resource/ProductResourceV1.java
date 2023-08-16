@@ -9,7 +9,6 @@ import com.example.common.command.CommandBus;
 import com.example.common.query.QueryBus;
 import com.example.common.vm.CommandResult;
 import com.example.common.vm.ListQueryResult;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,27 +18,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Set;
+
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/products")
 @RequiredArgsConstructor
 public class ProductResourceV1 {
 
     private final CommandBus commandBus;
     private final QueryBus queryBus;
 
-    @PostMapping("/products")
+    @PostMapping
     public ResponseEntity<CommandResult<Long>> createProduct(@RequestBody CreateProductCommand command) {
         return ResponseEntity.ok(this.commandBus.execute(command));
     }
 
-    @PostMapping("/products/list")
+    @GetMapping("/list")
     public ResponseEntity<ListQueryResult<ProductVm>> productList(ProductFilter filter, Pageable pageable) {
         GetProductListQuery query = GetProductListQuery.of(filter, pageable);
 
         return ResponseEntity.ok(this.queryBus.execute(query));
     }
 
-    @GetMapping("/products/get-by-ids")
+    @PostMapping("/get-by-ids")
     public ResponseEntity<Set<ProductVm>> getByIds(@RequestBody GetProductsByIdsQuery query) {
         return ResponseEntity.ok(this.queryBus.execute(query));
     }

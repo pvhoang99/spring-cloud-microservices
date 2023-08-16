@@ -37,7 +37,7 @@
     <module>config-service</module>
     <module>discovery-service</module>
     <module>gateway-service</module>
-<!--    <module>order-service</module>-->
+    <module>order-service</module>
 <!--    <module>inventory-service</module>-->
     <module>shopping-cart-service</module>
   </modules>

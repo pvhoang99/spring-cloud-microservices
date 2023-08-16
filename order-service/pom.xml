@@ -10,27 +10,11 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <artifactId>commons-pool2</artifactId>
-      <groupId>org.apache.commons</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-boot-starter-data-rest</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-oauth2</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
@@ -42,37 +26,9 @@
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <artifactId>slf4j-api</artifactId>
-      <groupId>org.slf4j</groupId>
-      <version>1.7.29</version>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-statemachine-starter</artifactId>
-      <groupId>org.springframework.statemachine</groupId>
-      <version>3.1.0</version>
-    </dependency>
-    <dependency>
-      <artifactId>spring-statemachine-data-mongodb</artifactId>
-      <groupId>org.springframework.statemachine</groupId>
-      <version>3.2.0</version>
-    </dependency>
-    <dependency>
-      <artifactId>reactor-core</artifactId>
-      <groupId>io.projectreactor</groupId>
-      <version>3.4.17</version>
     </dependency>
   </dependencies>
   <description>order-service</description>

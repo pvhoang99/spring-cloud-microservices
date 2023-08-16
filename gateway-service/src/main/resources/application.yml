@@ -62,11 +62,11 @@ spring:
           uri: lb://cart
           predicates:
             - Path=/api/cart/**
-        #          filters:
-        #            - name: CircuitBreaker
-        #              args:
-        #                name: myCircuitBreaker
-        #                fallbackUri: forward:/fallback/message
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/message
         - id: orderModule
           uri: lb://order-service
           predicates:

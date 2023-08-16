@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/categories")
+@RequestMapping("/v1/categories")
 public class CategoryResourceV1 {
 
     private final CommandBus commandBus;
@@ -29,6 +29,4 @@ public class CategoryResourceV1 {
 
         return ResponseEntity.ok().build();
     }
-
-
 }

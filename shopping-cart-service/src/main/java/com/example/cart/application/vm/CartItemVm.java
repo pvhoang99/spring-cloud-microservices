@@ -1,10 +1,13 @@
 package com.example.cart.application.vm;
 
 import com.example.cart.domain.cart.CartItem;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 @Getter
+@Setter(AccessLevel.PRIVATE)
 public class CartItemVm {
 
     private Long productId;
@@ -19,9 +22,12 @@ public class CartItemVm {
 
     public static CartItemVm of(CartItem item) {
         CartItemVm cartItem = new CartItemVm();
-        BeanUtils.copyProperties(item, cartItem);
+        cartItem.setProductId(item.getProductId());
+        cartItem.setPrice(item.getPrice());
+        cartItem.setQuantity(item.getQuantity());
+        cartItem.setName(item.getName());
+        cartItem.setImage(item.getImage());
 
         return cartItem;
     }
-
 }

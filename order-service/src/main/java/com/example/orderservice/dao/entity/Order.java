@@ -1,50 +1,55 @@
 package com.example.orderservice.dao.entity;
 
+import com.example.common.domain.AggregateRoot;
 import com.example.orderservice.dto.Address;
 import com.example.orderservice.dto.CartItem;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
 @Getter
 @Setter
-public class Order extends BaseEntity {
+public class Order extends AggregateRoot {
 
-  @Id
-  private ObjectId orderId;
-  private Long userId;
-  @Transient
-  private OrderStatus orderStatus;
-  private List<CartItem> cartItems = new ArrayList<>();
-  private Address shippingAddress;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private OrderStatus status;
+    private Long cartId;
 
-  public Order() {
-    this.orderStatus = OrderStatus.PURCHASED;
-  }
+    private List<CartItem> cartItems = new ArrayList<>();
+    private Address shippingAddress;
 
-  public enum OrderStatus {
-    NEW,
-    PURCHASED,
-    PENDING,
-    SUCCESS,
-    FAIL,
-    CONFIRMED,
-    SHIPPED,
-    DELIVERED
-  }
+    public Order() {
+        this.orderStatus = OrderStatus.PURCHASED;
+    }
 
-  public enum OrderEvents {
-    PAYED,
-    PURCHASED,
-    CREAT,
-    ORDERED,
-    SHIPPED,
-    DELIVERED
-  }
+    public enum OrderStatus {
+        NEW,
+        PURCHASED,
+        PENDING,
+        SUCCESS,
+        FAIL,
+        CONFIRMED,
+        SHIPPED,
+        DELIVERED
+    }
+
+    public enum OrderEvents {
+        PAYED,
+        PURCHASED,
+        CREAT,
+        ORDERED,
+        SHIPPED,
+        DELIVERED
+    }
 }

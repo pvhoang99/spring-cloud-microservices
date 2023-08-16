@@ -21,37 +21,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CartControllerV1 {
 
-  private final CommandBus commandBus;
+    private final CommandBus commandBus;
 
-  @GetMapping
-  public ResponseEntity<CartVm> getCart() {
-    GetCartCommand command = GetCartCommand.of();
-    CartVm cartVm = this.commandBus.execute(command);
+    @GetMapping
+    public ResponseEntity<CartVm> getCart() {
+        GetCartCommand command = GetCartCommand.of();
+        CartVm cartVm = this.commandBus.execute(command);
 
-    return ResponseEntity.ok(cartVm);
-  }
+        return ResponseEntity.ok(cartVm);
+    }
 
-  @PostMapping("/{id}/clear")
-  public ResponseEntity<Void> clearCart(@PathVariable Long id) {
-    ClearCartCommand command = ClearCartCommand.of(id);
-    this.commandBus.execute(command);
+    @PostMapping("/{id}/clear")
+    public ResponseEntity<Void> clearCart(@PathVariable Long id) {
+        ClearCartCommand command = ClearCartCommand.of(id);
+        this.commandBus.execute(command);
 
-    return ResponseEntity.ok().build();
-  }
+        return ResponseEntity.ok().build();
+    }
 
-  @PutMapping("/add-items")
-  public ResponseEntity<Void> addItemToCart(@RequestBody AddItemToCartCommand command) {
-    this.commandBus.execute(command);
+    @PostMapping("/add-items")
+    public ResponseEntity<Void> addItemToCart(@RequestBody AddItemToCartCommand command) {
+        this.commandBus.execute(command);
 
-    return ResponseEntity.ok().build();
-  }
+        return ResponseEntity.ok().build();
+    }
 
-  @PutMapping("/{cartId}/subtract-items")
-  public ResponseEntity<Void> subtractItem(@PathVariable Long cartId,
-      SubtractItemFromCartCommand command) {
-    command.setCartId(cartId);
-    this.commandBus.execute(command);
+    @PostMapping("/{cartId}/subtract-items")
+    public ResponseEntity<Void> subtractItem(@PathVariable Long cartId,
+                                             SubtractItemFromCartCommand command) {
+        command.setCartId(cartId);
+        this.commandBus.execute(command);
 
-    return ResponseEntity.ok().build();
-  }
+        return ResponseEntity.ok().build();
+    }
 }

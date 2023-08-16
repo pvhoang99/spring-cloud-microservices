@@ -17,6 +17,7 @@ public class CreateProductCommand implements Command<CommandResult<Long>> {
 
   private String image;
 
+  @NotNull
   private Long categoryId;
 
 }
