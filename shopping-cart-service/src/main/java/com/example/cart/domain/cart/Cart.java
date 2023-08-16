@@ -3,6 +3,7 @@ package com.example.cart.domain.cart;
 import com.example.cart.infrastructure.client.dto.response.ProductDTO;
 import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
+import com.example.common.utils.SecurityContext;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,8 +48,9 @@ public class Cart extends AggregateRoot {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinTable(name = "cart_item_mapping",
-        joinColumns = {@JoinColumn(name = "cart_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "cart_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")}
+    )
     @MapKey(name = "id")
     private Map<Long, CartItem> items;
 
@@ -58,7 +60,7 @@ public class Cart extends AggregateRoot {
     public static Cart createEmpty() {
         Cart cart = new Cart();
         cart.setItems(new HashMap<>());
-        cart.setUserId(1L);
+        cart.setUsername(SecurityContext.currentUsername());
         cart.setStatus(Status.ACTIVE);
 
         return cart;
@@ -76,7 +78,12 @@ public class Cart extends AggregateRoot {
         Map<Long, ProductDTO> productPrice = cartService.collectProduct(productIds);
         this.totalPrice = 0L;
         for (CartItem item : this.items.values()) {
-            //TODO: chưa xử lý case không tồn tại productId
+            boolean isItemNotExist = !productPrice.containsKey(item.getId());
+            if (isItemNotExist) {
+                this.items.remove(item.getId());
+
+                continue;
+            }
             ProductDTO productDTO = productPrice.get(item.getProductId());
             this.totalPrice += productDTO.getPrice() * item.getQuantity();
             item.addInfo(productDTO.getPrice(), productDTO.getImage(), productDTO.getName());
@@ -92,7 +99,11 @@ public class Cart extends AggregateRoot {
     public void subtractItem(Long productId, Long quantity) {
         CartItem cartItem = this.items.get(productId);
         cartItem.subtractQuantity(quantity);
-        this.items.put(productId, cartItem);
+        boolean isRemoveItem = cartItem.getQuantity() == 0L;
+        if (isRemoveItem) {
+            this.items.remove(productId);
+        } else {
+            this.items.put(productId, cartItem);
+        }
     }
-
 }

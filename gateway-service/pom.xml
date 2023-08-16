@@ -12,14 +12,14 @@
       </plugin>
     </plugins>
   </build>
+
   <dependencies>
     <dependency>
-      <artifactId>spring-boot-configuration-processor</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <optional>true</optional>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
-      <artifactId>spring-cloud-starter-config</artifactId>
+      <artifactId>spring-cloud-config-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
@@ -34,24 +34,16 @@
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
-<!--    <dependency>-->
-<!--      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
-<!--      <groupId>org.springframework.cloud</groupId>-->
-<!--    </dependency>-->
     <dependency>
       <artifactId>spring-boot-devtools</artifactId>
       <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <groupId>org.springframework.boot</groupId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
   </dependencies>
+
   <description>Demo project for Spring Boot</description>
   <modelVersion>4.0.0</modelVersion>
   <name>gateway-server</name>

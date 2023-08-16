@@ -1,5 +1,15 @@
 spring:
+  application.name: gateway
+  main:
+    web-application-type: reactive
   cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+      import-check:
+        enabled: false
     gateway:
       globalCors:
         corsConfigurations:
@@ -26,7 +36,7 @@ spring:
         #                name: myCircuitBreaker
         #                fallbackUri: forward:/fallback/message
         - id: auth
-          uri: lb://auth-service
+          uri: lb://auth
           predicates:
             - Path=/api/auth/**
           filters:
@@ -40,9 +50,9 @@ spring:
             - Path=/api/inventory/**
 
         - id: catalog
-          uri: lb://catalog-service
+          uri: lb://catalog
           predicates:
-            - Path=/catalog/**
+            - Path=/api/catalog/**
           filters:
             - name: CircuitBreaker
               args:
@@ -92,10 +102,12 @@ management:
       exposure:
         include: refresh
 eureka:
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-  client:
-    fetch-registry: true
 
 server:
   port: 8000

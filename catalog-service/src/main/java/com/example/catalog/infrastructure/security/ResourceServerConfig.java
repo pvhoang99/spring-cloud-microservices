@@ -16,8 +16,7 @@ public class ResourceServerConfig {
 
     @Bean
     @Order(0)
-    public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http)
-        throws Exception {
+    public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http
             .securityMatcher("/**")

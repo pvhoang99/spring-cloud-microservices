@@ -1,5 +1,6 @@
 package com.example.cart.infrastructure.config.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
@@ -14,6 +15,7 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 public class ResourceServerConfig {
 
     @Order(0)
+    @Bean
     public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http
