@@ -1,17 +1,17 @@
 package com.example.cart.application.api.v1;
 
-import com.example.common.command.CommandBus;
 import com.example.cart.application.command.cart.AddItemToCartCommand;
 import com.example.cart.application.command.cart.ClearCartCommand;
+import com.example.cart.application.command.cart.ConfirmCartCommand;
 import com.example.cart.application.command.cart.GetCartCommand;
 import com.example.cart.application.command.cart.SubtractItemFromCartCommand;
 import com.example.cart.application.vm.CartVm;
+import com.example.common.command.CommandBus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,8 +47,17 @@ public class CartControllerV1 {
     }
 
     @PostMapping("/{cartId}/subtract-items")
-    public ResponseEntity<Void> subtractItem(@PathVariable Long cartId,
-                                             SubtractItemFromCartCommand command) {
+    public ResponseEntity<Void> subtractItem(
+            @PathVariable Long cartId, SubtractItemFromCartCommand command
+    ) {
+        command.setCartId(cartId);
+        this.commandBus.execute(command);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{cartId}/confirm")
+    public ResponseEntity<Void> confirmCart(@PathVariable Long cartId, @RequestBody ConfirmCartCommand command) {
         command.setCartId(cartId);
         this.commandBus.execute(command);
 

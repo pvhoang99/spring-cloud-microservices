@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: cart
+  datasource:
+    url: jdbc:mysql://localhost:3306/orchestration?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+    import-check:
+      enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI:http://localhost:8082/api/auth}
+  main.allow-bean-definition-overriding: true
+server:
+  port: 8088
+  servlet:
+    context-path: /api/orchestration
+
+eureka:
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+

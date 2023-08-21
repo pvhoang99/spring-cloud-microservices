@@ -1,5 +1,6 @@
 package com.example.cart.domain.cart;
 
+import com.example.cart.domain.cart.event.CartConfirmedEvent;
 import com.example.cart.infrastructure.client.dto.response.ProductDTO;
 import com.example.common.domain.AggregateRoot;
 import com.example.common.exception.BadRequestException;
@@ -23,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +35,8 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 public class Cart extends AggregateRoot {
+    @Serial
+    private static final long serialVersionUID = -7842535490839976235L;
 
     @Id
     @Column(name = "id")
@@ -105,5 +109,13 @@ public class Cart extends AggregateRoot {
         } else {
             this.items.put(productId, cartItem);
         }
+    }
+
+    public void confirmCart() {
+        if (!this.status.equals(Status.ACTIVE)) {
+            throw new BadRequestException("Không thể clear cart");
+        }
+        this.status = Status.CONFIRMED;
+        this.dispatch(CartConfirmedEvent.of(this.id));
     }
 }

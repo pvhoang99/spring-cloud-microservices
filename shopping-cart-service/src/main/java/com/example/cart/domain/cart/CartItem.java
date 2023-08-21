@@ -11,11 +11,14 @@ import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.io.Serial;
+
 @Entity
 @Table(name = "cart_item")
 @Getter
 @EqualsAndHashCode
 public class CartItem {
+    private static final long serialVersionUID = 2447558325749295596L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

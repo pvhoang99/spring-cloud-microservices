@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<artifactId>orchestration-service</artifactId>
+	<dependencies>
+		<dependency>
+			<artifactId>common</artifactId>
+			<groupId>com.example</groupId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<optional>true</optional>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-starter -->
+		<dependency>
+			<groupId>org.springframework.statemachine</groupId>
+			<artifactId>spring-statemachine-starter</artifactId>
+		</dependency>
+
+	</dependencies>
+	<modelVersion>4.0.0</modelVersion>
+	<name>orchestration-service</name>
+	<parent>
+		<artifactId>microservices</artifactId>
+		<groupId>com.example</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<version>0.0.1-SNAPSHOT</version>
+</project>

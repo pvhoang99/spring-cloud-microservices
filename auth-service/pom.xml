@@ -21,32 +21,12 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <artifactId>commons-pool2</artifactId>
-      <groupId>org.apache.commons</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-boot-starter-data-redis</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
       <artifactId>spring-boot-starter-cache</artifactId>
       <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-openfeign</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-config-client</artifactId>
-      <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>
       <artifactId>lombok</artifactId>
@@ -59,7 +39,6 @@
       <artifactId>spring-security-oauth2-authorization-server</artifactId>
       <version>1.1.1</version>
     </dependency>
-
   </dependencies>
 
   <description>Auth Server</description>

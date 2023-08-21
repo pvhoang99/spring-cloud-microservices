@@ -40,6 +40,7 @@
     <module>order-service</module>
 <!--    <module>inventory-service</module>-->
     <module>shopping-cart-service</module>
+    <module>orchestration-service</module>
   </modules>
   <name>microservices</name>
 
