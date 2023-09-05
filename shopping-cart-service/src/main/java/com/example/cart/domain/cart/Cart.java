@@ -28,6 +28,7 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cart")
@@ -49,6 +50,9 @@ public class Cart extends AggregateRoot {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Column(name = "transaction_id", updatable = false, unique = true)
+    private String transactionId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinTable(name = "cart_item_mapping",
@@ -116,6 +120,7 @@ public class Cart extends AggregateRoot {
             throw new BadRequestException("Không thể clear cart");
         }
         this.status = Status.CONFIRMED;
-        this.dispatch(CartConfirmedEvent.of(this.id));
+        this.transactionId = UUID.randomUUID().toString();
+        this.dispatch(CartConfirmedEvent.of(this));
     }
 }

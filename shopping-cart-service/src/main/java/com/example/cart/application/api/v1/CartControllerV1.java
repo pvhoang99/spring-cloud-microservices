@@ -6,6 +6,7 @@ import com.example.cart.application.command.cart.ConfirmCartCommand;
 import com.example.cart.application.command.cart.GetCartCommand;
 import com.example.cart.application.command.cart.SubtractItemFromCartCommand;
 import com.example.cart.application.vm.CartVm;
+import com.example.cart.domain.cart.event.CartConfirmedEvent;
 import com.example.common.command.CommandBus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,8 +58,8 @@ public class CartControllerV1 {
     }
 
     @PostMapping("/{cartId}/confirm")
-    public ResponseEntity<Void> confirmCart(@PathVariable Long cartId, @RequestBody ConfirmCartCommand command) {
-        command.setCartId(cartId);
+    public ResponseEntity<Void> confirmCart(@PathVariable Long cartId) {
+        ConfirmCartCommand command = ConfirmCartCommand.of(cartId);
         this.commandBus.execute(command);
 
         return ResponseEntity.ok().build();

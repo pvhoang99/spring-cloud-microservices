@@ -18,6 +18,7 @@ import java.io.Serial;
 @Getter
 @EqualsAndHashCode
 public class CartItem {
+    @Serial
     private static final long serialVersionUID = 2447558325749295596L;
 
     @Id
