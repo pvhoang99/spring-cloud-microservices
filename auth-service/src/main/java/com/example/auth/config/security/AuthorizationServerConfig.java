@@ -154,8 +154,8 @@ public class AuthorizationServerConfig {
                 .scope(OidcScopes.OPENID)
                 .tokenSettings(
                         TokenSettings.builder()
-                                .accessTokenTimeToLive(Duration.ofMinutes(10))
-                                .refreshTokenTimeToLive(Duration.ofHours(1))
+                                .accessTokenTimeToLive(Duration.ofHours(1))
+                                .refreshTokenTimeToLive(Duration.ofHours(5))
                                 .build()
                 )
                 .clientSettings(

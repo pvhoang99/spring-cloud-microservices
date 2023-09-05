@@ -51,7 +51,7 @@ public class Cart extends AggregateRoot {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "transaction_id", updatable = false, unique = true)
+    @Column(name = "transaction_id", unique = true)
     private String transactionId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

@@ -14,24 +14,24 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 @EnableWebSecurity
 public class ResourceServerConfig {
 
-  @Order(0)
-  @Bean
-  public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http) throws Exception {
+    @Order(0)
+    @Bean
+    public SecurityFilterChain restApiSecurityFilterChain(HttpSecurity http) throws Exception {
 
-    http
-            .securityMatcher("/**")
-            .authorizeHttpRequests((authorize) -> authorize
-                    .anyRequest().authenticated()
-            )
-            .exceptionHandling(
-                    handler -> handler
-                            .accessDeniedHandler(new AccessDeniedHandlerImpl())
-                            .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
-            )
-            .oauth2ResourceServer((resourceServer) -> resourceServer
-                    .jwt(Customizer.withDefaults())
-            );
+        http
+                .securityMatcher("/**")
+                .authorizeHttpRequests((authorize) -> authorize
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(
+                        handler -> handler
+                                .accessDeniedHandler(new AccessDeniedHandlerImpl())
+                                .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
+                )
+                .oauth2ResourceServer((resourceServer) -> resourceServer
+                        .jwt(Customizer.withDefaults())
+                );
 
-    return http.build();
-  }
+        return http.build();
+    }
 }

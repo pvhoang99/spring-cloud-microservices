@@ -1,5 +1,6 @@
 package com.example.orchestration.statemachine;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import static com.example.orchestration.statemachine.SagaState.WAIT_FOR_NEW_ORDE
 @Slf4j
 @Configuration
 @EnableStateMachineFactory
+@RequiredArgsConstructor
 public class StateMachineConfig
         extends EnumStateMachineConfigurerAdapter<SagaState, SagaEvent> {
 
@@ -31,7 +33,7 @@ public class StateMachineConfig
         config
                 .withConfiguration()
                 .autoStartup(true)
-                .listener(listener());
+                .listener(this.listener());
     }
 
     @Override
@@ -68,8 +70,11 @@ public class StateMachineConfig
     @Bean
     public Action<SagaState, SagaEvent> cartConfirmed() {
         return
-                context -> log.info("CartConfirmed with context {}", context);
+                context -> {
+                    log.info("CartConfirmed with context {}", context);
+                };
     }
+
 
     @Bean
     public Action<SagaState, SagaEvent> cartConfirmedError() {

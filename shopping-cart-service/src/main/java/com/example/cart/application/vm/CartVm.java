@@ -13,6 +13,8 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 public class CartVm {
 
+    private Long id;
+
     private Status status;
 
     private Long totalPrice;
@@ -21,6 +23,7 @@ public class CartVm {
 
     public static CartVm of(Cart cart) {
         CartVm cartVm = new CartVm();
+        cartVm.setId(cart.getId());
         cartVm.setStatus(cart.getStatus());
         cartVm.setTotalPrice(cart.getTotalPrice());
         cartVm.setItems(cart.getItems().values().stream().map(CartItemVm::of).collect(Collectors.toSet()));

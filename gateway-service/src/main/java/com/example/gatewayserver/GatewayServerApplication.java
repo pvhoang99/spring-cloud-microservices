@@ -90,6 +90,4 @@ public class GatewayServerApplication {
             return map;
         }
     }
-
-
 }

@@ -17,7 +17,7 @@ public class OrderControllerV1 {
     private final CommandBus commandBus;
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(@RequestBody CreateOrderCommand command) {
+    public ResponseEntity<Long> createOrder(@RequestBody CreateOrderCommand command) {
         return ResponseEntity.ok(this.commandBus.execute(command));
     }
 }

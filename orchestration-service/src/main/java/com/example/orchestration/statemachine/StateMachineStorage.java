@@ -17,12 +17,6 @@ public class StateMachineStorage {
     private final StateMachineFactory<SagaState, SagaEvent> stateMachineFactory;
 
     public StateMachine<SagaState, SagaEvent> acquireStateMachine(String transactionId) {
-        StateMachine<SagaState, SagaEvent> stateMachine = stateMachineInMemory.get(transactionId);
-        if (stateMachine == null) {
-            stateMachine = this.stateMachineFactory.getStateMachine(transactionId);
-            stateMachineInMemory.put(transactionId, stateMachine);
-        }
-
-        return stateMachine;
+        return stateMachineInMemory.computeIfAbsent(transactionId, this.stateMachineFactory::getStateMachine);
     }
 }

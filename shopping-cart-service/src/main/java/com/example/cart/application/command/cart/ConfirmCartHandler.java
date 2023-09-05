@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ConfirmCartCHandler implements CommandHandler<ConfirmCartCommand, Void> {
+public class ConfirmCartHandler implements CommandHandler<ConfirmCartCommand, Void> {
 
     private final CartRepository cartRepository;
 
