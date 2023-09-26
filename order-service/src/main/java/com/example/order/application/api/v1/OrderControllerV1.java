@@ -1,6 +1,7 @@
 package com.example.order.application.api.v1;
 
 import com.example.common.command.CommandBus;
+import com.example.common.exception.BadRequestException;
 import com.example.order.application.command.CreateOrderCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ public class OrderControllerV1 {
 
     @PostMapping
     public ResponseEntity<Long> createOrder(@RequestBody CreateOrderCommand command) {
-        return ResponseEntity.ok(this.commandBus.execute(command));
+        Long orderId = this.commandBus.execute(command);
+
+        return ResponseEntity.ok(orderId);
     }
 }

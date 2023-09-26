@@ -1,7 +1,11 @@
 package com.example.orchestration.statemachine;
 
+import com.example.orchestration.client.CartServiceFeignClient;
+import com.example.orchestration.client.OrderServiceFeignClient;
+import com.example.orchestration.client.dto.CreateOrderDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.action.Action;
@@ -24,8 +28,7 @@ import static com.example.orchestration.statemachine.SagaState.WAIT_FOR_NEW_ORDE
 @Configuration
 @EnableStateMachineFactory
 @RequiredArgsConstructor
-public class StateMachineConfig
-        extends EnumStateMachineConfigurerAdapter<SagaState, SagaEvent> {
+public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<SagaState, SagaEvent> {
 
     @Override
     public void configure(StateMachineConfigurationConfigurer<SagaState, SagaEvent> config)
@@ -51,9 +54,8 @@ public class StateMachineConfig
         transitions
                 .withExternal()
                 .source(WAIT_FOR_NEW_ORDER).target(ORDER_CREATED)
-                .action(this.cartConfirmed(), this.cartConfirmedError())
+                .action(this.createOrder(), this.createOrderError())
                 .event(CART_CONFIRMED)
-
         ;
     }
 
@@ -67,18 +69,27 @@ public class StateMachineConfig
         };
     }
 
+    @Autowired
+    private OrderServiceFeignClient orderServiceFeignClient;
+
+    @Autowired
+    private CartServiceFeignClient cartServiceFeignClient;
+
     @Bean
-    public Action<SagaState, SagaEvent> cartConfirmed() {
+    public Action<SagaState, SagaEvent> createOrder() {
         return
                 context -> {
-                    log.info("CartConfirmed with context {}", context);
+                    String transactionId = context.getMessageHeaders().get("transactionId").toString();
+                    this.orderServiceFeignClient.createOrder(CreateOrderDTO.of(transactionId));
                 };
     }
 
-
     @Bean
-    public Action<SagaState, SagaEvent> cartConfirmedError() {
-        return context -> log.error("CartConfirmedError error with context {}", context);
+    public Action<SagaState, SagaEvent> createOrderError() {
+        return context ->  {
+            String transactionId = context.getMessageHeaders().get("transactionId").toString();
+            this.cartServiceFeignClient.reactiveConfirmCart(transactionId);
+        };
     }
 
 }

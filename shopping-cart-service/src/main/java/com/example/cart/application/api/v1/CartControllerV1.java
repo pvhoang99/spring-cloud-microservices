@@ -4,10 +4,12 @@ import com.example.cart.application.command.cart.AddItemToCartCommand;
 import com.example.cart.application.command.cart.ClearCartCommand;
 import com.example.cart.application.command.cart.ConfirmCartCommand;
 import com.example.cart.application.command.cart.GetCartCommand;
+import com.example.cart.application.command.cart.ReactiveConfirmedCartCommand;
 import com.example.cart.application.command.cart.SubtractItemFromCartCommand;
+import com.example.cart.application.query.cart.GetCartByTransactionIdQuery;
 import com.example.cart.application.vm.CartVm;
-import com.example.cart.domain.cart.event.CartConfirmedEvent;
 import com.example.common.command.CommandBus;
+import com.example.common.query.QueryBus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartControllerV1 {
 
     private final CommandBus commandBus;
+    private final QueryBus queryBus;
 
     @GetMapping
     public ResponseEntity<CartVm> getCart() {
@@ -63,5 +66,20 @@ public class CartControllerV1 {
         this.commandBus.execute(command);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reactive/{transactionId}")
+    public ResponseEntity<Void> reactiveCart(@PathVariable String transactionId) {
+        ReactiveConfirmedCartCommand command = ReactiveConfirmedCartCommand.of(transactionId);
+        this.commandBus.execute(command);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/transaction/{transactionId}")
+    public ResponseEntity<CartVm> getByTransactionId(@PathVariable String transactionId) {
+        GetCartByTransactionIdQuery query = GetCartByTransactionIdQuery.of(transactionId);
+
+        return ResponseEntity.ok(this.queryBus.execute(query));
     }
 }

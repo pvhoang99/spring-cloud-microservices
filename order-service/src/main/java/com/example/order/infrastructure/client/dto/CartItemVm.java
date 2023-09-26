@@ -1,11 +1,10 @@
-package com.example.order.client.dto;
+package com.example.order.infrastructure.client.dto;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter(AccessLevel.PRIVATE)
+@Setter
 public class CartItemVm {
 
     private Long productId;

@@ -23,7 +23,7 @@ public class CartEventHandleController {
     private final StateMachineStorage stateMachineStorage;
 
     @PostMapping("/{transactionId}/{event}")
-    public ResponseEntity<Void> confirmedHandle(@PathVariable String transactionId, @PathVariable SagaEvent event) {
+    public ResponseEntity<Void> handle(@PathVariable String transactionId, @PathVariable SagaEvent event) {
         StateMachine<SagaState, SagaEvent> stateMachine = this.stateMachineStorage.acquireStateMachine(transactionId);
         Map<String, Object> headers = Map.of(
                 "transactionId", transactionId

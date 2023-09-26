@@ -27,4 +27,9 @@ public class CartMysqlRepository implements CartRepository {
     return this.cartJpaRepository.getOne(id);
   }
 
+  @Override
+  public Cart findByTransactionId(String transactionId) {
+    return this.cartJpaRepository.findByTransactionId(transactionId).orElse(null);
+  }
+
 }

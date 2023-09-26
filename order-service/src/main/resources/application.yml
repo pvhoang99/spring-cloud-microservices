@@ -1,27 +1,37 @@
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://localhost:8082/auth-server/oauth/check_token
-      user-info-uri: http://localhost:8082/auth-server/api/v1/user/me
-      id: order-service
-    client:
-      client-id: hoang
-      client-secret: 1
-      access-token-uri: http://localhost:8082/auth-server/oauth/token
-      scope: read
 spring:
-  data:
-    mongodb:
-      database: order-service
-      host: localhost
-      port: 27017
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/order?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  cloud:
+    config:
+      username: hoang
+      password: hoang
+      uri: http://localhost:8888
+      enabled: false
+    import-check:
+      enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI:http://localhost:8082/api/auth}
+  main.allow-bean-definition-overriding: true
 server:
-  port: 8088
+  port: 8090
+  servlet:
+    context-path: /api/order
+
 eureka:
   client:
     fetchRegistry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
 

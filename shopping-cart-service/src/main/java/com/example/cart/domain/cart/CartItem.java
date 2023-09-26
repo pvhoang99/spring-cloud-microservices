@@ -49,7 +49,7 @@ public class CartItem {
         return cartItem;
     }
 
-    public void addInfo(Long price, String image, String name) {
+    public void bindingInfo(Long price, String image, String name) {
         this.price = price;
         this.image = image;
         this.name = name;
@@ -65,5 +65,4 @@ public class CartItem {
         }
         this.quantity -= quantity;
     }
-
 }

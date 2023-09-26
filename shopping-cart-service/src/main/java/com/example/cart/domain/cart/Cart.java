@@ -94,7 +94,7 @@ public class Cart extends AggregateRoot {
             }
             ProductDTO productDTO = productPrice.get(item.getProductId());
             this.totalPrice += productDTO.getPrice() * item.getQuantity();
-            item.addInfo(productDTO.getPrice(), productDTO.getImage(), productDTO.getName());
+            item.bindingInfo(productDTO.getPrice(), productDTO.getImage(), productDTO.getName());
         }
     }
 
@@ -122,5 +122,9 @@ public class Cart extends AggregateRoot {
         this.status = Status.CONFIRMED;
         this.transactionId = UUID.randomUUID().toString();
         this.dispatch(CartConfirmedEvent.of(this));
+    }
+
+    public void reactiveCart() {
+        this.status = Status.ACTIVE;
     }
 }
